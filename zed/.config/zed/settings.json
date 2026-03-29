@@ -1,0 +1,38 @@
+{
+  "always_treat_brackets_as_autoclosed": true,
+  "auto_signature_help": true,
+  "show_signature_help_after_edits": true,
+  "terminal": {
+    "default_height": 600,
+  },
+  "autosave": "on_focus_change",
+  "relative_line_numbers": "disabled",
+  "vertical_scroll_margin": 999.0,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "icon_theme": {
+    "mode": "system",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme",
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "vim_mode": true,
+  "ui_font_size": 18,
+  "buffer_font_size": 15.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "VSCode Dark Modern",
+  },
+  "auto_install_extensions": {
+    "dockerfile": true,
+    "nix": true,
+    "make": true,
+    "vscode-dark-modern": true,
+    "material-icon-theme": true,
+    "hyprlang": true,
+    "toml": true,
+  },
+}

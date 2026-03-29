@@ -1,0 +1,21 @@
+format = "$directory$git_branch$git_status$character$right"
+right_format = "$cmd_duration"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+[git_branch]
+symbol = ""
+format = " [$branch]($style)"
+style = "bold purple"
+
+[git_status]
+format = "([$all_status$ahead_behind]($style)) "
+style = "bold red"
+
+[cmd_duration]
+disabled = false
+format = "[ $duration ]($style)"
+style = "dim"
+min_time = 1000
