@@ -22,14 +22,25 @@ alias postgres-up "docker run -d --restart unless-stopped -p 127.0.0.1:5432:5432
 alias psql-local "psql -h localhost -U postgres"
 alias redis-up "docker run -d --restart unless-stopped -p 127.0.0.1:6379:6379 --name=redis8 redis:8"
 
-complete -c vw -w command
-function vw
-    set target (command -v $argv[1] ^/dev/null)
+function __edit_cmd
+    set cmd $argv[1]
+    set editor $argv[2]
+    set target (command -v $cmd ^/dev/null)
     or begin
-        echo "vw: command not found: $argv[1]" >&2
+        echo "$editor: command not found: $cmd" >&2
         return 1
     end
-    vim $target
+    $editor $target
+end
+
+complete -c vw -w command
+function vw
+    __edit_cmd $argv[1] vim
+end
+
+complete -c zw -w command
+function zw
+    __edit_cmd $argv[1] zed
 end
 
 alias ls "eza -lh --group-directories-first --icons=auto"
