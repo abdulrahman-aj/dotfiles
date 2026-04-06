@@ -45,7 +45,10 @@ end
 
 alias ls "eza -lh --group-directories-first --icons=auto"
 
-# Set editor
+function mcd
+    mkdir -p $argv[1]; and cd $argv[1]
+end
+
 set -gx EDITOR vim
 
 # Starship prompt
