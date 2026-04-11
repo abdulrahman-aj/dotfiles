@@ -1,4 +1,18 @@
 {
+  "agent": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
+      "enable_thinking": false,
+      "effort": "high",
+    },
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "completions": {
+    "words_min_length": 5,
+    "words": "enabled",
+  },
   "always_treat_brackets_as_autoclosed": true,
   "auto_signature_help": true,
   "show_signature_help_after_edits": true,
@@ -11,7 +25,7 @@
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "ui_font_family": "JetBrainsMono Nerd Font",
   "icon_theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Material Icon Theme",
     "dark": "Material Icon Theme",
   },
@@ -22,15 +36,15 @@
   "ui_font_size": 14,
   "buffer_font_size": 14.0,
   "theme": {
-    "mode": "system",
-    "light": "Nord Light",
-    "dark": "Nord Dark",
+    "mode": "dark",
+    "light": "VSCode Dark Modern",
+    "dark": "VSCode Dark Modern",
   },
   "auto_install_extensions": {
     "dockerfile": true,
     "nix": true,
     "make": true,
-    "nord": true,
+    "vscode-dark-modern": true,
     "material-icon-theme": true,
     "hyprlang": true,
     "toml": true,
