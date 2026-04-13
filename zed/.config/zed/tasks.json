@@ -1,0 +1,21 @@
+[
+  {
+    "label": "opencode",
+    "command": "EDITOR=zed opencode",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "hide": "always",
+  },
+  {
+    "label": "lazygit",
+    "command": "EDITOR=zed lazygit",
+    "allow_concurrent_runs": false,
+    "hide": "always",
+  },
+  {
+    "label": "lazydocker",
+    "command": "EDITOR=zed lazydocker",
+    "allow_concurrent_runs": false,
+    "hide": "always",
+  },
+]

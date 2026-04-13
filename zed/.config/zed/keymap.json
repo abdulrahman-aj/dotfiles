@@ -13,4 +13,16 @@
       "ctrl-tab": "pane::ActivateNextItem",
     },
   },
+  {
+    "context": "EmptyPane || (ProjectPanel || AgentPanel) && not_editing || (Editor && vim_mode == normal)",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+      "space b o": ["pane::CloseOtherItems", { "close_pinned": false }],
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space d": ["task::Spawn", { "task_name": "lazydocker" }],
+      "space o c": ["task::Spawn", { "task_name": "opencode" }],
+      "space e": "project_panel::Toggle",
+      "space a": "agent::Toggle",
+    },
+  },
 ]
