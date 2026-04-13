@@ -14,7 +14,7 @@
     },
   },
   {
-    "context": "EmptyPane || (ProjectPanel || AgentPanel) && not_editing || (Editor && vim_mode == normal)",
+    "context": "EmptyPane || MarkdownPreview || (ProjectPanel || AgentPanel) && not_editing || (Editor && vim_mode == normal)",
     "bindings": {
       "space space": "file_finder::Toggle",
       "space b o": ["pane::CloseOtherItems", { "close_pinned": false }],
@@ -29,6 +29,13 @@
     "context": "vim_mode == visual",
     "bindings": {
       "p": ["vim::Paste", { "preserve_clipboard": true }],
+    },
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "j": "markdown::ScrollDown",
+      "k": "markdown::ScrollUp",
     },
   },
 ]
