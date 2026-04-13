@@ -1,6 +1,8 @@
 # Disable welcome message
 function fish_greeting; end
 
+fish_add_path $HOME/.local/bin
+
 zoxide init fish --cmd cd | source
 
 # Set personal aliases
