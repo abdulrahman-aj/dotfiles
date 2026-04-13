@@ -25,4 +25,10 @@
       "space a": "agent::Toggle",
     },
   },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "p": ["vim::Paste", { "preserve_clipboard": true }],
+    },
+  },
 ]
