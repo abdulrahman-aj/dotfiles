@@ -44,7 +44,7 @@ function mcd
     mkdir -p $argv[1]; and cd $argv[1]
 end
 
-set -gx EDITOR vim
+set -gx EDITOR nvim
 
 # Starship prompt
 starship init fish | source
