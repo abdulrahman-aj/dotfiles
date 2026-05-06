@@ -1,21 +1,27 @@
 [
   {
     "label": "opencode",
-    "command": "EDITOR=zed opencode",
+    "env": { "EDITOR": "zed" },
+    "command": "setsid xdg-terminal-exec opencode > /dev/null 2>&1 &",
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
     "hide": "always",
+    "reveal": "never",
   },
   {
     "label": "lazygit",
-    "command": "EDITOR=zed lazygit",
+    "env": { "EDITOR": "zed" },
+    "command": "setsid xdg-terminal-exec lazygit > /dev/null 2>&1 &",
     "allow_concurrent_runs": false,
     "hide": "always",
+    "reveal": "never",
   },
   {
     "label": "lazydocker",
-    "command": "EDITOR=zed lazydocker",
+    "env": { "EDITOR": "zed" },
+    "command": "setsid xdg-terminal-exec lazydocker > /dev/nill 2>&1 &",
     "allow_concurrent_runs": false,
     "hide": "always",
+    "reveal": "never",
   },
 ]
