@@ -19,7 +19,7 @@
   {
     "label": "lazydocker",
     "env": { "EDITOR": "zed" },
-    "command": "setsid xdg-terminal-exec lazydocker > /dev/nill 2>&1 &",
+    "command": "setsid xdg-terminal-exec lazydocker > /dev/null 2>&1 &",
     "allow_concurrent_runs": false,
     "hide": "always",
     "reveal": "never",

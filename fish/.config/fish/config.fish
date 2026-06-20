@@ -1,10 +1,40 @@
-# Set personal aliases
+if status is-interactive
+    fish_vi_key_bindings
+
+    if command -v mise &>/dev/null
+        mise activate fish | source
+    end
+
+    if command -v zoxide &>/dev/null
+        zoxide init fish | source
+    end
+
+    if command -v starship &>/dev/null
+        starship init fish | source
+    end
+
+    # Configure fzf.fish keybindings - disable process search
+    if command -v fzf &>/dev/null
+        fzf_configure_bindings --processes=
+    end
+
+
+    if test -d (brew --prefix)"/share/fish/completions"
+        set -p fish_complete_path (brew --prefix)/share/fish/completions
+    end
+
+    if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+        set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+    end
+end
+
+set -g fish_greeting
+
 alias lzd lazydocker
 alias lzg lazygit
 alias oc opencode
 alias open xdg-open
 alias vim nvim
-alias zed zeditor
 alias postgres-up "docker run -d --restart unless-stopped -p 127.0.0.1:5432:5432 --name=postgres18 -e POSTGRES_HOST_AUTH_METHOD=trust -v postgres18-data:/var/lib/postgresql postgres:18"
 alias psql-local "psql -h localhost -U postgres"
 alias redis-up "docker run -d --restart unless-stopped -p 127.0.0.1:6379:6379 --name=redis8 redis:8"
