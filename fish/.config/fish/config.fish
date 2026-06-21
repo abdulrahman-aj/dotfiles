@@ -1,3 +1,7 @@
+if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
 if status is-interactive
     fish_vi_key_bindings
 
