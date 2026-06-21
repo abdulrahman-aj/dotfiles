@@ -11,6 +11,20 @@ if status is-interactive
 
     if command -v zoxide &>/dev/null
         zoxide init fish | source
+
+        if not functions -q __original_cd
+            functions -c cd __original_cd
+        end
+
+        function cd --description 'zoxide-backed cd'
+            if test (count $argv) -eq 0
+                __original_cd ~; and return
+            else if test -d $argv[1]
+                __original_cd -- $argv[1]
+            else
+                z $argv; and printf "\U000F17A9 "; and pwd || echo "Error: Directory not found"
+            end
+        end
     end
 
     if command -v starship &>/dev/null
