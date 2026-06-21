@@ -21,6 +21,7 @@
       "space l g": ["task::Spawn", { "task_name": "lazygit" }],
       "space l d": ["task::Spawn", { "task_name": "lazydocker" }],
       "space o c": ["task::Spawn", { "task_name": "opencode" }],
+      "space c x": ["task::Spawn", { "task_name": "codex" }],
       "space e": "project_panel::Toggle",
       "space a": "agent::Toggle",
       "space b d": "pane::CloseActiveItem",
