@@ -36,6 +36,24 @@ if status is-interactive
         fzf_configure_bindings --processes=
     end
 
+    function ... --description 'cd up 2 directories'
+        cd ../..
+    end
+
+    function .... --description 'cd up 3 directories'
+        cd ../../..
+    end
+
+    if command -v eza &>/dev/null
+        function ls --wraps=eza --description 'List contents with eza'
+            eza -lh --group-directories-first --icons=auto $argv
+        end
+
+        function lt --wraps=eza --description 'Display directory tree'
+            eza --tree --level=2 --long --icons --git $argv
+        end
+
+    end
 
     if test -d (brew --prefix)"/share/fish/completions"
         set -p fish_complete_path (brew --prefix)/share/fish/completions
@@ -47,6 +65,8 @@ if status is-interactive
 end
 
 set -g fish_greeting
+set -gx SUDO_EDITOR "$EDITOR"
+set -g fish_history_max_size 32768
 
 alias lzd lazydocker
 alias lzg lazygit
