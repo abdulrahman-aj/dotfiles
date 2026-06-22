@@ -1,12 +1,17 @@
-.PHONY: stow unstow restow
+.PHONY: check stow unstow restow
 
-PKGS := fish zed
+PKGS := fish ghostty zed
+TARGET ?= $(HOME)
+STOW ?= stow
+
+check:
+	$(STOW) --simulate -t "$(TARGET)" $(PKGS)
 
 stow:
-	stow -t ~ $(PKGS)
+	$(STOW) -t "$(TARGET)" $(PKGS)
 
 unstow:
-	stow -t ~ -D $(PKGS)
+	$(STOW) -t "$(TARGET)" -D $(PKGS)
 
 restow:
-	stow -t ~ -R $(PKGS)
+	$(STOW) -t "$(TARGET)" -R $(PKGS)
