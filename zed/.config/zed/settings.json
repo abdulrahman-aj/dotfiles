@@ -1,6 +1,6 @@
 {
   "colorize_brackets": true,
-  // "code_lens": "on",
+  "code_lens": "on",
   "toolbar": {
     "code_actions": true,
   },
@@ -12,7 +12,7 @@
     "enabled": true,
   },
   "scrollbar": {
-    "show": "never",
+    "show": "auto",
   },
   "project_panel": {
     "dock": "left",
