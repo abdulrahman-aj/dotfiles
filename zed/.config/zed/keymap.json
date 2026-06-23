@@ -18,8 +18,10 @@
     "bindings": {
       "space space": "file_finder::Toggle",
       "space b o": ["pane::CloseOtherItems", { "close_pinned": false }],
-      "space l g": ["task::Spawn", { "task_name": "lazygit" }],
-      "space l d": ["task::Spawn", { "task_name": "lazydocker" }],
+      "space t": ["task::Spawn", { "task_name": "terminal" }],
+      "space g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space d": ["task::Spawn", { "task_name": "lazydocker" }],
+      "space c c": ["task::Spawn", { "task_name": "claude" }],
       "space o c": ["task::Spawn", { "task_name": "opencode" }],
       "space c x": ["task::Spawn", { "task_name": "codex" }],
       "space e": "project_panel::Toggle",
