@@ -51,7 +51,7 @@
   },
   {
     "label": "terminal",
-    "command": "setsid xdg-terminal-exec > /dev/null 2>&1 &",
+    "command": "setsid xdg-terminal-exec > /dev/null 2>&1",
     "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
