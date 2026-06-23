@@ -65,6 +65,7 @@ if status is-interactive
 end
 
 set -g fish_greeting
+set -gx EDITOR nvim
 set -gx SUDO_EDITOR "$EDITOR"
 set -g fish_history_max_size 32768
 
