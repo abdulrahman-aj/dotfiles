@@ -1,6 +1,6 @@
 .PHONY: check stow unstow restow
 
-PKGS := fish ghostty zed
+PKGS := fish alacritty zed
 TARGET ?= $(HOME)
 STOW ?= stow
 
