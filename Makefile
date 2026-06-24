@@ -1,4 +1,4 @@
-.PHONY: check stow unstow restow ai ai-check ai-unstow ai-prereqs build-codex
+.PHONY: check stow unstow restow ai ai-check ai-unstow ai-prereqs build-codex link-claude-skills
 
 PKGS := fish alacritty zed
 AI_PKGS := ai-shared claude codex opencode
@@ -22,6 +22,11 @@ restow:
 # opencode.jsonc is replaced by the dotfiles version.
 ai-prereqs:
 	@rm -f "$(TARGET)/.config/opencode/opencode.jsonc"
+	@rm -rf "$(TARGET)/.claude/skills"
+
+# Claude reads ~/.claude/skills; point it at ~/.agents/skills (already stowed from ai-shared).
+link-claude-skills:
+	@ln -sfn "$(TARGET)/.agents/skills" "$(TARGET)/.claude/skills"
 
 # Codex has no import mechanism, so its AGENTS.md must be a single file.
 # Generate it from the shared memories instead of hand-maintaining a copy.
@@ -39,6 +44,7 @@ build-codex:
 
 ai: ai-prereqs build-codex
 	$(STOW) -t "$(TARGET)" $(AI_PKGS)
+	$(MAKE) link-claude-skills
 
 ai-check:
 	$(STOW) --simulate -t "$(TARGET)" $(AI_PKGS)
