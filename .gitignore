@@ -1,1 +1,4 @@
 dank-zed-theme.json
+
+# Generated from ai-shared/.ai/memories/*.md by `make build-codex`
+codex/.codex/AGENTS.md
