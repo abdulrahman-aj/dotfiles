@@ -8,9 +8,8 @@
 
 ## Verification
 
-- Never mark a task complete without proving it works.
-- Run tests, check logs, demonstrate correctness.
-- Ask yourself: "Would a staff engineer approve this?"
+- Never mark complete without proof: tests, logs, or explicit user confirmation.
+- "No errors" and "service active" are not verification.
 
 ## Elegance
 
