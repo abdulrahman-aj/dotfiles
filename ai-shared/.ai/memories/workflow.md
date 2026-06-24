@@ -36,7 +36,3 @@ For new features, build a thin end-to-end skeleton first (input → output worki
 ## Reversibility
 
 When a decision is hard to undo — schema change, public API shape, external dependency lock-in — explicitly flag it to the user before proceeding.
-
-## YOLO
-
-When the user says "YOLO", read `.agent.md` from the current working directory and treat it as the next instructions in plan mode. If followed by a number (e.g. "YOLO 3"), only execute instruction 3 from that file.
