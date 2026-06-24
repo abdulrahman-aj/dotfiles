@@ -1,0 +1,16 @@
+{
+  "theme": "dark",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify-send -t 0 -u normal 'Claude Code' \"$(jq -r '.message // \"Needs attention\"')\""
+          }
+        ]
+      }
+    ]
+  }
+}

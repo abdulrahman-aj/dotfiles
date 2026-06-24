@@ -1,0 +1,11 @@
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+
+notify = ["sh", "-c", "notify-send -t 0 -u normal 'Codex' 'Turn complete'"]
+
+[[hooks.PermissionRequest]]
+matcher = ""
+
+[[hooks.PermissionRequest.hooks]]
+type = "command"
+command = "notify-send -t 0 -u normal 'Codex' 'Needs your approval'"

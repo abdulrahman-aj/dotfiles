@@ -19,6 +19,7 @@ unstow:
 # Remove files that conflict with stow before linking.
 _prereqs:
 	@rm -f "$(TARGET)/.config/opencode/opencode.jsonc"
+	@rm -f "$(TARGET)/.claude/settings.json"
 	@rm -rf "$(TARGET)/.claude/skills"
 
 # Claude reads ~/.claude/skills; point it at ~/.agents/skills (already stowed from ai-shared).
@@ -37,3 +38,5 @@ _build-codex:
 		printf '\n' >> codex/.codex/AGENTS.md; \
 	done
 	@echo "Generated codex/.codex/AGENTS.md from $$(ls $(MEMORIES)/*.md | wc -l) memory files"
+	@python3 scripts/merge-codex-config.py "$(TARGET)/.codex/config.toml"
+	@echo "Generated ~/.codex/config.toml from config.base.toml"
