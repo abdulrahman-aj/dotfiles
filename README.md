@@ -4,10 +4,8 @@ Managed with GNU Stow.
 
 ## Usage
 
-- `make check` - simulate stowing all packages and report conflicts
-- `make stow` - stow all packages
-- `make restow` - refresh symlinks
-- `make unstow` - remove symlinks
+- `make` - deploy everything (stow all packages + AI setup)
+- `make check` - dry-run and report conflicts
+- `make unstow` - remove all symlinks
 
-The targets default to `$HOME`; pass `TARGET=/path/to/home` when validating
-against another home directory.
+Pass `TARGET=/path/to/home` to deploy against a different home directory.
