@@ -14,9 +14,8 @@
 
 ## Elegance
 
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution."
-- Skip for simple, obvious fixes — do not over-engineer.
+- Prefer elegant solutions; if something feels hacky, step back before committing to it.
+- Do not over-engineer — elegance is not complexity.
 
 ## Root cause
 

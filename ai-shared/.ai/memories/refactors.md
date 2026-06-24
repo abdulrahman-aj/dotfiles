@@ -10,4 +10,4 @@ If touching code that has a poor name, rename it. Don't go out of scope to renam
 
 ## Refactor first
 
-Before adding a feature, refactor the surrounding code to make the change easy. Then make the easy change.
+Before adding a feature, refactor any surrounding code in the direct change path to make the change easy. Then make the easy change.

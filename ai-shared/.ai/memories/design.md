@@ -19,14 +19,6 @@ Only for non-trivial interface/API/data model decisions — not implementation d
 - Consistency: follow existing patterns and conventions.
 - Prefer 2–3 layers of abstraction.
 
-## Code review focus
-
-Interface design first: API shape, module boundaries, abstraction quality. Implementation details and style come second.
-
 ## DRY
 
 Apply to knowledge and decisions, not just structural similarity. If the same logic or business rule appears in two places, unify it. Structurally similar code is acceptable when the underlying concepts differ — wrong abstraction is worse than duplication.
-
-## Composition over inheritance
-
-Default to interfaces, delegation, and mixins. Use inheritance only for genuine is-a relationships.
