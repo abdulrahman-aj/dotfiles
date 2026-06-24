@@ -1,43 +1,29 @@
 #!/usr/bin/env python3
-"""Merge config.base.toml with Codex-managed personal sections from the live config."""
-
+"""Merge config.base.toml with the live config, preserving personal sections."""
 import pathlib
 import re
 import sys
 import tomllib
 
-PERSONAL_SECTIONS = ("projects", "tui", "notice")
+base_path = pathlib.Path("codex/.codex/config.base.toml")
+target = pathlib.Path(sys.argv[1])
 
-BASE = pathlib.Path("codex/.codex/config.base.toml")
-TARGET = pathlib.Path(sys.argv[1])
+base_text = base_path.read_text()
 
+if not target.exists():
+    target.write_text(base_text)
+    sys.exit()
 
-def toml_key(k: str) -> str:
-    return k if re.match(r"^[A-Za-z0-9_-]+$", k) else f'"{k}"'
+existing_text = target.read_text()
 
+base_keys = set(tomllib.loads(base_text).keys())
+personal_keys = set(tomllib.loads(existing_text).keys()) - base_keys
 
-def toml_value(v) -> str:
-    return f'"{v}"' if isinstance(v, str) else str(v)
+personal_text = ""
+if personal_keys:
+    pattern = r"^\[+(?:" + "|".join(re.escape(k) for k in personal_keys) + r")\."
+    match = re.search(pattern, existing_text, re.MULTILINE)
+    if match:
+        personal_text = existing_text[match.start():]
 
-
-def format_personal(data: dict) -> str:
-    parts = []
-    for section in PERSONAL_SECTIONS:
-        if section not in data:
-            continue
-        for subsection, values in data[section].items():
-            parts.append(f"\n[{section}.{toml_key(subsection)}]")
-            for k, v in values.items():
-                parts.append(f"{toml_key(k)} = {toml_value(v)}")
-    return "\n".join(parts)
-
-
-personal = ""
-if TARGET.exists():
-    existing = tomllib.loads(TARGET.read_text())
-    personal = format_personal(existing)
-
-content = BASE.read_text().rstrip() + "\n"
-if personal:
-    content += personal + "\n"
-TARGET.write_text(content)
+target.write_text(base_text.rstrip() + "\n" + ("\n" + personal_text if personal_text else ""))
