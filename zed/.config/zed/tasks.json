@@ -1,7 +1,6 @@
 [
   {
     "label": "opencode",
-    "env": { "EDITOR": "zed" },
     "command": "opencode",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
@@ -11,7 +10,6 @@
   },
   {
     "label": "codex",
-    "env": { "EDITOR": "zed" },
     "command": "codex",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
@@ -21,7 +19,6 @@
   },
   {
     "label": "claude",
-    "env": { "EDITOR": "zed" },
     "command": "claude",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
@@ -31,8 +28,7 @@
   },
   {
     "label": "lazygit",
-    "env": { "EDITOR": "zed" },
-    "command": "lazygit",
+    "command": "EDITOR=zed lazygit",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
     "reveal": "always",
@@ -41,8 +37,7 @@
   },
   {
     "label": "lazydocker",
-    "env": { "EDITOR": "zed" },
-    "command": "lazydocker",
+    "command": "EDITOR=zed lazydocker",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
     "reveal": "always",
