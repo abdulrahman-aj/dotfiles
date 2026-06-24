@@ -1,23 +1,43 @@
 #!/usr/bin/env python3
-"""Merge codex/config.base.toml with locally-accumulated personal sections.
+"""Merge config.base.toml with Codex-managed personal sections from the live config."""
 
-Codex appends [projects.*], [tui.*], and [notice.*] sections to config.toml
-at runtime. This script preserves those sections when regenerating the file
-from the tracked base config, so personal paths never enter the dotfiles repo.
-"""
 import pathlib
 import re
 import sys
+import tomllib
 
-base = pathlib.Path("codex/.codex/config.base.toml").read_text()
-target = pathlib.Path(sys.argv[1])
+PERSONAL_SECTIONS = ("projects", "tui", "notice")
+
+BASE = pathlib.Path("codex/.codex/config.base.toml")
+TARGET = pathlib.Path(sys.argv[1])
+
+
+def toml_key(k: str) -> str:
+    return k if re.match(r"^[A-Za-z0-9_-]+$", k) else f'"{k}"'
+
+
+def toml_value(v) -> str:
+    return f'"{v}"' if isinstance(v, str) else str(v)
+
+
+def format_personal(data: dict) -> str:
+    parts = []
+    for section in PERSONAL_SECTIONS:
+        if section not in data:
+            continue
+        for subsection, values in data[section].items():
+            parts.append(f"\n[{section}.{toml_key(subsection)}]")
+            for k, v in values.items():
+                parts.append(f"{toml_key(k)} = {toml_value(v)}")
+    return "\n".join(parts)
+
 
 personal = ""
-if target.exists():
-    lines = target.read_text().splitlines(keepends=True)
-    for i, line in enumerate(lines):
-        if re.match(r"^\[(projects|tui|notice)\.", line):
-            personal = "".join(lines[i:])
-            break
+if TARGET.exists():
+    existing = tomllib.loads(TARGET.read_text())
+    personal = format_personal(existing)
 
-target.write_text(base.rstrip() + "\n" + personal)
+content = BASE.read_text().rstrip() + "\n"
+if personal:
+    content += personal + "\n"
+TARGET.write_text(content)
