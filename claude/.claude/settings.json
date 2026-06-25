@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify-send -t 0 -u normal 'Claude Code' \"$(jq -r '.message // \"Needs attention\"')\""
+            "command": "notify-send --app-name 'Claude Code' -t 0 -u normal 'Claude Code' \"$(jq -r '.message // \"Needs attention\"')\""
           }
         ]
       }
