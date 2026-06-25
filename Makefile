@@ -19,6 +19,7 @@ unstow:
 # Remove files that conflict with stow before linking.
 _prereqs:
 	@rm -f "$(TARGET)/.gitconfig"
+	@rm -f "$(TARGET)/.config/git/ignore"
 	@rm -f "$(TARGET)/.config/opencode/opencode.jsonc"
 	@rm -f "$(TARGET)/.claude/settings.json"
 	@rm -rf "$(TARGET)/.claude/skills"
