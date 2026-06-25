@@ -1,0 +1,33 @@
+[user]
+	name = Abdulrahman Ajlouni
+	email = ajlouni2000@gmail.com
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[core]
+	editor = nvim
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	dark = true
+	line-numbers = true
+	side-by-side = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default
+
+[alias]
+	lg = log --oneline --graph --decorate --all
+	st = status -sb
+	undo = reset --soft HEAD~1

@@ -1,6 +1,6 @@
 .PHONY: all check unstow
 
-PKGS     := fish alacritty zed
+PKGS     := fish alacritty zed git
 AI_PKGS  := ai-shared claude codex opencode
 TARGET   ?= $(HOME)
 STOW     ?= stow
@@ -18,6 +18,7 @@ unstow:
 
 # Remove files that conflict with stow before linking.
 _prereqs:
+	@rm -f "$(TARGET)/.gitconfig"
 	@rm -f "$(TARGET)/.config/opencode/opencode.jsonc"
 	@rm -f "$(TARGET)/.claude/settings.json"
 	@rm -rf "$(TARGET)/.claude/skills"
