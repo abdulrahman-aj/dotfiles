@@ -11,6 +11,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `fish/` | `~/.config/fish/`, `~/.config/starship.toml` | Fish shell config, Starship prompt |
 | `alacritty/` | `~/.config/alacritty/` | Terminal config |
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
+| `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills (all tools) |
 | `claude/` | `~/.claude/` | Claude Code CLAUDE.md (@-imports memories) |
 | `codex/` | `~/.codex/` | Codex AGENTS.md (generated — do not edit) |
@@ -26,7 +27,7 @@ make unstow   # remove all symlinks
 
 ## AI Preferences Architecture
 
-Single source of truth: `ai-shared/.ai/memories/*.md` (6 files: personal, design, workflow, testing, task-execution, refactors).
+Single source of truth: `ai-shared/.ai/memories/*.md` (8 files: personal, design, workflow, testing, task-execution, refactors, readability, python-linter).
 
 - **Claude**: `~/.claude/CLAUDE.md` @-imports each memory file.
 - **OpenCode**: `opencode.jsonc` `instructions` array lists each memory path.
@@ -47,3 +48,4 @@ Or use the `/remember` skill — it handles all of the above.
 
 - `codex/.codex/AGENTS.md` is gitignored and must never be hand-edited.
 - Never commit without explicit user authorization.
+- When adding a new stow package, update the package table in this file and in `CLAUDE.md` if it has one.
