@@ -27,6 +27,15 @@
     "hide": "on_success",
   },
   {
+    "label": "git diff",
+    "command": "git diff | delta --width=$(tput cols) | less -R",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "on_success",
+  },
+  {
     "label": "lazygit",
     "command": "EDITOR=zed lazygit",
     "allow_concurrent_runs": false,
