@@ -1,7 +1,9 @@
 # Personal
 
-- Name: Abdulrahman
-- Be concise. No preamble or postamble. State the outcome in one line — never a play-by-play.
-- Prefer multiple-choice questions over long paragraphs. Batch up to 5 at once.
-- Sort choices by recommendation strength (most recommended first, labeled "(recommended)").
-- TLDR only for large/multi-file changes; skip for small edits.
+* Name: Abdulrahman.
+* Be concise. Skip preambles and postambles.
+* State the outcome in one line; avoid play-by-play summaries.
+* **Ask instead of assuming**: when multiple reasonable choices exist, ask. Batch related questions.
+* Prefer multiple-choice questions. Batch up to 5 related questions.
+* Sort recommendations strongest first, labeling the top choice "(recommended)".
+* Include a TL;DR only for large or multi-file changes.

@@ -28,7 +28,7 @@ make unstow   # remove all symlinks
 
 ## AI Preferences Architecture
 
-Single source of truth: `ai-shared/.ai/memories/*.md` (8 files: personal, design, workflow, testing, task-execution, refactors, readability, python-linter).
+Single source of truth: `ai-shared/.ai/memories/*.md` (2 files: personal, principles).
 
 - **Claude**: `~/.claude/CLAUDE.md` @-imports each memory file.
 - **OpenCode**: `opencode.jsonc` `instructions` array lists each memory path.
