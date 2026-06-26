@@ -9,7 +9,6 @@
 	rebase = true
 
 [core]
-	editor = nvim
 	pager = delta
 
 [interactive]
