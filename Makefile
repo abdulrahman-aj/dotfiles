@@ -1,6 +1,6 @@
 .PHONY: all check unstow
 
-PKGS     := fish alacritty zed git
+PKGS     := fish alacritty zed git cloc
 AI_PKGS  := ai-shared claude codex opencode
 TARGET   ?= $(HOME)
 STOW     ?= stow

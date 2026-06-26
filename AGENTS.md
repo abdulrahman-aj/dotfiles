@@ -12,6 +12,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `alacritty/` | `~/.config/alacritty/` | Terminal config |
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
 | `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
+| `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills (all tools) |
 | `claude/` | `~/.claude/` | Claude Code CLAUDE.md (@-imports memories) |
 | `codex/` | `~/.codex/` | Codex AGENTS.md (generated — do not edit) |
