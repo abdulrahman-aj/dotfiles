@@ -9,6 +9,10 @@ MEMORIES := ai-shared/.ai/memories
 all: _prereqs _build-codex
 	$(STOW) -R -t "$(TARGET)" $(PKGS) $(AI_PKGS)
 	@$(MAKE) -s _link-claude-skills
+	@$(MAKE) -s _fisher
+
+_fisher:
+	@fish -c 'type -q fisher; or curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | fish; fisher update'
 
 check:
 	$(STOW) --simulate -t "$(TARGET)" $(PKGS) $(AI_PKGS)

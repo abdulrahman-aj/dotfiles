@@ -2,6 +2,14 @@
 
 Managed with GNU Stow.
 
+## Install
+
+**Requirements:** Fish · GNU Stow · Python 3 · curl
+
+```bash
+git clone git@github.com:abdulrahman-aj/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && make
+```
+
 ## Usage
 
 - `make` - deploy everything (stow all packages + AI setup)
