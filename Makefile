@@ -6,10 +6,13 @@ TARGET   ?= $(HOME)
 STOW     ?= stow
 MEMORIES := ai-shared/.ai/memories
 
-all: _prereqs _build-codex
+all: _prereqs _build-codex _nvim
 	$(STOW) -R -t "$(TARGET)" $(PKGS) $(AI_PKGS)
 	@$(MAKE) -s _link-claude-skills
 	@$(MAKE) -s _fisher
+
+_nvim:
+	@bash scripts/install-kickstart.sh
 
 _fisher:
 	@fish -c 'type -q fisher; or curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | fish; fisher update'
