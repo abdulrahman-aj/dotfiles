@@ -5,6 +5,7 @@
 * **Simplicity wins**: complexity compounds. Every abstraction must earn its existence.
 * **Abstractions**: don't introduce one until it clearly reduces complexity.
 * **Readability**: prefer readable code over compactness. Extract non-trivial logic instead of embedding it inline.
+* **Flat indentation**: keep nesting ≤3 levels. Extract helpers, early-return, or guard-clause before going deeper.
 * **Avoid cleverness**: if the solution requires intricate reasoning, it's probably wrong.
 * **Naming**: unclear names signal unclear abstractions. Rethink the design.
 * **Locality**: behavior should be understandable from nearby code. Avoid hidden side effects and distant dependencies.
