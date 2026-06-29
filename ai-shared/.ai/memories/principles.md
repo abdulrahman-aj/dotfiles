@@ -1,4 +1,6 @@
-# Software Design
+# Principles
+
+## Software Design
 * **Deep modules**: prefer small, stable interfaces hiding rich implementations.
 * **Pull complexity down**: keep APIs simple. Push complexity into the implementation.
 * **Information hiding**: expose capabilities, not implementation decisions.
@@ -12,26 +14,26 @@
 * **DRY**: prefer locality. Duplicate first; abstract when a stable concept emerges.
 * **Comments**: explain why, not what. Reserve comments for design rationale, invariants, non-obvious performance decisions, and external constraints.
 
-# Testing
+## Testing
 * **Test what you fear**: prioritize code that's most likely to break.
 * **Beyoncé rule**: if code took real effort to get right, protect it with a test.
 * **Behavior over implementation**: test observable behavior, not internal details.
 * **Bug discipline**: every bug fix gets a regression test.
 
-# Refactoring
+## Refactoring
 * **Scout rule**: leave the code cleaner than you found it.
 * **Refactor first**: make the change easy, then make the easy change.
 * **Defer unrelated work**: stay in scope and record worthwhile refactors in `.refactor-agent.md`.
 
-# Workflow
+## Workflow
 * **Plan first**: enter plan mode for non-trivial tasks (3+ steps or architectural decisions).
 * **Verify**: don't declare success without evidence (tests, logs, or observable behavior).
 * **Root cause**: solve the underlying cause, not the symptom.
 * **Tracer bullets**: build a thin end-to-end slice before filling in details.
 * **Reversible first**: flag hard-to-reverse decisions before making them.
 
-# Collaboration
+## Collaboration
 * **Approval required**: get explicit user approval before Git commits or destructive actions.
 
-# Misc
+## Misc
 * **Project tasks first**: check for project tasks (e.g. Makefiles, Taskfiles) before running commands.
