@@ -18,6 +18,7 @@
 * **Test what you fear**: prioritize code that's most likely to break.
 * **Beyoncé rule**: if code took real effort to get right, protect it with a test.
 * **Behavior over implementation**: test observable behavior, not internal details.
+* **Avoid brittle tests**: prefer assertions that survive refactoring.
 * **Bug discipline**: every bug fix gets a regression test.
 
 ## Refactoring
