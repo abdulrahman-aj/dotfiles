@@ -77,6 +77,11 @@ alias lzd lazydocker
 alias lzg lazygit
 alias oc opencode
 alias open xdg-open
+
+if not command -q zed; and command -q zeditor
+    alias zed zeditor
+end
+
 alias vim nvim
 alias postgres-up "docker run -d --restart unless-stopped -p 127.0.0.1:5432:5432 --name=postgres18 -e POSTGRES_HOST_AUTH_METHOD=trust -v postgres18-data:/var/lib/postgresql postgres:18"
 alias psql-local "psql -h localhost -U postgres"

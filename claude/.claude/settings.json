@@ -1,4 +1,5 @@
 {
+  "model": "haiku",
   "hooks": {
     "Notification": [
       {
@@ -12,5 +13,6 @@
       }
     ]
   },
+  "effortLevel": "high",
   "theme": "dark"
 }

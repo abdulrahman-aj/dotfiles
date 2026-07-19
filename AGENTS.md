@@ -18,7 +18,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills (all tools) |
 | `claude/` | `~/.claude/` | Claude Code CLAUDE.md (@-imports memories) |
 | `codex/` | `~/.codex/` | Codex AGENTS.md (generated — do not edit) |
-| `opencode/` | `~/.config/opencode/` | OpenCode config with instructions array |
+| `opencode/` | `~/.config/opencode/` | OpenCode config, agents, skills, tool-scoped memories |
 
 ## Key Commands
 
@@ -46,7 +46,7 @@ directory.
 
 ## AI Preferences Architecture
 
-Single source of truth: `ai-shared/.ai/memories/*.md` (2 files: personal, principles).
+Single source of truth for shared rules: `ai-shared/.ai/memories/*.md` (2 files: personal, principles). OpenCode-only rules live in `opencode/.config/opencode/memories/` and are added only to OpenCode's `instructions` array (never to Codex's generated `AGENTS.md` or Claude's imports).
 
 - **Claude**: `~/.claude/CLAUDE.md` @-imports each memory file.
 - **OpenCode**: `opencode.jsonc` `instructions` array lists each memory path.
@@ -62,6 +62,8 @@ Skills (`remember`, `get-context`, `update-context`) live in `ai-shared/.agents/
 4. Run `make` (re-stows so the new file symlinks into `~/.ai/`, regenerates Codex)
 
 Or use the `/remember` skill — it handles all of the above.
+
+Tool-scoped (OpenCode-only) memories skip steps 1–2 and Claude; instead create `opencode/.config/opencode/memories/{slug}.md` and add only to OpenCode's `instructions` array. The `/remember` skill picks this path when the rule references OpenCode-specific entities.
 
 ## Constraints
 

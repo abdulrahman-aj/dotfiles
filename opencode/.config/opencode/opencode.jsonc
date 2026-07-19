@@ -4,6 +4,7 @@
   "plugin": ["@mohak34/opencode-notifier@latest"],
   "instructions": [
     "~/.ai/memories/personal.md",
-    "~/.ai/memories/principles.md"
+    "~/.ai/memories/principles.md",
+    "~/.config/opencode/memories/agent-delegation.md"
   ]
 }
