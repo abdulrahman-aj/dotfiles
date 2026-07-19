@@ -1,5 +1,5 @@
 # BEGIN dotfiles-managed Codex settings
-model = "gpt-5.6-sol"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "medium"
 
 notify = ["sh", "-c", "notify-send --app-name 'Codex' -t 0 -u normal 'Codex' 'Turn complete'"]
