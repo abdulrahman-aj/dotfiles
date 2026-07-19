@@ -13,6 +13,8 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
 | `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
 | `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
+| `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
+| `mise/` | `~/.config/mise/` | Mise tools and settings |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills (all tools) |
 | `claude/` | `~/.claude/` | Claude Code CLAUDE.md (@-imports memories) |
 | `codex/` | `~/.codex/` | Codex AGENTS.md (generated — do not edit) |
@@ -23,8 +25,24 @@ Each top-level directory is a stow package that mirrors `~/`:
 ```bash
 make          # deploy everything (stow all packages + AI setup)
 make check    # dry-run and report conflicts
+make test     # run deployment tests in isolated temporary homes
 make unstow   # remove all symlinks
 ```
+
+Pass `TARGET=/path/to/home` to run the complete workflow against another home
+directory.
+
+## Deployment Architecture
+
+- Before Stow runs, unmanaged paths that conflict with repo-managed files are moved
+  to a timestamped `.dotfiles-backups/` directory under the target home.
+- Stow uses `--no-folding`, keeping managed directories writable and linking their
+  individual files instead of linking whole directory trees into the repo.
+- Shared Codex settings live in `codex-managed.toml` and are merged into a
+  marked block in the live config. Settings outside the block remain machine-local,
+  including private project paths.
+- Fisher and Kickstart.nvim are external bootstrap steps run after Stow. They honor
+  `TARGET`, preserve unrelated existing configurations, and are safe to retry.
 
 ## AI Preferences Architecture
 
