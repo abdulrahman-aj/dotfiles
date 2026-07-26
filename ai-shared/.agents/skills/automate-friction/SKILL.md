@@ -13,7 +13,7 @@ description: Reduce recurring workflow or environment friction and context pollu
   - Prefer the existing script directory; otherwise use `scripts/`.
 - Reduce context pollution:
   - Keep successful output concise and failure diagnostics complete.
-  - Add `VERBOSE=1` when full output is useful.
+  - For noisy commands, start from this skill's `Makefile` and `scripts/quiet`, or use an equivalent; support `V=1` / `VERBOSE=1` for live output.
   - Consider Make targets for smaller test scopes.
 - Consider `make help`.
 - Put recurring conventions and constraints in `AGENTS.md`.
