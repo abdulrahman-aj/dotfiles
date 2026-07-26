@@ -1,5 +1,5 @@
 ---
-description: Handles the hardest delegated tasks where a Moonshot-family perspective is wanted — long context (1M) or deep reasoning. Strongest Moonshot model.
+description: Premium Moonshot specialist for long-context analysis, architecture, ambiguity, synthesis, and visual or frontend judgment.
 mode: subagent
 model: opencode-go/kimi-k3
 reasoningEffort: medium

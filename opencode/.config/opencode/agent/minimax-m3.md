@@ -1,5 +1,5 @@
 ---
-description: Default low-cost implementer — cheap MiniMax-family coder with 512k context for clear, scoped delegated tasks.
+description: Default low-cost implementer for clear, scoped coding tasks within 512k context.
 mode: subagent
 model: opencode-go/minimax-m3
 reasoningEffort: medium

@@ -4,22 +4,20 @@ Minimize expected total cost, including retries and supervision. Delegate isolat
 
 ## Models
 
-| Agent            | Cost      | Use                                                                                      |
-| ---------------- | --------- | ---------------------------------------------------------------------------------------- |
-| `minimax-m3`     | Low       | Default for clear, scoped coding within 512k.                                            |
-| `deepseek-v4-pro`| Low       | Scoped tasks needing more reasoning or debugging than M3.                                |
-| `luna`           | Low       | Fast scanning, extraction, and straightforward large-context work.                       |
-| `terra`          | Medium    | Everyday coding, debugging, integration, and repeated tool use.                          |
-| `kimi-k3`        | High      | Premium specialist for architecture, ambiguity, synthesis, and visual/frontend judgment. |
-| `sol`            | Very high | Hardest or highest-risk reasoning and engineering tasks.                                 |
+| Agent             | Cost      |
+| ----------------- | --------- |
+| `minimax-m3`      | Low       |
+| `deepseek-v4-pro` | Low       |
+| `luna`            | Low       |
+| `terra`           | Medium    |
+| `kimi-k3`         | High      |
+| `sol`             | Very high |
 
 Cheapest capable model wins.
 
-After one materially improved retry, escalate capability failures:
+## Escalation
 
-`minimax-m3` → `terra` → `sol`
-
-Use `kimi-k3` instead when the difficulty is primarily long-context analysis, research, architecture, or synthesis.
+Escalate only when necessary, to the cheapest suitable stronger agent.
 
 ## Review
 
@@ -27,9 +25,9 @@ Delegate reviews only when explicitly requested; otherwise review directly.
 
 Choose a cross-family reviewer:
 
-* OpenAI-authored: `deepseek-v4-pro`, or `kimi-k3` when escalated.
-* Other: `terra`, or `sol` when escalated.
+* OpenAI-authored: `deepseek-v4-pro`; stronger: `kimi-k3`.
+* Other: `terra`; stronger: `sol`.
 
-Reserve escalation for architectural, exceptionally difficult, security/privacy-sensitive, irreversible, or hard-to-verify work.
+Use stronger reviewers only for hard or high-risk work: architectural, security/privacy-sensitive, irreversible, or hard-to-verify changes.
 
 Keep reviews read-only. Pass requirements, scope, motivation, and verification results—not the implementer's reasoning.

@@ -1,5 +1,5 @@
 ---
-description: Low-cost peer to M3 for scoped tasks needing more reasoning or debugging. Also a cross-family reviewer.
+description: Low-cost alternative to M3 for scoped tasks requiring more reasoning or debugging.
 mode: subagent
 model: opencode-go/deepseek-v4-pro
 reasoningEffort: medium

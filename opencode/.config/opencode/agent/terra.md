@@ -1,5 +1,5 @@
 ---
-description: Handles delegated implementation and analysis tasks that need stronger reasoning than Luna.
+description: Everyday agent for coding, debugging, integration, and repeated tool use requiring stronger reasoning than low-cost agents.
 mode: subagent
 model: openai/gpt-5.6-terra
 reasoningEffort: medium

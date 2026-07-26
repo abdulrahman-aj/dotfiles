@@ -1,5 +1,5 @@
 ---
-description: Handles inexpensive, well-scoped implementation, research, and verification tasks.
+description: Fast, low-cost agent for scanning, extraction, research, verification, and straightforward large-context work.
 mode: subagent
 model: openai/gpt-5.6-luna
 reasoningEffort: medium
