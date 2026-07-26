@@ -24,6 +24,7 @@
 
 ## Refactoring
 * **Scout rule**: leave the code cleaner than you found it.
+* **Chesterton's fence**: before removing an existing constraint, understand why it exists.
 * **Refactor first**: make the change easy, then make the easy change.
 * **Defer unrelated work**: stay in scope and record worthwhile refactors in `.refactor-agent.md`.
 
