@@ -25,12 +25,11 @@ Use `kimi-k3` instead when the difficulty is primarily long-context analysis, re
 
 Delegate reviews only when explicitly requested; otherwise review directly.
 
-When needed, use a read-only reviewer from another family:
+Choose a cross-family reviewer:
 
-* OpenAI → `deepseek-v4-pro`
-* Moonshot → `deepseek-v4-pro`
-* Zhipu → `terra`
-* MiniMax → `deepseek-v4-pro`
-* DeepSeek → `terra`
+* OpenAI-authored: `deepseek-v4-pro`, or `kimi-k3` when escalated.
+* Other: `terra`, or `sol` when escalated.
 
-Pass the requirements, scope, motivation, and verification results when available—not the implementer’s reasoning. Use a stronger reviewer for high-risk changes or behavior that is hard to verify automatically.
+Reserve escalation for architectural, exceptionally difficult, security/privacy-sensitive, irreversible, or hard-to-verify work.
+
+Keep reviews read-only. Pass requirements, scope, motivation, and verification results—not the implementer's reasoning.
