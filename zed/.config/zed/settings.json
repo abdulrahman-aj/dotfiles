@@ -57,8 +57,8 @@
     "trust_all_worktrees": true,
   },
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 14.0,
+  "ui_font_size": 14,
+  "buffer_font_size": 13.0,
   "theme": {
     "mode": "dark",
     "light": "VSCode Dark Modern",
