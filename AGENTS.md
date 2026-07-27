@@ -10,6 +10,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 |---------|----------|----------|
 | `fish/` | `~/.config/fish/`, `~/.config/starship.toml` | Fish shell config, Starship prompt |
 | `alacritty/` | `~/.config/alacritty/` | Terminal config |
+| `hypr/` | `~/.config/hypr/` | Hyprland configuration |
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
 | `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
 | `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
