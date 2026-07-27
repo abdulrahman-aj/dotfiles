@@ -7,7 +7,7 @@ Managed with GNU Stow.
 **Requirements:** Bash · Fish · GNU Stow · curl · Git · Neovim · Python 3
 
 ```bash
-git clone git@github.com:abdulrahman-aj/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && make
+git clone git@github.com:abdulrahman-aj/dotfiles.git ~/dotfiles && cd ~/dotfiles && make
 ```
 
 `make` checks all requirements before changing the target. Existing unmanaged files at

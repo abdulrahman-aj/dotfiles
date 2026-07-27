@@ -26,7 +26,10 @@
 [diff]
 	colorMoved = default
 
+[status]
+	short = true
+	branch = true
+
 [alias]
 	lg = log --oneline --graph --decorate --all
-	st = status -sb
 	undo = reset --soft HEAD~1

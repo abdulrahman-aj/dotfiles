@@ -7,12 +7,16 @@
 * **Simplicity wins**: complexity compounds. Every abstraction must earn its existence.
 * **Abstractions**: don't introduce one until it clearly reduces complexity.
 * **Readability**: prefer readable code over compactness. Extract non-trivial logic instead of embedding it inline.
-* **Flat indentation**: keep nesting ≤3 levels. Extract helpers, early-return, or guard-clause before going deeper.
 * **Avoid cleverness**: prefer the simplest correct solution. Reconsider anything clever, brittle, or surprising.
 * **Naming**: unclear names signal unclear abstractions. Rethink the design.
 * **Locality**: behavior should be understandable from nearby code. Avoid hidden side effects and distant dependencies.
 * **DRY**: prefer locality. Duplicate first; abstract when a stable concept emerges.
 * **Comments**: explain why, not what. Reserve comments for design rationale, invariants, non-obvious performance decisions, and external constraints.
+
+## Code Style
+* **Nesting**: keep nesting to three levels or fewer; extract or return early.
+* **Line length**: prefer lines under 100 characters.
+* **Scripts**: prefer standalone files over long shell or Python strings.
 
 ## Testing
 * **Test what you fear**: prioritize code that's most likely to break.

@@ -30,6 +30,6 @@ Match `principles.md`'s voice. Re-read it first.
 1. Write the bullet(s) into the chosen file under the right heading, alongside siblings.
 2. **New shared file**: create `~/.ai/memories/{slug}.md`, append `@~/.ai/memories/{slug}.md` to `~/.claude/CLAUDE.md`, and append `"~/.ai/memories/{slug}.md"` to the `instructions` array in `~/.config/opencode/opencode.jsonc`. (`make` auto-pulls it into Codex's generated `AGENTS.md`.)
 3. **Tool-scoped (OpenCode)**: create `~/.config/opencode/memories/{slug}.md` (stowed from `opencode/.config/opencode/memories/`), and append `"~/.config/opencode/memories/{slug}.md"` to OpenCode's `instructions` array only. Do NOT add to `~/.claude/CLAUDE.md` or `~/.ai/memories/` — `make` would auto-pull the latter into Codex.
-4. Run `make` from `~/.dotfiles` — re-stows, regenerates Codex's `AGENTS.md`.
+4. Run `make` from `~/dotfiles` — re-stows, regenerates Codex's `AGENTS.md`.
 
 Confirm: "`{file}` updated." (or "`{slug}` saved." for new files).
