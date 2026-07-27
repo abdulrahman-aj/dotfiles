@@ -13,11 +13,7 @@ Minimize expected total cost, including retries and supervision. Delegate isolat
 | `kimi-k3`         | High      |
 | `sol`             | Very high |
 
-Cheapest capable model wins.
-
-## Escalation
-
-Escalate only when necessary, to the cheapest suitable stronger agent.
+Cheapest capable model wins. Escalate only when necessary, to the cheapest suitable stronger agent.
 
 ## Review
 
@@ -30,4 +26,4 @@ Choose a cross-family reviewer:
 
 Use stronger reviewers only for hard or high-risk work: architectural, security/privacy-sensitive, irreversible, or hard-to-verify changes.
 
-Keep reviews read-only. Pass requirements, scope, motivation, and verification results—not the implementer's reasoning.
+Keep reviews read-only. The `ask-for-review` skill owns briefing and delegation details.

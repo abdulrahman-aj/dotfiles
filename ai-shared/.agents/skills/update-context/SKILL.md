@@ -3,7 +3,7 @@ name: update-context
 description: bootstrap or refresh project context files (CLAUDE.md + AGENTS.md)
 ---
 
-Delegate all work by spawning an agent using the cheapest available model to do the following in the current working directory:
+Delegate all work in the current working directory to a mid-tier agent (its output loads every session — quality over cost):
 
 1. If `CLAUDE.md` does not exist in the project root, create it with a single line: `@AGENTS.md`
 2. If `AGENTS.md` does not exist, create it. If it exists, update it.

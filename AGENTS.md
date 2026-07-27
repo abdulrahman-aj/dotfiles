@@ -57,14 +57,7 @@ Skills (`remember`, `get-context`, `update-context`) live in `ai-shared/.agents/
 
 ## Adding a New Memory
 
-1. Create `ai-shared/.ai/memories/{slug}.md`
-2. Add `@~/.ai/memories/{slug}.md` to `claude/.claude/CLAUDE.md`
-3. Add the path to `opencode/.config/opencode/opencode.jsonc` instructions array
-4. Run `make` (re-stows so the new file symlinks into `~/.ai/`, regenerates Codex)
-
-Or use the `/remember` skill — it handles all of the above.
-
-Tool-scoped (OpenCode-only) memories skip steps 1–2 and Claude; instead create `opencode/.config/opencode/memories/{slug}.md` and add only to OpenCode's `instructions` array. The `/remember` skill picks this path when the rule references OpenCode-specific entities.
+Use the `/remember` skill — it handles shared and tool-scoped (OpenCode-only) memories end to end. Manual procedure: `ai-shared/.agents/skills/remember/SKILL.md`.
 
 ## Constraints
 
