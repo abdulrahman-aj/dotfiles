@@ -61,6 +61,7 @@ Use the `/remember` skill — it handles shared and tool-scoped (OpenCode-only) 
 
 ## Constraints
 
+- Keep dotfile configuration portable; avoid platform- or package-manager-specific assumptions.
 - `nixos-shell` supplies its required NixOS services, graphical-session
   lifecycle, curated Hyprland appearance, and shell-facing default bindings.
   The Hyprland package loads those defaults first through `modules/shell.lua`;
