@@ -1,5 +1,5 @@
 ---
-description: Fast, low-cost agent for scanning, extraction, research, verification, and straightforward large-context work.
+description: Fast, low-cost agent for routine and high-volume work, including scanning, extraction, research, verification, and straightforward large-context tasks.
 mode: subagent
 model: openai/gpt-5.6-luna
 reasoningEffort: medium
