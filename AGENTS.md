@@ -13,6 +13,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `hypr/` | `~/.config/hypr/` | Hyprland configuration |
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
 | `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
+| `bin/` | `~/.local/bin/` | Personal executable commands |
 | `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
 | `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
 | `mise/` | `~/.config/mise/` | Mise tools and settings |

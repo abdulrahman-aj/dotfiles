@@ -4,7 +4,7 @@ set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo"
 
-packages=(fish alacritty zed git cloc hypr lazygit mise ai-shared claude codex opencode)
+packages=(bin fish alacritty zed git cloc hypr lazygit mise ai-shared claude codex opencode)
 managed_config="codex-managed.toml"
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
@@ -52,7 +52,7 @@ test_stow_round_trip() {
     local before after
 
     mkdir -p "$target"
-    before="$(find fish hypr claude codex -type f -print0 | sort -z | xargs -0 sha256sum)"
+    before="$(find bin fish hypr claude codex -type f -print0 | sort -z | xargs -0 sha256sum)"
     stow --no-folding -R -t "$target" "${packages[@]}"
 
     [[ -d "$target/.config/fish" && ! -L "$target/.config/fish" ]] \
@@ -61,7 +61,7 @@ test_stow_round_trip() {
     [[ -L "$target/.config/hypr/modules/shell.lua" ]] || fail "Hyprland shell integration is not linked"
     bash scripts/manage-claude-skills.sh link "$target"
 
-    after="$(find fish hypr claude codex -type f -print0 | sort -z | xargs -0 sha256sum)"
+    after="$(find bin fish hypr claude codex -type f -print0 | sort -z | xargs -0 sha256sum)"
     [[ "$before" == "$after" ]] || fail "deployment modified package contents"
 
     make -s check TARGET="$target" >/dev/null

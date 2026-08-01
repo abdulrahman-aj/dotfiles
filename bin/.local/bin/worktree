@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage:
+  worktree <command> [<args>]
+
+Commands:
+  create <task-slug>  Create or print a managed worktree path.
+  list [--porcelain]  List all worktrees for the current repository.
+  path <task-slug>    Print the managed path for a task.
+  remove <task-slug>  Remove a clean task worktree; retain its branch.
+  repair [path...]    Repair Git worktree metadata after a move.
+  help                Show this help.
+
+Task slugs use lowercase letters, digits, and hyphens. Managed worktrees live
+at ${WORKTREES_DIR:-$HOME/Worktrees}/<repository>/<task-slug> on branches named
+work/<task-slug>. New branches always start from the repository's local main.
+Repository directory names must be unique under the worktree directory. Set
+WORKTREES_DIR to isolate repositories with the same name.
+EOF
+}
+
+die() {
+  printf 'worktree: %s\n' "$*" >&2
+  exit 1
+}
+
+task_slug() {
+  [[ ${1:-} =~ ^[a-z0-9][a-z0-9-]*$ ]] ||
+    die "task slug must use lowercase letters, digits, and hyphens"
+}
+
+primary_worktree() {
+  local worktrees
+
+  worktrees=$(git worktree list --porcelain 2>/dev/null) || die "not inside a Git worktree"
+  printf '%s\n' "$worktrees" | awk '/^worktree / { print substr($0, 10); exit }'
+}
+
+repository_root() {
+  local primary root
+  primary=$(primary_worktree)
+  [[ -n $primary ]] || return 1
+  root=$(git -C "$primary" rev-parse --show-toplevel 2>/dev/null) ||
+    die "bare repositories have no primary worktree"
+  printf '%s\n' "$root"
+}
+
+same_directory() {
+  local first second
+  first=$(cd "$1" 2>/dev/null && pwd -P)
+  second=$(cd "$2" 2>/dev/null && pwd -P)
+  [[ $first == "$second" ]]
+}
+
+worktree_for_branch() {
+  local root=$1
+  local branch=$2
+
+  git -C "$root" worktree list --porcelain |
+    awk -v branch="branch refs/heads/$branch" '
+      /^worktree / { path = substr($0, 10) }
+      $0 == branch { print path; exit }
+    '
+}
+
+managed_path() {
+  local root=$1
+  local task=$2
+  local worktrees_dir=${WORKTREES_DIR:-"$HOME/Worktrees"}
+
+  [[ $worktrees_dir == /* ]] || die "WORKTREES_DIR must be an absolute path"
+  printf '%s/%s/%s\n' "$worktrees_dir" "$(basename "$root")" "$task"
+}
+
+create() {
+  local task=$1
+  local root branch path existing
+  task_slug "$task"
+  root=$(repository_root)
+  branch="work/$task"
+  path=$(managed_path "$root" "$task")
+  existing=$(worktree_for_branch "$root" "$branch")
+
+  if [[ -n $existing ]]; then
+    [[ -d $existing ]] ||
+      die "registered worktree '$existing' is missing; run 'worktree repair <new-path>' if moved or 'git worktree prune' if deleted"
+    if same_directory "$existing" "$path"; then
+      printf '%s\n' "$path"
+      return
+    fi
+    die "branch '$branch' is already checked out at '$existing'"
+  fi
+
+  [[ ! -e $path ]] || die "path already exists but is not registered as '$branch': '$path'"
+  mkdir -p "$(dirname "$path")"
+  if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$root" worktree add "$path" "$branch" >&2
+  else
+    git -C "$root" show-ref --verify --quiet refs/heads/main || die "local branch 'main' does not exist"
+    git -C "$root" worktree add -b "$branch" "$path" main >&2
+  fi
+  printf '%s\n' "$path"
+}
+
+remove() {
+  local task=$1
+  local root branch path current_root target_root actual_branch
+  task_slug "$task"
+  root=$(repository_root)
+  branch="work/$task"
+  path=$(managed_path "$root" "$task")
+  [[ -d $path ]] || die "no worktree exists at '$path'"
+  actual_branch=$(git -C "$path" branch --show-current 2>/dev/null) ||
+    die "'$path' is not a Git worktree"
+  [[ $actual_branch == "$branch" ]] ||
+    die "'$path' is not checked out on '$branch'"
+  current_root=$(git rev-parse --show-toplevel)
+  target_root=$(git -C "$path" rev-parse --show-toplevel)
+  [[ $current_root != "$target_root" ]] || die "leave '$path' before removing it"
+
+  # Git refuses dirty worktrees, preserving unfinished worker changes.
+  git -C "$root" worktree remove "$path"
+}
+
+main() {
+  local command=${1:-help}
+  local root current_root
+
+  case $command in
+    create)
+      [[ $# -eq 2 ]] || die "usage: worktree create <task-slug>"
+      create "$2"
+      ;;
+    list)
+      [[ $# -eq 1 || ($# -eq 2 && $2 == --porcelain) ]] ||
+        die "usage: worktree list [--porcelain]"
+      root=$(repository_root)
+      git -C "$root" worktree list "${@:2}"
+      ;;
+    path)
+      [[ $# -eq 2 ]] || die "usage: worktree path <task-slug>"
+      task_slug "$2"
+      root=$(repository_root)
+      managed_path "$root" "$2"
+      ;;
+    remove)
+      [[ $# -eq 2 ]] || die "usage: worktree remove <task-slug>"
+      remove "$2"
+      ;;
+    repair)
+      shift
+      root=$(repository_root)
+      current_root=$(git rev-parse --show-toplevel)
+      [[ $current_root == "$root" ]] || die "run 'worktree repair' from the repository's primary worktree"
+      git worktree repair "$@"
+      ;;
+    help|-h|--help)
+      [[ $# -le 1 ]] || die "usage: worktree help"
+      usage
+      ;;
+    *)
+      die "unknown command '$command'; run 'worktree help'"
+      ;;
+  esac
+}
+
+main "$@"
