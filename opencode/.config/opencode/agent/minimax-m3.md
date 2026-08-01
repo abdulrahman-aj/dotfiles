@@ -3,6 +3,8 @@ description: Default low-cost implementer for clear, scoped coding tasks within 
 mode: subagent
 model: opencode-go/minimax-m3
 reasoningEffort: medium
+permission:
+  task: allow
 ---
 
 Complete the delegated task directly and return a concise result. Stay within scope, preserve unrelated changes, and verify work when practical.
