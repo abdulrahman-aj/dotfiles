@@ -1,6 +1,6 @@
 ---
 name: ask-for-review
-description: Use only when explicitly asked to delegate an independent review of a diff, commit, PR, or uncommitted changes.
+description: Use for explicit user review requests, or after verifying your local commit for an approved parallel-work task.
 ---
 
 ## Scope
@@ -26,6 +26,7 @@ Instruct the reviewer to:
 * Apply `~/.ai/memories/principles.md` pragmatically.
 * Focus on correctness, regressions, edge cases, and security/performance risks.
 * Output `### Blockers` / `### Concerns` (omit empty). Each finding: `path:line` — issue, proposed fix.
+* Review directly; do not delegate.
 * Read-only — no edits, no tests. Say "No blockers or concerns." if clean.
 
 ## Remediate

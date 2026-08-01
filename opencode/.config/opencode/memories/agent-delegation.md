@@ -17,7 +17,8 @@ Cheapest capable model wins. Escalate only when necessary, to the cheapest suita
 
 ## Review
 
-Delegate reviews only when explicitly requested; otherwise review directly.
+Delegate reviews only when explicitly requested or completing an approved
+`parallel-work` task; otherwise review directly.
 
 Choose a cross-family reviewer:
 
