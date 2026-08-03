@@ -2,16 +2,18 @@
 
 Minimize expected total cost, including retries and supervision. Delegate isolated work; keep tiny or context-heavy tasks in the primary agent.
 
+Subagents never call the `Task` tool; the primary agent orchestrates all
+delegation, including reviews of subagent work.
+
 ## Models
 
-| Agent             | Cost      |
-| ----------------- | --------- |
-| `minimax-m3`      | Low       |
-| `deepseek-v4-pro` | Low       |
-| `luna`            | Low       |
-| `terra`           | Medium    |
-| `kimi-k3`         | High      |
-| `sol`             | Very high |
+| Agent                    | Cost      |
+| ------------------------ | --------- |
+| `deepseek-v4-flash-free` | Free      |
+| `luna`                   | Low       |
+| `terra`                  | Medium    |
+| `kimi-k3`                | High      |
+| `sol`                    | Very high |
 
 Cheapest capable model wins. Escalate only when necessary, to the cheapest suitable stronger agent.
 
@@ -22,7 +24,7 @@ Delegate reviews only when explicitly requested or completing an approved
 
 Choose a cross-family reviewer:
 
-* OpenAI-authored: `deepseek-v4-pro`; stronger: `kimi-k3`.
+* OpenAI-authored: `deepseek-v4-flash-free`; stronger: `kimi-k3`.
 * Other: `terra`; stronger: `sol`.
 
 Use stronger reviewers only for hard or high-risk work: architectural, security/privacy-sensitive, irreversible, or hard-to-verify changes.

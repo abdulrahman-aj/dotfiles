@@ -1,6 +1,6 @@
 ---
 name: ask-for-review
-description: Use for explicit user review requests, or after verifying your local commit for an approved parallel-work task.
+description: Use for explicit user review requests, or to review a `parallel-work` worker's commit after handoff.
 ---
 
 ## Scope
@@ -19,7 +19,7 @@ Choose the reviewer using `~/.config/opencode/memories/agent-delegation.md`. An 
 
 ## Delegate
 
-Make one Task call. Pass the scope, intent, and verification results—not the diff or implementer reasoning. Keep the returned `task_id` for re-reviews.
+Make one Task call. Pass the scope, intent, and verification results—not the diff or implementer reasoning. Keep the returned `task_id` for re-reviews. Treat a response without a verdict as incomplete: resume the reviewer to supply one.
 
 Instruct the reviewer to:
 
@@ -27,14 +27,16 @@ Instruct the reviewer to:
 * Focus on correctness, regressions, edge cases, and security/performance risks.
 * Output `### Blockers` / `### Concerns` (omit empty). Each finding: `path:line` — issue, proposed fix.
 * Review directly; do not delegate.
-* Read-only — no edits, no tests. Say "No blockers or concerns." if clean.
+* Read-only — no edits, no tests.
+* End with exactly one verdict: `Verdict: approve` (no findings), `Verdict: approve-with-concerns` (concerns only), or `Verdict: changes-requested` (any blocker).
 
 ## Remediate
 
 Act on blockers and actionable concerns in the same turn; do not stop at
-findings.
+findings. Fixes for a `parallel-work` worker's commit go back to that worker's
+session; apply any you own directly, with regression coverage.
 
-1. Apply the smallest correct fixes and add regression coverage.
+1. Apply or route the smallest correct fixes.
 2. Run relevant verification.
 3. Resume the reviewer with its `task_id` for one re-review of the full scope.
 4. Repeat for blockers. State why any intentional or unresolved concern remains.
