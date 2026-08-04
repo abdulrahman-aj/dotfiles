@@ -1,1 +1,2 @@
---exclude-dir=.venv,venv,.env,node_modules,__pycache__,.git
+--exclude-dir=.venv,venv,.env,node_modules,__pycache__,.git,.next,out
+--not-match-f=^package-lock\.json$
