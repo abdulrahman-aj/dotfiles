@@ -9,7 +9,7 @@ delegation, including reviews of subagent work.
 
 | Agent                    | Cost      |
 | ------------------------ | --------- |
-| `deepseek-v4-flash-free` | Free      |
+| `deepseek-v4-flash`      | Low       |
 | `luna`                   | Low       |
 | `terra`                  | Medium    |
 | `kimi-k3`                | High      |
@@ -24,7 +24,7 @@ Delegate reviews only when explicitly requested or completing an approved
 
 Choose a cross-family reviewer:
 
-* OpenAI-authored: `deepseek-v4-flash-free`; stronger: `kimi-k3`.
+* OpenAI-authored: `deepseek-v4-flash`; stronger: `kimi-k3`.
 * Other: `terra`; stronger: `sol`.
 
 Use stronger reviewers only for hard or high-risk work: architectural, security/privacy-sensitive, irreversible, or hard-to-verify changes.
