@@ -16,7 +16,6 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `bin/` | `~/.local/bin/` | Personal executable commands |
 | `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
 | `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
-| `mise/` | `~/.config/mise/` | Mise tools and settings |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills |
 | `opencode/` | `~/.config/opencode/` | OpenCode config, agents, skills, tool-scoped memories |
 

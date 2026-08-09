@@ -1,8 +1,0 @@
-[tools]
-go = "latest"
-opencode = "latest"
-python = "latest"
-uv = "latest"
-
-[settings]
-all_compile = false
