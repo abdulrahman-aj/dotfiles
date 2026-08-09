@@ -1,6 +1,6 @@
 ---
 name: ask-for-review
-description: Use for explicit user review requests, or to review a `parallel-work` worker's commit after handoff.
+description: Use when requesting an independent review of a diff, commit, range, or PR.
 ---
 
 ## Scope
@@ -29,20 +29,6 @@ Instruct the reviewer to:
 * Review directly; do not delegate.
 * Read-only — no edits, no tests.
 * End with exactly one verdict: `Verdict: approve` (no findings), `Verdict: approve-with-concerns` (concerns only), or `Verdict: changes-requested` (any blocker).
-
-## Remediate
-
-Act on blockers and actionable concerns in the same turn; do not stop at
-findings. Fixes for a `parallel-work` worker's commit go back to that worker's
-session; apply any you own directly, with regression coverage.
-
-1. Apply or route the smallest correct fixes.
-2. Run relevant verification.
-3. Resume the reviewer with its `task_id` for one re-review of the full scope.
-4. Repeat for blockers. State why any intentional or unresolved concern remains.
-
-Report fixes, accepted risks, unresolved risks, and verification only after this
-loop. Preserve the `task_id` for future re-reviews.
 
 ## Re-review
 

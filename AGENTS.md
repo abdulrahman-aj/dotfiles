@@ -42,9 +42,13 @@ directory.
 
 ## AI Preferences Architecture
 
-Single source of truth for shared rules: `ai-shared/.ai/memories/*.md` (2 files: personal, principles). OpenCode-only rules live in `opencode/.config/opencode/memories/` and are added to OpenCode's `instructions` array.
+Single source of truth for shared rules: `ai-shared/.ai/memories/*.md`.
+OpenCode-only rules live in `opencode/.config/opencode/memories/` and are added
+to OpenCode's `instructions` array.
 
-Skills (`remember`, `get-context`, `update-context`) live in `ai-shared/.agents/skills/`, stowed to `~/.agents/skills/`. OpenCode reads them natively.
+Shared skills (`automate-friction`, `get-context`, `remember`, `todo`,
+`todo-add`, `update-context`) live in `ai-shared/.agents/skills/`, stowed to
+`~/.agents/skills/`. OpenCode reads them natively.
 
 ## Adding a New Memory
 

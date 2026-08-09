@@ -3,6 +3,8 @@ description: Low-cost alternative for routine, high-volume, or straightforward t
 mode: subagent
 model: opencode-go/deepseek-v4-flash
 reasoningEffort: high
+permission:
+  task: deny
 ---
 
 Complete the delegated task directly and return a concise result. Stay within scope, preserve unrelated changes, and verify work when practical.

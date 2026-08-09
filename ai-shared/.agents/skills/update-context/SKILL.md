@@ -1,10 +1,11 @@
 ---
 name: update-context
-description: bootstrap or refresh a project's AGENTS.md context
+description: Use when bootstrapping or refreshing a project's AGENTS.md context.
 ---
 
-Delegate all work in the current working directory to a mid-tier agent (its output loads every session — quality over cost):
-
-1. If `AGENTS.md` does not exist, create it. If it exists, update it.
-2. Write high-level project context into `AGENTS.md`: purpose, key directories, salient commands (test, build, lint), architectural decisions worth knowing. Keep it concise — future sessions should not be burdened with stale detail.
-3. Avoid documenting anything likely to change frequently (specific line numbers, implementation details).
+1. Read applicable context files and check their claims against the code.
+2. If `AGENTS.md` does not exist, create it. If it exists, preserve valid
+   project-specific instructions and update only stale or missing context.
+3. Record the purpose, key directories, salient commands, and architectural
+   decisions worth knowing.
+4. Keep it concise. Avoid volatile details such as line numbers and internals.

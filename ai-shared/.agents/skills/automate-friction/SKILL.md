@@ -1,6 +1,6 @@
 ---
 name: automate-friction
-description: Reduce recurring workflow or environment friction and context pollution.
+description: Use when reducing recurring workflow friction or context pollution.
 ---
 
 - Review recent work for repeated commands, noisy output, and manual steps.

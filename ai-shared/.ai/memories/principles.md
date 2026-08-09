@@ -25,10 +25,9 @@
 * **Scout rule**: leave the code cleaner than you found it.
 * **Chesterton's fence**: before removing an existing constraint, understand why it exists.
 * **Refactor first**: make the change easy, then make the easy change.
-* **Defer unrelated work**: stay in scope and record worthwhile refactors in `.refactor-agent.md`.
 
 ## Workflow
-* **Plan first**: enter plan mode for non-trivial tasks (3+ steps or architectural decisions).
+* **Plan first**: create a task list for work with 3+ steps or architectural decisions.
 * **Verify**: don't declare success without evidence (tests, logs, or observable behavior).
 * **Root cause**: solve the underlying cause, not the symptom.
 * **Tracer bullets**: build a thin end-to-end slice before filling in details.
