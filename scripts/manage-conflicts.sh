@@ -82,15 +82,6 @@ for package in "$@"; do
     done < <(find "$package_root" \( -type f -o -type l \) -print0)
 done
 
-skills_path="$target/.claude/skills"
-skills_target="$target/.agents/skills"
-if [[ -e "$skills_path" || -L "$skills_path" ]]; then
-    if [[ ! -L "$skills_path" \
-        || "$(realpath -m "$skills_path")" != "$(realpath -m "$skills_target")" ]]; then
-        add_conflict ".claude/skills"
-    fi
-fi
-
 if ((${#conflicts[@]} == 0)); then
     echo "No unmanaged conflicts found"
     exit 0

@@ -16,9 +16,6 @@ repo-managed paths are moved to a timestamped directory under
 installed. Kickstart.nvim and Fisher are then initialized; either step can be safely
 retried by running `make` again.
 
-Only the marked block in the live Codex config is managed. Machine-specific settings
-outside that block remain local.
-
 ## Usage
 
 - `make` - deploy everything (stow all packages + AI, Neovim, and Fish setup)
@@ -27,4 +24,4 @@ outside that block remain local.
 - `make unstow` - remove repo-managed links without deleting generated tool data
 
 Pass `TARGET=/path/to/home` to run the complete workflow against a different home
-directory. Fisher, Neovim, Codex, and Claude setup all honor the alternate target.
+directory. Fisher and Neovim setup honor the alternate target.

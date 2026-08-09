@@ -1,6 +1,4 @@
 [tools]
-claude = "latest"
-codex = "latest"
 go = "latest"
 opencode = "latest"
 python = "latest"

@@ -35,7 +35,6 @@
 * **Reversible first**: flag hard-to-reverse decisions before making them.
 * **Port omissions**: explicitly document every omitted upstream behavior in the target repository.
 * **Reuse context**: continue with the same sub-agent unless independence or changed scope requires a new one.
-* **Worktrees**: edit the primary checkout directly; use the `worktree` CLI for delegated worktrees and remove them after integration or abandonment.
 
 ## Automation
 * **Automate friction**: turn recurring manual work and preventable failures into project-local guardrails.
