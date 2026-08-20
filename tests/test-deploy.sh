@@ -4,7 +4,7 @@ set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo"
 
-packages=(bin fish alacritty zed git cloc hypr lazygit ai-shared opencode)
+packages=(bin fish alacritty zed git cloc lazygit ai-shared opencode)
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
 
@@ -31,14 +31,13 @@ test_stow_round_trip() {
     local before after
 
     mkdir -p "$target"
-    before="$(find bin fish hypr -type f -print0 | sort -z | xargs -0 sha256sum)"
+    before="$(find bin fish -type f -print0 | sort -z | xargs -0 sha256sum)"
     stow --no-folding -R -t "$target" "${packages[@]}"
 
     [[ -d "$target/.config/fish" && ! -L "$target/.config/fish" ]] \
         || fail "Fish directory was folded into the repository"
     [[ -L "$target/.config/fish/config.fish" ]] || fail "Fish config is not linked"
-    [[ -L "$target/.config/hypr/modules/shell.lua" ]] || fail "Hyprland shell integration is not linked"
-    after="$(find bin fish hypr -type f -print0 | sort -z | xargs -0 sha256sum)"
+    after="$(find bin fish -type f -print0 | sort -z | xargs -0 sha256sum)"
     [[ "$before" == "$after" ]] || fail "deployment modified package contents"
 
     make -s check TARGET="$target" >/dev/null

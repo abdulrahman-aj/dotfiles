@@ -73,7 +73,6 @@ set -gx EDITOR nvim
 set -gx SUDO_EDITOR "$EDITOR"
 set -g fish_history_max_size 32768
 
-alias lzd lazydocker
 alias lzg lazygit
 alias oc opencode
 alias open xdg-open

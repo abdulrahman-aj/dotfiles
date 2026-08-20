@@ -10,7 +10,6 @@ Each top-level directory is a stow package that mirrors `~/`:
 |---------|----------|----------|
 | `fish/` | `~/.config/fish/`, `~/.config/starship.toml` | Fish shell config, Starship prompt |
 | `alacritty/` | `~/.config/alacritty/` | Terminal config |
-| `hypr/` | `~/.config/hypr/` | Hyprland configuration |
 | `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
 | `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
 | `bin/` | `~/.local/bin/` | Personal executable commands |
@@ -57,10 +56,5 @@ Use the `/remember` skill — it handles shared and tool-scoped (OpenCode-only) 
 ## Constraints
 
 - Keep dotfile configuration portable; avoid platform- or package-manager-specific assumptions.
-- `nixos-shell` supplies its required NixOS services, graphical-session
-  lifecycle, curated Hyprland appearance, and shell-facing default bindings.
-  The Hyprland package loads those defaults first through `modules/shell.lua`;
-  personal monitor/input/application/layout/window policy remains here. Remove
-  a shell binding through its named handle before defining a replacement.
 - Never commit without explicit user authorization.
 - When adding a new stow package, update the package table in this file.

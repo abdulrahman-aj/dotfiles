@@ -1,6 +1,6 @@
 .PHONY: all check test unstow _check-prereqs
 
-PKGS := bin fish alacritty zed git cloc hypr lazygit ai-shared opencode
+PKGS := bin fish alacritty zed git cloc lazygit ai-shared opencode
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow

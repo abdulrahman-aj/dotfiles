@@ -20,7 +20,6 @@
       "space b o": ["pane::CloseOtherItems", { "close_pinned": false }],
       "space t": ["task::Spawn", { "task_name": "terminal" }],
       "space l g": ["task::Spawn", { "task_name": "lazygit" }],
-      "space l d": ["task::Spawn", { "task_name": "lazydocker" }],
       "space g d": ["task::Spawn", { "task_name": "git diff" }],
       "space o c": ["task::Spawn", { "task_name": "opencode" }],
       "space e": "project_panel::Toggle",
