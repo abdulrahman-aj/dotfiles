@@ -5,9 +5,9 @@ Subagents never call `Task`. The primary agent owns integration and final checks
 
 ## Routing
 
-- Use DeepSeek for bounded, mechanical, routine, or high-volume first passes.
-- Use Luna for ordinary implementation, synthesis, ambiguity, and DeepSeek review.
-- Use Sol for architecture, security, hard engineering, or unresolved cheap-agent work.
+- Use Muse Spark for everyday work: routine, high-volume, coding, debugging, integration, synthesis, and ambiguity (daily driver).
+- Reserve Luna for independent cross-family reviews only.
+- Use Sol for architecture, security, hard engineering, or unresolved Muse Spark work.
 - Use Kimi only when explicitly requested.
 
 Give each worker a narrow outcome, file scope, and verification. Keep one writer
@@ -22,12 +22,11 @@ worktrees, and remove them after integration or abandonment.
 
 Resume an agent that stops early or omits a verdict. Route blockers back to the
 same implementer. Escalate only if the resumed or remediated attempt remains
-incomplete: DeepSeek to Luna, then Luna to Sol.
+incomplete: Muse Spark to Sol.
 
 ## Review
 
-Keep reviews read-only and cross-family. DeepSeek and Luna review each other by
-default. Use Sol only for high-risk work or blockers that survive remediation
+Keep reviews read-only and cross-family. Luna is the default reviewer for Muse Spark-authored work. Use Sol only for high-risk work or blockers that survive remediation
 and re-review. Use Kimi only when explicitly requested. The `ask-for-review`
 skill owns review workflow.
 

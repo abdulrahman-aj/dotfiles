@@ -1,7 +1,7 @@
 ---
-description: Independent cross-family reviewer for Muse Spark-authored work; not used for implementation.
+description: Everyday agent for coding, debugging, integration, synthesis, ambiguity, and routine high-volume work — daily driver.
 mode: subagent
-model: openai/gpt-5.6-luna
+model: opencode-go/muse-spark-1.2-contributor
 reasoningEffort: high
 permission:
   task: deny
