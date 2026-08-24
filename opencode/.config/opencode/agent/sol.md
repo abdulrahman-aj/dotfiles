@@ -1,5 +1,5 @@
 ---
-description: Highest-capability OpenAI agent for the hardest or highest-risk reasoning and engineering tasks.
+description: Highest-capability OpenAI agent for the hardest or highest-risk reasoning and engineering tasks; backup reviewer, settles disputes.
 mode: subagent
 model: openai/gpt-5.6-sol
 reasoningEffort: medium

@@ -1,7 +1,7 @@
 ---
-description: Cross-family reviewer; implements only when explicitly delegated.
+description: High-capability implementer and reviewer.
 mode: subagent
-model: openai/gpt-5.6-luna
+model: opencode-go/ox-alpha-free
 reasoningEffort: high
 permission:
   task: deny

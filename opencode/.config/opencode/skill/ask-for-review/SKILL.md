@@ -13,13 +13,22 @@ Use the user-specified diff, commit, range, or PR. Otherwise:
 
 Summarize the change’s intent in 1–2 sentences. Include known acceptance criteria and verification results.
 
-## Reviewer
+## Reviewers
 
-Choose the reviewer using `~/.config/opencode/memories/agent-delegation.md`. An explicit reviewer argument overrides it.
+Two different reviewers, never the author. If neither Ox Alpha nor Muse Spark
+made the change, they review together; if one did, the other joins with Luna.
+If a reviewer turns out to be unavailable, swap in Luna, then Sol; if only one
+reviewer is left, go ahead with one and say so. A reviewer named by the user
+takes one slot under the same rules. At least one reviewer should come from a
+different model family than the author — the usual pair already does unless
+the author is one of them.
 
 ## Delegate
 
-Make one Task call. Pass the scope, intent, and verification results—not the diff or implementer reasoning. Keep the returned `task_id` for re-reviews. Treat a response without a verdict as incomplete: resume the reviewer to supply one.
+Send one Task call per reviewer, BOTH in a single message—never one after the
+other. Pass scope, intent, and verification results—not your own reasoning;
+a reviewer who can't run git or edit files also gets the diff pasted in. Keep
+each `task_id`; resume any reviewer that returns no verdict.
 
 Instruct the reviewer to:
 
@@ -32,6 +41,12 @@ Instruct the reviewer to:
 
 ## Re-review
 
-Resume via `task_id` when available to verify prior findings and review the full
-current scope for new issues. Start fresh for a second opinion, materially
-changed scope, or missing `task_id`.
+Resume each reviewer via its `task_id` to verify prior findings against the full
+current scope. Start fresh for second opinions, materially changed scope, or
+missing `task_id`s.
+
+## Merge verdicts
+
+The primary agent combines both responses: any blocker blocks; concerns just
+get noted. If a blocker is still disputed after a fix attempt and re-review,
+Sol decides — unless the disputed finding was Sol's own; then ask the user.

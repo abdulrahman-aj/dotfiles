@@ -5,9 +5,13 @@ Subagents never call `Task`. The primary agent owns integration and final checks
 
 ## Routing
 
-- Use Muse Spark for everyday work: routine, high-volume, coding, debugging, integration, synthesis, and ambiguity (daily driver).
-- Reserve Luna for independent cross-family reviews only.
-- Use Sol for architecture, security, hard engineering, or unresolved Muse Spark work.
+- Use Ox Alpha for substantial implementation, long-context work, or complex
+  debugging; if unavailable, Muse Spark takes it.
+- Use Muse Spark for routine, high-volume, or straightforward work, including
+  everyday synthesis and ambiguity.
+- Reserve Luna for reviews; implement with her only on explicit delegation.
+- Use Sol for architecture, security, hard engineering, or unresolved work from
+  Ox Alpha or Muse Spark.
 - Use Kimi only when explicitly requested.
 
 Give each worker a narrow outcome, file scope, and verification. Keep one writer
@@ -20,15 +24,16 @@ worktrees, and remove them after integration or abandonment.
 
 ## Failure
 
-Resume an agent that stops early or omits a verdict. Route blockers back to the
-same implementer. Escalate only if the resumed or remediated attempt remains
-incomplete: Muse Spark to Sol.
+If an agent stops early or skips the verdict, resume it. Send blockers back to
+the same worker. Escalate only if it still can't finish: Muse Spark to Ox Alpha,
+then Ox Alpha to Sol; skip straight to Sol when Ox Alpha is unavailable.
 
 ## Review
 
-Keep reviews read-only and cross-family. Luna is the default reviewer for Muse Spark-authored work. Use Sol only for high-risk work or blockers that survive remediation
-and re-review. Use Kimi only when explicitly requested. The `ask-for-review`
-skill owns review workflow.
+Keep reviews read-only — put it in the task instructions; permissions don't
+enforce roles. Two reviewers per change, at least one from a different model
+family than the author. Defaults, swaps, and merging verdicts: see the
+`ask-for-review` skill.
 
 ## Acceptance
 

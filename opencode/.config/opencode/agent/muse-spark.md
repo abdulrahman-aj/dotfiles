@@ -1,5 +1,5 @@
 ---
-description: Everyday agent for coding, debugging, integration, synthesis, ambiguity, and routine high-volume work — daily driver.
+description: Everyday coding, debugging, integration, and synthesis agent; reviewer.
 mode: subagent
 model: opencode-go/muse-spark-1.2-contributor
 reasoningEffort: high
