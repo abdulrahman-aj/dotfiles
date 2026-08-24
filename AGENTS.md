@@ -17,6 +17,7 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills |
 | `opencode/` | `~/.config/opencode/` | OpenCode config, agents, skills, tool-scoped memories |
+| `omarchy/` | `~/.config/{hypr,omarchy}/`, XDG defaults | Omarchy-only desktop preferences |
 
 ## Key Commands
 
@@ -38,6 +39,15 @@ directory.
   individual files instead of linking whole directory trees into the repo.
 - Fisher and Kickstart.nvim are external bootstrap steps run after Stow. They honor
   `TARGET`, preserve unrelated existing configurations, and are safe to retry.
+- The `omarchy` package is always stowed. Original Omarchy installs profile
+  packages; other systems install no packages, though applicable XDG defaults
+  remain active.
+- Omarchy package installation is skipped when deploying to an alternate `TARGET`.
+- `omarchy/.config/xdg-terminals.list` owns terminal preference order; do not
+  replace it with the single-entry output of `omarchy default terminal`.
+- The Omarchy package is authoritative for `shell.json`, `mimeapps.list`, and
+  `xdg-terminals.list`. Applications may atomically replace their Stow links;
+  the next deployment backs up changed files and restores repository versions.
 
 ## AI Preferences Architecture
 

@@ -10,11 +10,11 @@ Managed with GNU Stow.
 git clone git@github.com:abdulrahman-aj/dotfiles.git ~/dotfiles && cd ~/dotfiles && make
 ```
 
-`make` checks all requirements before changing the target. Existing unmanaged files at
-repo-managed paths are moved to a timestamped directory under
-`~/.dotfiles-backups/`, preserving their relative paths, before the repo links are
-installed. Kickstart.nvim and Fisher are then initialized; either step can be safely
-retried by running `make` again.
+`make` backs up unmanaged conflicts under `~/.dotfiles-backups/`, stows the
+configuration, and initializes Fisher and Kickstart.nvim.
+
+On Omarchy, `make` also offers to remove bundled preinstalls and sets up the
+personal configuration and packages.
 
 ## Usage
 

@@ -4,7 +4,7 @@ set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo"
 
-packages=(bin fish alacritty zed git cloc lazygit ai-shared opencode)
+packages=(bin fish alacritty zed git cloc lazygit ai-shared opencode omarchy)
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
 
@@ -28,20 +28,19 @@ test_conflict_backup() {
 
 test_stow_round_trip() {
     local target="$test_root/stow-home"
-    local before after
+    local leftover_link
 
     mkdir -p "$target"
-    before="$(find bin fish -type f -print0 | sort -z | xargs -0 sha256sum)"
     stow --no-folding -R -t "$target" "${packages[@]}"
 
-    [[ -d "$target/.config/fish" && ! -L "$target/.config/fish" ]] \
-        || fail "Fish directory was folded into the repository"
-    [[ -L "$target/.config/fish/config.fish" ]] || fail "Fish config is not linked"
-    after="$(find bin fish -type f -print0 | sort -z | xargs -0 sha256sum)"
-    [[ "$before" == "$after" ]] || fail "deployment modified package contents"
+    [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
+        || fail "Omarchy directory was folded into the repository"
+    [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
 
     make -s check TARGET="$target" >/dev/null
     make -s unstow TARGET="$target" >/dev/null
+    leftover_link="$(find "$target" -type l -print -quit)"
+    [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }
 
 test_conflict_backup

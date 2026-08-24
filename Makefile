@@ -1,18 +1,21 @@
-.PHONY: all check test unstow _check-prereqs
+.PHONY: all check test unstow
 
-PKGS := bin fish alacritty zed git cloc lazygit ai-shared opencode
+PKGS := bin fish alacritty zed git cloc lazygit ai-shared opencode omarchy
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
 STOW_FLAGS := --no-folding
 
-all: _check-prereqs
+all:
+	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
+	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)" $(PKGS)
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" $(PKGS)
 	@bash scripts/install-kickstart.sh "$(TARGET_ABS)"
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
 
-check: _check-prereqs
+check:
+	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh check "$(TARGET_ABS)" $(PKGS)
 	$(STOW) $(STOW_FLAGS) --simulate -t "$(TARGET_ABS)" $(PKGS)
 
@@ -23,6 +26,3 @@ test:
 unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }
 	$(STOW) $(STOW_FLAGS) -t "$(TARGET_ABS)" -D $(PKGS)
-
-_check-prereqs:
-	@bash scripts/check-prereqs.sh
