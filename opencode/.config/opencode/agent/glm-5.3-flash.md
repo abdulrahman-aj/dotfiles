@@ -1,7 +1,7 @@
 ---
 description: High-capability implementer and reviewer.
 mode: subagent
-model: opencode-go/ox-alpha-free
+model: opencode-go/glm-5.3-flash
 reasoningEffort: high
 permission:
   task: deny

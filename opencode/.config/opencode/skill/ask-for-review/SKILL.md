@@ -15,7 +15,7 @@ Summarize the change’s intent in 1–2 sentences. Include known acceptance cri
 
 ## Reviewers
 
-Two different reviewers, never the author. If neither Ox Alpha nor Muse Spark
+Two different reviewers, never the author. If neither GLM 5.3 Flash nor Muse Spark
 made the change, they review together; if one did, the other joins with Luna.
 If a reviewer turns out to be unavailable, swap in Luna, then Sol; if only one
 reviewer is left, go ahead with one and say so. A reviewer named by the user
