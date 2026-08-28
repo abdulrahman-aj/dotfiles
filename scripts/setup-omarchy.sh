@@ -23,14 +23,17 @@ if [[ ! -f "$HOME/.local/state/omarchy/preinstalls-removed" ]]; then
     omarchy remove preinstalls
 fi
 
-omarchy pkg add alacritty dosfstools fish git-delta github-cli ntfs-3g starship stow \
-    || echo "Warning: some Omarchy packages could not be installed; continuing." >&2
-omarchy pkg add opencode \
-    || echo "Warning: OpenCode could not be installed; continuing." >&2
-omarchy pkg aur add google-chrome \
-    || echo "Warning: Chrome could not be installed; continuing." >&2
+omarchy pkg add alacritty fish git-delta github-cli starship stow
+omarchy pkg add opencode
+omarchy pkg aur add google-chrome
+omarchy install browser zen
+omarchy default browser zen
+omarchy install editor zed
 
-if ! command -v zeditor >/dev/null 2>&1 || ! command -v omazed >/dev/null 2>&1; then
-    omarchy install editor zed \
-        || echo "Warning: Zed or its Omarchy integration could not be installed; continuing." >&2
-fi
+# Filesystem drivers for external drives.
+omarchy pkg add dosfstools ntfs-3g
+
+# Ensure mode-switching Wi-Fi adapters initialize as network devices.
+omarchy pkg add usb_modeswitch
+
+chsh -s "$(command -v fish)" "$USER"
