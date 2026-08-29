@@ -5,6 +5,7 @@
   "instructions": [
     "~/.ai/memories/personal.md",
     "~/.ai/memories/principles.md",
-    "~/.config/opencode/memories/agent-delegation.md"
+    "~/.config/opencode/memories/agent-delegation.md",
+    "~/.ai/memories/privilege-elevation.md"
   ]
 }
