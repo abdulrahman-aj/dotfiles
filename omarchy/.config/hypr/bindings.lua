@@ -3,20 +3,8 @@ local function rebind(keys, description, dispatcher, options)
   o.bind(keys, description, dispatcher, options)
 end
 
--- Web apps — uniform table, one loop. Zed stays explicit (different dispatcher).
-local webapps = {
-  { keys = "SUPER + SHIFT + N", name = "Notion", url = "https://notion.so" },
-  { keys = "SUPER + SHIFT + R", name = "Reddit", url = "https://reddit.com" },
-  { keys = "SUPER + SHIFT + C", name = "Calendar", url = "https://calendar.google.com" },
-  { keys = "SUPER + SHIFT + D", name = "Discord", url = "https://discord.com/app" },
-  { keys = "SUPER + SHIFT + M", name = "YouTube Music", url = "https://music.youtube.com" },
-  { keys = "SUPER + SHIFT + X", name = "X", url = "https://x.com/" },
-}
-for _, app in ipairs(webapps) do
-  rebind(app.keys, app.name, { webapp = app.url, focus = true })
-end
-
 rebind("SUPER + SHIFT + Z", "Zed", { launch = "zeditor" })
+rebind("SUPER + SHIFT + T", "T3 Code", { launch = "t3code", focus = "t3code" })
 
 -- Scratchpad — SHIFT for moves.
 hl.unbind("SUPER + ALT + S")
