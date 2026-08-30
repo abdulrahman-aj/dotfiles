@@ -44,6 +44,11 @@
     "context": "vim_mode == visual",
     "bindings": {
       "p": ["vim::Paste", { "preserve_clipboard": true }],
+      // Use helper sequences so the synthetic keystrokes do not recurse.
+      ">": ["workspace::SendKeystrokes", "z > g v"],
+      "<": ["workspace::SendKeystrokes", "z < g v"],
+      "z >": "vim::Indent",
+      "z <": "vim::Outdent",
     },
   },
   {
