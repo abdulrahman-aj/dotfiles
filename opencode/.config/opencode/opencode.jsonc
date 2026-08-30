@@ -7,5 +7,12 @@
     "~/.ai/memories/principles.md",
     "~/.config/opencode/memories/agent-delegation.md",
     "~/.ai/memories/privilege-elevation.md"
-  ]
+  ],
+  "mcp": {
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp/readonly",
+      "enabled": true
+    }
+  }
 }
