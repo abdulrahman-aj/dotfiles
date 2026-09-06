@@ -5,6 +5,8 @@ needs much of the current conversation in the primary agent.
 
 ## Routing
 
+Prefer a cheaper suitable agent for bounded exploration.
+
 - Muse: default worker, including large changes and difficult debugging.
 - GLM: alternative when Muse's data-use terms are unsuitable, or for a second opinion.
 - Sol: difficult reasoning, engineering, or a second opinion.

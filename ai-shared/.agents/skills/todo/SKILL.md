@@ -15,3 +15,4 @@ If `TODO.md` doesn't exist or has no unchecked tasks, say so and stop.
 4. After verification, ask the user to confirm completion; only then check it and move it to `## Done`.
 
 Task selection and plan approval never mean completion.
+Removing tasks also requires explicit user approval.

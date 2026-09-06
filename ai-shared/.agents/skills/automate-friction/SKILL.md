@@ -1,20 +1,12 @@
 ---
 name: automate-friction
-description: Use when reducing recurring workflow friction or context pollution.
+description: Use when automating repeated manual work or reducing noisy command output.
 ---
 
 - Review recent work for repeated commands, noisy output, and manual steps.
-- Name observed friction; label speculative opportunities.
-- Inspect existing Makefiles, task runners, and scripts before adding anything.
-- Consider a Nix development environment when setup causes friction.
-- Automate commands:
-  - Repeated command sequence → script exposed through the Makefile.
-  - Long one-line command → simple Makefile target.
-  - Prefer the existing script directory; otherwise use `scripts/`.
-- Reduce context pollution:
-  - Keep successful output concise and failure diagnostics complete.
-  - For noisy commands, start from this skill's `Makefile` and `scripts/quiet`, or use an equivalent; support `V=1` / `VERBOSE=1` for live output.
-  - Consider Make targets for smaller test scopes.
-- Consider `make help`.
-- Put recurring conventions and constraints in `AGENTS.md`.
-- Report concisely.
+- Name the observed friction and choose the smallest useful fix.
+- Reuse the project's tooling and conventions; ask before adding dependencies or changing shared workflows.
+- Keep successful output concise, failure diagnostics complete, and live output available.
+- For noisy commands, consider the bundled `scripts/quiet`; the `Makefile` is an optional integration example.
+- Verify the fix preserves behavior and reduces the observed friction.
+- Document recurring conventions in `AGENTS.md` when useful.
