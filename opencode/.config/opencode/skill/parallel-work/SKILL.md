@@ -1,18 +1,18 @@
 ---
 name: parallel-work
-description: Use for an approved batch of independent worktree tasks that need isolated implementation and review pairs.
+description: Use to run approved independent tasks in parallel, each in its own worktree.
 ---
 
 # Parallel Work
 
-Use only for independent tasks Abdulrahman has approved and prioritized.
+Use for user-approved tasks that can be done independently. Get permission to commit locally.
 
-1. Scout only when a task has material uncertainty. Batch questions and wait for answers.
-2. Create each managed worktree with `worktree create <task-slug>`. Create a queue card only for todos-tracked work. Give each worker its path, branch, scope, and checks.
-3. Tell each worker: "You are the implementation worker for this approved `parallel-work` task. Work only in the assigned worktree. Commit locally; never push. Do not delegate."
-4. Require this handoff only: commit, verification, and unresolved risks.
-5. Review each worker's commit with `ask-for-review`. Send blockers and fixable
-   findings back to the worker; after they update the commit, re-review per the
-   skill's Re-review section until nothing is blocked.
-6. After reviews, synthesize results and proactively surface required user decisions.
-7. After Abdulrahman approves integration, merge and run `worktree remove <task>`.
+1. Ask necessary implementation questions in one message; wait for answers.
+2. Read `worktree help` and create a worktree for each task.
+3. Start workers in parallel. Give each its task, worktree path, and check commands.
+   Keep edits in that worktree; commit locally, never push. Return commits, check results, and risks.
+4. Review all changes for each task, not just its latest commit; follow `ask-for-review`.
+   Send confirmed problems back to the worker and check that the fixes resolve them.
+5. Summarize changes, check results, and unresolved questions. Ask permission to merge.
+6. After approval, merge, resolve conflicts, and check the combined result.
+   Only if checks pass, run `worktree remove <task>`.

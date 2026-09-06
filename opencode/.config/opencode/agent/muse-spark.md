@@ -1,7 +1,7 @@
 ---
 description: Everyday coding, debugging, integration, and synthesis agent; reviewer.
 mode: subagent
-model: opencode-go/muse-spark-1.2-contributor
+model: opencode-go/muse-spark-1.3-contributor
 reasoningEffort: high
 permission:
   task: deny

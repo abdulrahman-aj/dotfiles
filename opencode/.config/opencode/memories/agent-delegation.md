@@ -1,39 +1,31 @@
 # Agent delegation
 
-Delegate isolated work; keep tiny or context-heavy tasks in the primary agent.
-Subagents never call `Task`. The primary agent owns integration and final checks.
+Delegate when it saves time or adds expertise. Keep key decisions and work that
+needs much of the current conversation in the primary agent.
 
 ## Routing
 
-- Use Muse Spark as the default for routine, high-volume, and standard implementation work — cheapest on Go (limited regions); prefer it whenever quality allows.
-- Use GLM 5.3 Flash only for substantial implementation, long-context work, or complex debugging when Muse quality is insufficient; if unavailable, Muse Spark takes it.
-- Reserve Luna for reviews; implement with her only on explicit delegation.
-- Use Sol for architecture, security, hard engineering, or unresolved work from
-  GLM 5.3 Flash or Muse Spark.
-- Use Kimi only when explicitly requested.
+- Muse: default worker, including large changes and difficult debugging.
+- GLM: alternative when Muse's data-use terms are unsuitable, or for a second opinion.
+- Sol: difficult reasoning, engineering, or a second opinion.
+- Astra: only when explicitly requested, including for reviews.
 
-Give each worker a narrow outcome, file scope, and verification. Keep one writer
-per file, and do not duplicate delegated work.
+Do not assume another model is better. Before switching, check why the worker failed;
+give missing context or tools to the same worker and resume it.
 
-## Worktrees
+Follow the project's provider restrictions for workers and reviewers. Muse Contributor
+may use submitted content for training: ask before first use unless already approved
+for this work.
 
-Edit the primary checkout directly. Use the `worktree` CLI for delegated
-worktrees, and remove them after integration or abandonment.
+## Execution
 
-## Failure
-
-If an agent stops early or skips the verdict, resume it. Send blockers back to
-the same worker. Escalate only if it still can't finish: Muse Spark to GLM 5.3 Flash,
-then GLM 5.3 Flash to Sol; skip straight to Sol when GLM 5.3 Flash is unavailable.
+- Give each worker a clear task and checks to run. Avoid assigning duplicate tasks.
+- Use separate worktrees for parallel implementation; see `parallel-work`.
+- The primary merges changes, resolves conflicts, and verifies the combined result.
 
 ## Review
 
-Keep reviews read-only — put it in the task instructions; permissions don't
-enforce roles. Two reviewers per change, at least one from a different model
-family than the author. Defaults, swaps, and merging verdicts: see the
-`ask-for-review` skill.
-
-## Acceptance
-
-Require focused verification, resolve review blockers, compare ports with pinned
-sources when applicable, and run final checks after integration.
+Self-review and run checks. Add an independent reviewer when a second opinion would
+help establish correctness, especially when mistakes would be costly. Add more only
+for a specific unresolved concern or the user's request. Follow requested counts,
+including no delegation. Use `ask-for-review`; check findings before acting on them.

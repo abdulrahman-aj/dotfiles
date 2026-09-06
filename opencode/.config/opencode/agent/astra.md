@@ -1,8 +1,8 @@
 ---
-description: Cross-family reviewer; implements only when explicitly delegated.
+description: Frontier OpenAI model for the hardest work; explicit-only, never auto-delegated.
 mode: subagent
-model: openai/gpt-5.6-luna
-reasoningEffort: high
+model: openai/gpt-6-astra
+reasoningEffort: medium
 permission:
   task: deny
 ---

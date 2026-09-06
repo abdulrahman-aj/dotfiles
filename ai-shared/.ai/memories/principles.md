@@ -10,7 +10,7 @@
 * **Comments**: explain why, not what. Reserve comments for design rationale, invariants, non-obvious performance decisions, and external constraints.
 
 ## Code Style
-* **Nesting**: keep nesting to three levels or fewer; extract or return early.
+* **Nesting**: reduce nesting for readability, not arbitrary limits.
 * **Line length**: prefer lines under 100 characters.
 * **Scripts**: prefer standalone files over long shell or Python strings.
 
@@ -18,16 +18,16 @@
 * **Test what you fear**: prioritize code most likely to break or that took real effort to get right.
 * **Behavior over implementation**: test observable behavior, not internal details.
 * **Avoid brittle tests**: prefer assertions that survive refactoring.
-* **Bug discipline**: every bug fix gets a regression test.
+* **Bug discipline**: add a regression test for fixes; use direct checks when automation is impractical.
 * **Test dependencies**: install missing verification tools. Prefer a temporary `nix shell`; downloads are allowed.
 
 ## Refactoring
-* **Scout rule**: leave the code cleaner than you found it.
+* **Scout rule**: leave touched code cleaner; keep cleanup within the task's scope.
 * **Chesterton's fence**: before removing an existing constraint, understand why it exists.
-* **Refactor first**: make the change easy, then make the easy change.
+* **Refactoring**: refactor to simplify or safeguard the requested change.
 
 ## Workflow
-* **Plan first**: create a task list for work with 3+ steps or architectural decisions.
+* **Planning**: use task lists when they help.
 * **Verify**: don't declare success without evidence (tests, logs, or observable behavior).
 * **Root cause**: solve the underlying cause, not the symptom.
 * **Tracer bullets**: build a thin end-to-end slice before filling in details.
@@ -38,7 +38,7 @@
 ## Automation
 * **Automate friction**: turn recurring manual work and preventable failures into project-local guardrails.
 * **Evidence first**: automate observed friction, not hypothetical problems. Ask before adding dependencies or changing shared workflows.
-* **Recurring commands**: expose two or more through the existing task runner or a small Makefile.
+* **Recurring commands**: use the existing task runner for frequently repeated commands.
 
 ## Collaboration
 * **Approval required**: get explicit user approval before Git commits or destructive actions.
