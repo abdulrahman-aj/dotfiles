@@ -55,7 +55,7 @@ Single source of truth for shared rules: `ai-shared/.ai/memories/*.md`.
 OpenCode-only rules live in `opencode/.config/opencode/memories/` and are added
 to OpenCode's `instructions` array.
 
-Shared skills (`automate-friction`, `remember`, `todo`,
+Shared skills (`automate-friction`, `frontend-design`, `grill-me`, `remember`, `todo`,
 `todo-add`, `update-context`) live in `ai-shared/.agents/skills/`, stowed to
 `~/.agents/skills/`. OpenCode reads them natively.
 
