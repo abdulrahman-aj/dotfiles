@@ -11,6 +11,7 @@ all:
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
+	@bash scripts/install-herdr-integrations.sh "$(TARGET_ABS)"
 
 check:
 	@bash scripts/check-prereqs.sh

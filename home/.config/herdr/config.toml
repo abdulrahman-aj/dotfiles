@@ -58,6 +58,13 @@ accent = "blue"
 confirm_close = true
 prompt_new_tab_name = false
 
+[ui.toast]
+delivery = "system"
+delay_seconds = 1
+
+[ui.sound]
+enabled = true
+
 [[keys.command]]
 key = "alt+z"
 type = "shell"
