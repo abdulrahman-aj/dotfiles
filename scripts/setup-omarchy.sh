@@ -24,6 +24,7 @@ if [[ ! -f "$HOME/.local/state/omarchy/preinstalls-removed" ]]; then
 fi
 
 omarchy pkg add alacritty fish git-delta github-cli starship stow
+omarchy pkg add omarchy-fish
 omarchy pkg add opencode
 omarchy pkg aur add google-chrome
 omarchy install browser zen
