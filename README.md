@@ -18,7 +18,7 @@ personal configuration and packages.
 
 ## Usage
 
-- `make` - deploy everything (stow all packages + AI, Neovim, and Fish setup)
+- `make` - deploy everything (stow home/ + AI, Neovim, and Fish setup)
 - `make check` - report missing requirements and unmanaged conflicts without changes
 - `make test` - run the deployment tests in isolated temporary homes
 - `make unstow` - remove repo-managed links without deleting generated tool data

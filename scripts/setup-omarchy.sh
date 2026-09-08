@@ -43,4 +43,6 @@ fi
 # Mise-managed dev tools.
 mise use -g npm:hunkdiff
 
-chsh -s "$(command -v fish)" "$USER"
+if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v fish)" ]]; then
+    chsh -s "$(command -v fish)" "$USER"
+fi

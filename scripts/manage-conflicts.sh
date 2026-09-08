@@ -2,19 +2,19 @@
 set -euo pipefail
 
 usage() {
-    echo "usage: $0 {check|backup} TARGET PACKAGE..." >&2
+    echo "usage: $0 {check|backup} TARGET" >&2
     exit 2
 }
 
-[[ $# -ge 3 ]] || usage
+[[ $# -eq 2 ]] || usage
 
 mode="$1"
 target="$2"
-shift 2
 
 [[ "$mode" == "check" || "$mode" == "backup" ]] || usage
 
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+package_root="$repo/home"
 target="$(realpath -m "$target")"
 declare -a conflicts=()
 declare -A seen=()
@@ -28,8 +28,7 @@ is_managed_path() {
 }
 
 find_blocking_ancestor() {
-    local package_root="$1"
-    local relative_path="$2"
+    local relative_path="$1"
     local prefix=""
     local source_path target_path
     local -a parts
@@ -54,33 +53,26 @@ find_blocking_ancestor() {
 add_conflict() {
     local relative_path="$1"
 
+    # Several files can share one blocking ancestor; back it up only once.
     if [[ -z "${seen[$relative_path]+x}" ]]; then
         conflicts+=("$relative_path")
         seen["$relative_path"]=1
     fi
 }
 
-for package in "$@"; do
-    package_root="$repo/$package"
-    [[ -d "$package_root" ]] || {
-        echo "Unknown stow package: $package" >&2
-        exit 2
-    }
+while IFS= read -r -d '' source_path; do
+    relative_path="${source_path#"$package_root"/}"
+    if blocking_path="$(find_blocking_ancestor "$relative_path")"; then
+        add_conflict "$blocking_path"
+        continue
+    fi
 
-    while IFS= read -r -d '' source_path; do
-        relative_path="${source_path#"$package_root"/}"
-        if blocking_path="$(find_blocking_ancestor "$package_root" "$relative_path")"; then
-            add_conflict "$blocking_path"
-            continue
-        fi
-
-        target_path="$target/$relative_path"
-        if [[ -e "$target_path" || -L "$target_path" ]] \
-            && ! is_managed_path "$source_path" "$target_path"; then
-            add_conflict "$relative_path"
-        fi
-    done < <(find "$package_root" \( -type f -o -type l \) -print0)
-done
+    target_path="$target/$relative_path"
+    if [[ -e "$target_path" || -L "$target_path" ]] \
+        && ! is_managed_path "$source_path" "$target_path"; then
+        add_conflict "$relative_path"
+    fi
+done < <(find "$package_root" \( -type f -o -type l \) -print0)
 
 if ((${#conflicts[@]} == 0)); then
     echo "No unmanaged conflicts found"

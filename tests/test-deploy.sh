@@ -4,7 +4,6 @@ set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo"
 
-packages=(bin fish alacritty zed git cloc lazygit herdr hunk ai-shared opencode omarchy)
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
 
@@ -19,7 +18,7 @@ test_conflict_backup() {
 
     mkdir -p "$target/.config"
     printf 'existing fish config\n' > "$target/.config/fish"
-    bash scripts/manage-conflicts.sh backup "$target" "${packages[@]}" >/dev/null
+    bash scripts/manage-conflicts.sh backup "$target" >/dev/null
 
     backup="$(find "$target/.dotfiles-backups" -path '*/.config/fish' -type f -print -quit)"
     [[ -n "$backup" ]] || fail "blocking path was not backed up"
@@ -31,7 +30,7 @@ test_stow_round_trip() {
     local leftover_link
 
     mkdir -p "$target"
-    stow --no-folding -R -t "$target" "${packages[@]}"
+    stow --no-folding -R -t "$target" home
 
     [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
         || fail "Omarchy directory was folded into the repository"

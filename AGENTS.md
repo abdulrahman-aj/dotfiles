@@ -4,27 +4,14 @@ Personal dotfiles managed with GNU Stow. Deploying to a new machine: clone the r
 
 ## Structure
 
-Each top-level directory is a stow package that mirrors `~/`:
-
-| Package | Stows to | Contents |
-|---------|----------|----------|
-| `fish/` | `~/.config/fish/`, `~/.config/starship.toml` | Fish shell config, Starship prompt |
-| `alacritty/` | `~/.config/alacritty/` | Terminal config |
-| `zed/` | `~/.config/zed/` | Editor settings, keymap, tasks, theme |
-| `git/` | `~/.gitconfig`, `~/.config/git/` | Git global config + global gitignore |
-| `bin/` | `~/.local/bin/` | Personal executable commands |
-| `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
-| `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
-| `herdr/` | `~/.config/herdr/` | Herdr terminal workspace manager config |
-| `hunk/` | `~/.config/hunk/` | Hunk diff viewer preferences |
-| `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills |
-| `opencode/` | `~/.config/opencode/` | OpenCode config, agents, skills, tool-scoped memories |
-| `omarchy/` | `~/.config/{hypr,omarchy}/`, XDG defaults | Omarchy-only desktop preferences |
+`home/` is a stow package that mirrors `~/` 1:1: strip the `home/` prefix to
+get the deployed path (e.g. `home/.config/fish/config.fish` → `~/.config/fish/config.fish`).
+New dotfiles go under `home/` at their deployed relative path.
 
 ## Key Commands
 
 ```bash
-make          # deploy everything (stow all packages + AI setup)
+make          # deploy everything (stow home/ + AI setup)
 make check    # dry-run and report conflicts
 make test     # run deployment tests in isolated temporary homes
 make unstow   # remove all symlinks
@@ -41,32 +28,28 @@ directory.
   individual files instead of linking whole directory trees into the repo.
 - Fisher and Kickstart.nvim are external bootstrap steps run after Stow. They honor
   `TARGET`, preserve unrelated existing configurations, and are safe to retry.
-- The `omarchy` package is always stowed. Original Omarchy installs profile
-  packages; other systems install no packages, though applicable XDG defaults
-  remain active.
-- Omarchy package installation is skipped when deploying to an alternate `TARGET`.
-- `omarchy/.config/xdg-terminals.list` owns terminal preference order; do not
-  replace it with the single-entry output of `omarchy default terminal`.
-- The Omarchy package is authoritative for `shell.json`, `mimeapps.list`, and
-  `xdg-terminals.list`. Applications may atomically replace their Stow links;
-  the next deployment backs up changed files and restores repository versions.
+- `home/` is always stowed in full. The Omarchy setup step (preinstall removal,
+  package/browser/editor installs, `chsh`) runs only on Omarchy hosts deploying
+  to the real `$HOME`; elsewhere the stowed XDG defaults apply as-is.
+- The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
+  sets terminal preference order — do not replace it with the single-entry
+  output of `omarchy default terminal`). Applications may atomically replace
+  their Stow links; the next deployment backs up changed files and restores
+  repository versions.
 
-## AI Preferences Architecture
+## AI Memories & Skills
 
-Single source of truth for shared rules: `ai-shared/.ai/memories/*.md`.
-OpenCode-only rules live in `opencode/.config/opencode/memories/` and are added
+Single source of truth for shared rules: `home/.ai/memories/*.md`.
+OpenCode-only rules live in `home/.config/opencode/memories/` and are added
 to OpenCode's `instructions` array.
 
 Shared skills (`automate-friction`, `frontend-design`, `grill-me`, `remember`, `todo`,
-`todo-add`, `update-context`) live in `ai-shared/.agents/skills/`, stowed to
-`~/.agents/skills/`. OpenCode reads them natively.
+`todo-add`, `update-context`) live in `home/.agents/skills/`. OpenCode reads them natively.
 
-## Adding a New Memory
-
-Use the `/remember` skill — it handles shared and tool-scoped (OpenCode-only) memories end to end. Manual procedure: `ai-shared/.agents/skills/remember/SKILL.md`.
+To add a memory, use the `/remember` skill (manual procedure:
+`home/.agents/skills/remember/SKILL.md`).
 
 ## Constraints
 
 - Keep dotfile configuration portable; avoid platform- or package-manager-specific assumptions.
 - Never commit without explicit user authorization.
-- When adding a new stow package, update the package table in this file.

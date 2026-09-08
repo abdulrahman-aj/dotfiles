@@ -2,8 +2,8 @@
 set -euo pipefail
 
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-command="$repo/bin/.local/bin/worktree"
-completion="$repo/fish/.config/fish/completions/worktree.fish"
+command="$repo/home/.local/bin/worktree"
+completion="$repo/home/.config/fish/completions/worktree.fish"
 test_root="$(mktemp -d)"
 source_repo="$test_root/source"
 physical_worktrees="$test_root/physical-worktrees"
