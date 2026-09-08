@@ -72,9 +72,9 @@ description = "lazygit here in a new tab"
 
 [[keys.command]]
 key = "alt+v"
-type = "popup"
-command = "nvim \"${HERDR_ACTIVE_PANE_CWD:-.}\""
-description = "open neovim here"
+type = "shell"
+command = "herdr-tab-run nvim \"${HERDR_ACTIVE_PANE_CWD:-.}\""
+description = "open neovim here in a new tab"
 
 [[keys.command]]
 key = "alt+d"
