@@ -5,7 +5,8 @@ needs much of the current conversation in the primary agent.
 
 ## Routing
 
-Prefer a cheaper suitable agent for bounded exploration.
+Do not assume `explore` or `general` is cheap. Check its configured model; if unknown,
+use an explicitly named worker with known model routing.
 
 - Muse: default worker, including large changes and difficult debugging.
 - GLM: alternative when Muse's data-use terms are unsuitable, or for a second opinion.

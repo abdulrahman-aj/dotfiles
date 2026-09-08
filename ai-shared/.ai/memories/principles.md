@@ -34,6 +34,7 @@
 * **Reversible first**: flag hard-to-reverse decisions before making them.
 * **Port omissions**: explicitly document every omitted upstream behavior in the target repository.
 * **Reuse context**: continue with the same sub-agent unless independence or changed scope requires a new one.
+* **Delegation**: use cheaper suitable workers for routine tasks, including verification; keep key decisions and synthesis with the primary. Keep trivial work local.
 
 ## Automation
 * **Automate friction**: turn recurring manual work and preventable failures into project-local guardrails.

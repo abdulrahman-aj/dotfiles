@@ -13,6 +13,16 @@
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "enabled": true
+    },
+    "linear-source": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
+      "enabled": true
+    },
+    "todoist": {
+      "type": "remote",
+      "url": "https://ai.todoist.net/mcp",
+      "enabled": true
     }
   }
 }
