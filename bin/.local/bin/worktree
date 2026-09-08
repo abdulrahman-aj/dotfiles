@@ -7,10 +7,11 @@ Usage:
   worktree <command> [<args>]
 
 Commands:
-  create <task-slug>  Create or print a managed worktree path.
+  create <task-slug>...  Create or print managed worktree paths (fail-fast).
   list [--porcelain]  List all worktrees for the current repository.
-  path <task-slug>    Print the managed path for a task.
-  remove <task-slug>  Remove a clean task worktree; retain its branch.
+  path <task-slug>...    Print the managed paths for tasks (all-or-nothing).
+  remove [--force] <task-slug>...
+                        Remove task worktrees; retain branches (--force discards changes).
   repair [path...]    Repair Git worktree metadata after a move.
   help                Show this help.
 
@@ -27,8 +28,16 @@ die() {
   exit 1
 }
 
+err() {
+  printf 'worktree: %s\n' "$*" >&2
+}
+
+valid_slug() {
+  [[ ${1:-} =~ ^[a-z0-9][a-z0-9-]*$ ]]
+}
+
 task_slug() {
-  [[ ${1:-} =~ ^[a-z0-9][a-z0-9-]*$ ]] ||
+  valid_slug "${1:-}" ||
     die "task slug must use lowercase letters, digits, and hyphens"
 }
 
@@ -75,54 +84,77 @@ managed_path() {
   printf '%s/%s/%s\n' "$worktrees_dir" "$(basename "$root")" "$task"
 }
 
-create() {
-  local task=$1
-  local root branch path existing
-  task_slug "$task"
-  root=$(repository_root)
+create_one() {
+  local root=$1
+  local task=$2
+  local branch path existing
   branch="work/$task"
   path=$(managed_path "$root" "$task")
   existing=$(worktree_for_branch "$root" "$branch")
 
   if [[ -n $existing ]]; then
     [[ -d $existing ]] ||
-      die "registered worktree '$existing' is missing; run 'worktree repair <new-path>' if moved or 'git worktree prune' if deleted"
+      die "$task: registered worktree '$existing' is missing; run 'worktree repair <new-path>' if moved or 'git worktree prune' if deleted"
     if same_directory "$existing" "$path"; then
       printf '%s\n' "$path"
       return
     fi
-    die "branch '$branch' is already checked out at '$existing'"
+    die "$task: branch '$branch' is already checked out at '$existing'"
   fi
 
-  [[ ! -e $path ]] || die "path already exists but is not registered as '$branch': '$path'"
+  [[ ! -e $path ]] || die "$task: path already exists but is not registered as '$branch': '$path'"
   mkdir -p "$(dirname "$path")"
   if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
     git -C "$root" worktree add "$path" "$branch" >&2
   else
-    git -C "$root" show-ref --verify --quiet refs/heads/main || die "local branch 'main' does not exist"
+    git -C "$root" show-ref --verify --quiet refs/heads/main || die "$task: local branch 'main' does not exist"
     git -C "$root" worktree add -b "$branch" "$path" main >&2
   fi
   printf '%s\n' "$path"
 }
 
-remove() {
-  local task=$1
-  local root branch path current_root target_root actual_branch
-  task_slug "$task"
-  root=$(repository_root)
+remove_one() {
+  local root=$1
+  local current_root=$2
+  local task=$3
+  local force=$4
+  local branch path target_root actual_branch
+  valid_slug "$task" || {
+    err "$task: task slug must use lowercase letters, digits, and hyphens"
+    return 1
+  }
   branch="work/$task"
   path=$(managed_path "$root" "$task")
-  [[ -d $path ]] || die "no worktree exists at '$path'"
-  actual_branch=$(git -C "$path" branch --show-current 2>/dev/null) ||
-    die "'$path' is not a Git worktree"
-  [[ $actual_branch == "$branch" ]] ||
-    die "'$path' is not checked out on '$branch'"
-  current_root=$(git rev-parse --show-toplevel)
+  [[ -d $path ]] || {
+    err "$task: no worktree exists at '$path'"
+    return 1
+  }
+  actual_branch=$(git -C "$path" branch --show-current 2>/dev/null) || {
+    err "$task: '$path' is not a Git worktree"
+    return 1
+  }
+  [[ $actual_branch == "$branch" ]] || {
+    err "$task: '$path' is not checked out on '$branch'"
+    return 1
+  }
   target_root=$(git -C "$path" rev-parse --show-toplevel)
-  [[ $current_root != "$target_root" ]] || die "leave '$path' before removing it"
+  [[ $current_root != "$target_root" ]] || {
+    err "$task: leave '$path' before removing it"
+    return 1
+  }
 
-  # Git refuses dirty worktrees, preserving unfinished worker changes.
-  git -C "$root" worktree remove "$path"
+  # Without --force, git refuses dirty worktrees, preserving unfinished changes.
+  if [[ $force == 1 ]]; then
+    git -C "$root" worktree remove --force "$path" || {
+      err "$task: failed to remove '$path'"
+      return 1
+    }
+  else
+    git -C "$root" worktree remove "$path" || {
+      err "$task: failed to remove '$path'"
+      return 1
+    }
+  fi
 }
 
 main() {
@@ -131,8 +163,16 @@ main() {
 
   case $command in
     create)
-      [[ $# -eq 2 ]] || die "usage: worktree create <task-slug>"
-      create "$2"
+      [[ $# -ge 2 ]] || die "usage: worktree create <task-slug>..."
+      for arg in "${@:2}"; do
+        [[ $arg != -* ]] || die "usage: worktree create <task-slug>..."
+      done
+      root=$(repository_root)
+      [[ ${WORKTREES_DIR:-"$HOME/Worktrees"} == /* ]] || die "WORKTREES_DIR must be an absolute path"
+      for task in "${@:2}"; do
+        valid_slug "$task" || die "$task: task slug must use lowercase letters, digits, and hyphens"
+        create_one "$root" "$task"
+      done
       ;;
     list)
       [[ $# -eq 1 || ($# -eq 2 && $2 == --porcelain) ]] ||
@@ -141,14 +181,49 @@ main() {
       git -C "$root" worktree list "${@:2}"
       ;;
     path)
-      [[ $# -eq 2 ]] || die "usage: worktree path <task-slug>"
-      task_slug "$2"
+      [[ $# -ge 2 ]] || die "usage: worktree path <task-slug>..."
+      for arg in "${@:2}"; do
+        [[ $arg != -* ]] || die "usage: worktree path <task-slug>..."
+      done
       root=$(repository_root)
-      managed_path "$root" "$2"
+      [[ ${WORKTREES_DIR:-"$HOME/Worktrees"} == /* ]] || die "WORKTREES_DIR must be an absolute path"
+      for task in "${@:2}"; do
+        valid_slug "$task" || die "$task: task slug must use lowercase letters, digits, and hyphens"
+      done
+      for task in "${@:2}"; do
+        managed_path "$root" "$task"
+      done
       ;;
     remove)
-      [[ $# -eq 2 ]] || die "usage: worktree remove <task-slug>"
-      remove "$2"
+      shift
+      local force=0
+      local tasks=()
+      for arg in "$@"; do
+        if [[ $arg == --force ]]; then
+          force=1
+        elif [[ $arg == -* ]]; then
+          die "usage: worktree remove [--force] <task-slug>..."
+        else
+          tasks+=("$arg")
+        fi
+      done
+      [[ ${#tasks[@]} -ge 1 ]] || die "usage: worktree remove [--force] <task-slug>..."
+      root=$(repository_root)
+      [[ ${WORKTREES_DIR:-"$HOME/Worktrees"} == /* ]] || die "WORKTREES_DIR must be an absolute path"
+      current_root=$(git rev-parse --show-toplevel)
+      local succeeded=0 failed=0
+      local task
+      for task in "${tasks[@]}"; do
+        if remove_one "$root" "$current_root" "$task" "$force"; then
+          succeeded=$((succeeded + 1))
+        else
+          failed=$((failed + 1))
+        fi
+      done
+      if [[ $failed -gt 0 ]]; then
+        err "removed $succeeded of ${#tasks[@]}"
+        exit 1
+      fi
       ;;
     repair)
       shift

@@ -38,11 +38,12 @@ end
 complete -c worktree -n __worktree_no_subcommand -f -a create -d 'Create a managed worktree'
 complete -c worktree -n __worktree_no_subcommand -f -a list -d 'List repository worktrees'
 complete -c worktree -n __worktree_no_subcommand -f -a path -d 'Print a managed worktree path'
-complete -c worktree -n __worktree_no_subcommand -f -a remove -d 'Remove a clean managed worktree'
+complete -c worktree -n __worktree_no_subcommand -f -a remove -d 'Remove a managed worktree'
 complete -c worktree -n __worktree_no_subcommand -f -a repair -d 'Repair Git worktree metadata'
 complete -c worktree -n __worktree_no_subcommand -f -a help -d 'Show command help'
 complete -c worktree -n __worktree_no_subcommand -s h -d 'Show command help'
 complete -c worktree -n __worktree_no_subcommand -l help -d 'Show command help'
 complete -c worktree -n '__fish_seen_subcommand_from create' -f
 complete -c worktree -n '__fish_seen_subcommand_from path remove' -f -a '(__worktree_task_names)'
+complete -c worktree -n '__fish_seen_subcommand_from remove' -f -l force -d 'Discard uncommitted changes'
 complete -c worktree -n '__fish_seen_subcommand_from list' -f -a '--porcelain' -d 'Use machine-readable output'
