@@ -1,7 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "username": "Abdulrahman",
-  "plugin": ["@mohak34/opencode-notifier@latest"],
   "instructions": [
     "~/.ai/memories/personal.md",
     "~/.ai/memories/principles.md",
