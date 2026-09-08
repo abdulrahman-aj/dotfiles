@@ -40,4 +40,7 @@ if ! omarchy plugin list 2>/dev/null | grep -q "aj.opencode-go"; then
     omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
 fi
 
+# Mise-managed dev tools.
+mise use -g npm:hunkdiff
+
 chsh -s "$(command -v fish)" "$USER"

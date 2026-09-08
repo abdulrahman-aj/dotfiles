@@ -9,8 +9,8 @@
     "hide": "on_success",
   },
   {
-    "label": "git diff",
-    "command": "git diff | delta --width=$(tput cols) | less -R",
+    "label": "hunk diff",
+    "command": "EDITOR=zed hunk diff",
     "allow_concurrent_runs": false,
     "use_new_terminal": false,
     "reveal": "always",

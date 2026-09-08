@@ -1,0 +1,8 @@
+# Follow the terminal, split like delta side-by-side.
+theme = "auto"
+transparent_background = true
+mode = "split"
+line_numbers = true
+
+[keybindings]
+"hunk.review.alignCurrentLineCenter" = "z"
