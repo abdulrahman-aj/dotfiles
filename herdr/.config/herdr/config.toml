@@ -1,0 +1,83 @@
+# Home-row, leaderless. Plain alt = go/make, shift+alt = modify.
+# Spaces > tabs, no panes. Numbers are tabs, everywhere else too.
+
+[theme]
+name = "terminal"
+
+[theme.custom]
+panel_bg = "black"
+
+[keys]
+switch_workspace = ""
+previous_workspace = ["alt+k", "alt+up"]
+next_workspace = ["alt+j", "alt+down"]
+new_workspace = "alt+s"
+close_workspace = "alt+w"
+rename_workspace = "alt+shift+s"
+
+switch_tab = "alt+1..9"
+previous_tab = ["alt+h", "alt+left"]
+next_tab = ["alt+l", "alt+right"]
+new_tab = "alt+t"
+close_tab = ""
+rename_tab = "alt+shift+t"
+move_tab_previous = ["alt+shift+h", "alt+shift+left"]
+move_tab_next = ["alt+shift+l", "alt+shift+right"]
+
+focus_pane_left = ""
+focus_pane_down = ""
+focus_pane_up = ""
+focus_pane_right = ""
+split_horizontal = ""
+split_vertical = ""
+close_pane = "alt+esc"
+zoom = ""
+
+reload_config = "alt+r"
+help = "alt+?"
+goto = "alt+p"
+workspace_picker = ""
+toggle_sidebar = "alt+b"
+
+settings = ""
+detach = ""
+open_notification_target = ""
+new_worktree = ""
+rename_pane = ""
+copy_mode = ""
+edit_scrollback = ""
+previous_agent = ""
+next_agent = ""
+focus_agent = ""
+cycle_pane_next = ""
+cycle_pane_previous = ""
+last_pane = ""
+
+[ui]
+accent = "blue"
+confirm_close = true
+prompt_new_tab_name = false
+
+[[keys.command]]
+key = "alt+z"
+type = "shell"
+command = "zed \"${HERDR_ACTIVE_PANE_CWD:-.}\""
+description = "open zed here"
+
+[[keys.command]]
+key = "alt+g"
+type = "shell"
+command = "herdr-tab-run lazygit"
+description = "lazygit here in a new tab"
+
+[[keys.command]]
+key = "alt+v"
+type = "popup"
+command = "nvim \"${HERDR_ACTIVE_PANE_CWD:-.}\""
+description = "open neovim here"
+
+[[keys.command]]
+key = "alt+d"
+type = "shell"
+command = "herdr-tab-run hunk diff"
+description = "hunk diff here in a new tab"

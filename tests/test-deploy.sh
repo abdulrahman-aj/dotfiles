@@ -4,7 +4,7 @@ set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo"
 
-packages=(bin fish alacritty zed git cloc lazygit ai-shared opencode omarchy)
+packages=(bin fish alacritty zed git cloc lazygit herdr hunk ai-shared opencode omarchy)
 test_root="$(mktemp -d)"
 trap 'rm -rf "$test_root"' EXIT
 

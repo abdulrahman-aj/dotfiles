@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Open a command in a new Herdr tab rooted at the current pane's directory.
+# Intended as a [[keys.command]] shell binding, e.g.:
+#
+#   [[keys.command]]
+#   key = "alt+g"
+#   type = "shell"
+#   command = "herdr-tab-run lazygit"
+#   description = "lazygit here in a new tab"
+#
+# Usage: herdr-tab-run <command> [args...]
+set -euo pipefail
+
+die() {
+    printf 'herdr-tab-run: %s\n' "$*" >&2
+    exit 1
+}
+
+command -v herdr >/dev/null || die "herdr not on PATH"
+command -v jq >/dev/null || die "jq not on PATH"
+[[ $# -ge 1 ]] || die "usage: herdr-tab-run <command> [args...]"
+[[ -n ${HERDR_ACTIVE_PANE_CWD:-} ]] || die "HERDR_ACTIVE_PANE_CWD is not set"
+cmd=("$@")
+
+created="$(herdr tab create --cwd "$HERDR_ACTIVE_PANE_CWD" --label "$1" --focus \
+    | jq -r '[.result.tab.tab_id, .result.root_pane.pane_id] | join(" ")')" \
+    || die "tab create failed"
+tab="${created%% *}" pane="${created##* }"
+[[ -n $tab && -n $pane && $tab != "$pane" ]] || die "tab create returned no tab/pane ids"
+
+# `exec` replaces the shell so the tab dies with the command: quitting
+# lazygit (or whatever runs here) ends the pane process and the tab
+# cascades shut instead of dropping back to a prompt.
+if ! herdr pane run "$pane" exec "${cmd[@]}" >/dev/null; then
+    herdr tab close "$tab" >/dev/null 2>&1 || true
+    die "failed to run: ${cmd[*]}"
+fi

@@ -1,6 +1,6 @@
 .PHONY: all check test unstow
 
-PKGS := bin fish alacritty zed git cloc lazygit ai-shared opencode omarchy
+PKGS := bin fish alacritty zed git cloc lazygit herdr hunk ai-shared opencode omarchy
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow

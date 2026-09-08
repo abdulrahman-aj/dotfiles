@@ -15,6 +15,8 @@ Each top-level directory is a stow package that mirrors `~/`:
 | `bin/` | `~/.local/bin/` | Personal executable commands |
 | `cloc/` | `~/.config/cloc/` | cloc default options (global excludes) |
 | `lazygit/` | `~/.config/lazygit/` | LazyGit configuration |
+| `herdr/` | `~/.config/herdr/` | Herdr terminal workspace manager config |
+| `hunk/` | `~/.config/hunk/` | Hunk diff viewer preferences |
 | `ai-shared/` | `~/.ai/`, `~/.agents/` | Shared AI memories + skills |
 | `opencode/` | `~/.config/opencode/` | OpenCode config, agents, skills, tool-scoped memories |
 | `omarchy/` | `~/.config/{hypr,omarchy}/`, XDG defaults | Omarchy-only desktop preferences |
