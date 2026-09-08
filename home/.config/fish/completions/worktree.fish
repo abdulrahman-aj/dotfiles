@@ -1,5 +1,5 @@
 function __worktree_no_subcommand
-    not __fish_seen_subcommand_from create list path remove repair help
+    not __fish_seen_subcommand_from add list path remove repair help
 end
 
 function __worktree_task_names
@@ -35,7 +35,7 @@ function __worktree_task_names
     end
 end
 
-complete -c worktree -n __worktree_no_subcommand -f -a create -d 'Create a managed worktree'
+complete -c worktree -n __worktree_no_subcommand -f -a add -d 'Create a managed worktree'
 complete -c worktree -n __worktree_no_subcommand -f -a list -d 'List repository worktrees'
 complete -c worktree -n __worktree_no_subcommand -f -a path -d 'Print a managed worktree path'
 complete -c worktree -n __worktree_no_subcommand -f -a remove -d 'Remove a managed worktree'
@@ -43,7 +43,9 @@ complete -c worktree -n __worktree_no_subcommand -f -a repair -d 'Repair Git wor
 complete -c worktree -n __worktree_no_subcommand -f -a help -d 'Show command help'
 complete -c worktree -n __worktree_no_subcommand -s h -d 'Show command help'
 complete -c worktree -n __worktree_no_subcommand -l help -d 'Show command help'
-complete -c worktree -n '__fish_seen_subcommand_from create' -f
+complete -c worktree -n '__fish_seen_subcommand_from add' -f
 complete -c worktree -n '__fish_seen_subcommand_from path remove' -f -a '(__worktree_task_names)'
 complete -c worktree -n '__fish_seen_subcommand_from remove' -f -l force -d 'Discard uncommitted changes'
+complete -c worktree -n '__fish_seen_subcommand_from remove add path list repair' -s h -l help -d 'Show command help'
 complete -c worktree -n '__fish_seen_subcommand_from list' -f -a '--porcelain' -d 'Use machine-readable output'
+complete -c worktree -n '__fish_seen_subcommand_from help' -f -a 'add list path remove repair help'

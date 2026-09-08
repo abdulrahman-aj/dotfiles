@@ -7,17 +7,20 @@ Usage:
   worktree <command> [<args>]
 
 Commands:
-  create <task-slug>...  Create or print managed worktree paths (fail-fast).
-  list [--porcelain]  List all worktrees for the current repository.
+  add <task-slug>...     Create or print managed worktree paths (fail-fast).
+  list [--porcelain]     List all worktrees as a readable table.
   path <task-slug>...    Print the managed paths for tasks (all-or-nothing).
   remove [--force] <task-slug>...
-                        Remove task worktrees; retain branches (--force discards changes).
-  repair [path...]    Repair Git worktree metadata after a move.
-  help                Show this help.
+                         Remove task worktrees; retain branches (--force discards changes).
+  repair [path...]       Repair Git worktree metadata after a move.
+  help [<command>]       Show this help or help for one command.
+
+Run 'worktree <command> --help' for command-specific help.
 
 Task slugs use lowercase letters, digits, and hyphens. Managed worktrees live
 at ${WORKTREES_DIR:-$HOME/Worktrees}/<repository>/<task-slug> on branches named
-work/<task-slug>. New branches always start from the repository's local main.
+work/<task-slug>. New branches start from the repository's default branch
+(origin/HEAD, then local main, then local master).
 Repository directory names must be unique under the worktree directory. Set
 WORKTREES_DIR to isolate repositories with the same name.
 EOF
@@ -30,6 +33,76 @@ die() {
 
 err() {
   printf 'worktree: %s\n' "$*" >&2
+}
+
+cmd_usage() {
+  case ${1:-} in
+    add)
+      cat <<'EOF'
+Usage:
+  worktree add <task-slug>...
+
+Create managed worktrees on branches named work/<task-slug>, or print their
+paths if they already exist. Stops at the first failure.
+
+New branches start from the repository's default branch (origin/HEAD, then
+local main, then local master).
+EOF
+      ;;
+    list)
+      cat <<'EOF'
+Usage:
+  worktree list [--porcelain]
+
+List all worktrees for the current repository as a readable TASK / BRANCH /
+PATH table. With --porcelain, print git's machine-readable format instead.
+EOF
+      ;;
+    path)
+      cat <<'EOF'
+Usage:
+  worktree path <task-slug>...
+
+Print the managed paths for tasks without creating anything. Validates all
+slugs before printing any path.
+EOF
+      ;;
+    remove)
+      cat <<'EOF'
+Usage:
+  worktree remove [--force] <task-slug>...
+
+Remove task worktrees but retain their branches. Continues past individual
+failures and summarizes (e.g. 'removed 2 of 3'). Without --force, git refuses
+to remove worktrees with uncommitted changes.
+EOF
+      ;;
+    repair)
+      cat <<'EOF'
+Usage:
+  worktree repair [path...]
+
+Repair Git worktree metadata after a move. Must be run from the repository's
+primary worktree. Arguments are passed through to 'git worktree repair'.
+EOF
+      ;;
+    help)
+      cat <<'EOF'
+Usage:
+  worktree help [<command>]
+
+Show general help or help for one command.
+EOF
+      ;;
+  esac
+}
+
+wants_help() {
+  local arg
+  for arg in "$@"; do
+    [[ $arg == -h || $arg == --help ]] && return 0
+  done
+  return 1
 }
 
 valid_slug() {
@@ -84,7 +157,29 @@ managed_path() {
   printf '%s/%s/%s\n' "$worktrees_dir" "$(basename "$root")" "$task"
 }
 
-create_one() {
+default_base_branch() {
+  local root=$1
+  local ref
+  if ref=$(git -C "$root" symbolic-ref refs/remotes/origin/HEAD 2>/dev/null); then
+    # Keep the remote ref (e.g. origin/release/stable): the branch name alone
+    # breaks for defaults containing slashes and can resolve a divergent
+    # local branch instead of the remote's default. Ignore it if dangling.
+    ref=${ref#refs/remotes/}
+    if git -C "$root" show-ref --verify --quiet "refs/remotes/$ref"; then
+      printf '%s\n' "$ref"
+      return 0
+    fi
+  fi
+  if git -C "$root" show-ref --verify --quiet refs/heads/main; then
+    printf 'main\n'
+  elif git -C "$root" show-ref --verify --quiet refs/heads/master; then
+    printf 'master\n'
+  else
+    return 1
+  fi
+}
+
+add_one() {
   local root=$1
   local task=$2
   local branch path existing
@@ -107,8 +202,10 @@ create_one() {
   if git -C "$root" show-ref --verify --quiet "refs/heads/$branch"; then
     git -C "$root" worktree add "$path" "$branch" >&2
   else
-    git -C "$root" show-ref --verify --quiet refs/heads/main || die "$task: local branch 'main' does not exist"
-    git -C "$root" worktree add -b "$branch" "$path" main >&2
+    local base
+    base=$(default_base_branch "$root") ||
+      die "$task: no suitable base branch (tried origin/HEAD, main, master)"
+    git -C "$root" worktree add -b "$branch" "$path" "$base" >&2
   fi
   printf '%s\n' "$path"
 }
@@ -157,30 +254,94 @@ remove_one() {
   fi
 }
 
+pretty_list() {
+  local root=$1
+  local worktrees_dir=${WORKTREES_DIR:-"$HOME/Worktrees"}
+  local managed_root="$worktrees_dir/$(basename "$root")/"
+  # Git prints resolved paths, so also match against the resolved worktree dir
+  # (WORKTREES_DIR is commonly a symlink).
+  local resolved_root="$managed_root"
+  if [[ -d $worktrees_dir ]]; then
+    resolved_root="$(cd "$worktrees_dir" && pwd -P)/$(basename "$root")/"
+  fi
+  {
+    printf 'TASK\tBRANCH\tPATH\n'
+    git -C "$root" worktree list --porcelain |
+      awk -v managed_root="$managed_root" -v resolved_root="$resolved_root" '
+        function emit() {
+          task = "-"
+          if (branch ~ /^refs\/heads\/work\//) {
+            candidate = substr(branch, 17)
+            # Exact match only: a work/* branch checked out at any other path
+            # is not the managed worktree for that slug.
+            if (path == managed_root candidate || path == resolved_root candidate)
+              task = candidate
+          }
+          if (bare)
+            display = "(bare)"
+          else if (branch ~ /^refs\/heads\//)
+            display = substr(branch, 12)
+          else if (head != "")
+            display = substr(head, 1, 7) " (detached)"
+          else
+            display = "-"
+          notes = ""
+          if (locked != "")
+            notes = " [" locked "]"
+          printf "%s\t%s\t%s%s\n", task, display, path, notes
+        }
+        /^worktree / { path = substr($0, 10); head = ""; branch = ""; bare = 0; locked = ""; next }
+        /^HEAD / { head = substr($0, 6); next }
+        /^branch / { branch = substr($0, 8); next }
+        /^bare$/ { bare = 1; next }
+        /^locked/ { reason = substr($0, 8); locked = reason == "" ? "locked" : "locked: " reason; next }
+        /^prunable/ { locked = locked == "" ? "prunable" : locked ", prunable"; next }
+        /^$/ { if (path != "") emit(); path = ""; next }
+        END { if (path != "") emit() }
+      '
+  } | if command -v column >/dev/null 2>&1; then column -t -s "$(printf '\t')"; else cat; fi
+}
+
 main() {
   local command=${1:-help}
   local root current_root
 
   case $command in
-    create)
-      [[ $# -ge 2 ]] || die "usage: worktree create <task-slug>..."
+    add)
+      if [[ $# -ge 2 ]] && wants_help "${@:2}"; then
+        cmd_usage add
+        return
+      fi
+      [[ $# -ge 2 ]] || die "usage: worktree add <task-slug>..."
       for arg in "${@:2}"; do
-        [[ $arg != -* ]] || die "usage: worktree create <task-slug>..."
+        [[ $arg != -* ]] || die "usage: worktree add <task-slug>..."
       done
       root=$(repository_root)
       [[ ${WORKTREES_DIR:-"$HOME/Worktrees"} == /* ]] || die "WORKTREES_DIR must be an absolute path"
       for task in "${@:2}"; do
         valid_slug "$task" || die "$task: task slug must use lowercase letters, digits, and hyphens"
-        create_one "$root" "$task"
+        add_one "$root" "$task"
       done
       ;;
     list)
+      if [[ $# -ge 2 ]] && wants_help "${@:2}"; then
+        cmd_usage list
+        return
+      fi
       [[ $# -eq 1 || ($# -eq 2 && $2 == --porcelain) ]] ||
         die "usage: worktree list [--porcelain]"
       root=$(repository_root)
-      git -C "$root" worktree list "${@:2}"
+      if [[ ${2:-} == --porcelain ]]; then
+        git -C "$root" worktree list --porcelain
+      else
+        pretty_list "$root"
+      fi
       ;;
     path)
+      if [[ $# -ge 2 ]] && wants_help "${@:2}"; then
+        cmd_usage path
+        return
+      fi
       [[ $# -ge 2 ]] || die "usage: worktree path <task-slug>..."
       for arg in "${@:2}"; do
         [[ $arg != -* ]] || die "usage: worktree path <task-slug>..."
@@ -196,6 +357,12 @@ main() {
       ;;
     remove)
       shift
+      for arg in "$@"; do
+        if [[ $arg == -h || $arg == --help ]]; then
+          cmd_usage remove
+          return
+        fi
+      done
       local force=0
       local tasks=()
       for arg in "$@"; do
@@ -227,14 +394,33 @@ main() {
       ;;
     repair)
       shift
+      for arg in "$@"; do
+        if [[ $arg == -h || $arg == --help ]]; then
+          cmd_usage repair
+          return
+        fi
+      done
       root=$(repository_root)
       current_root=$(git rev-parse --show-toplevel)
       [[ $current_root == "$root" ]] || die "run 'worktree repair' from the repository's primary worktree"
       git worktree repair "$@"
       ;;
     help|-h|--help)
-      [[ $# -le 1 ]] || die "usage: worktree help"
-      usage
+      [[ $# -le 2 ]] || die "usage: worktree help [<command>]"
+      if [[ $# -le 1 ]]; then
+        usage
+        return
+      fi
+      case $2 in
+        add) cmd_usage add ;;
+        list) cmd_usage list ;;
+        path) cmd_usage path ;;
+        remove) cmd_usage remove ;;
+        repair) cmd_usage repair ;;
+        help) cmd_usage help ;;
+        -h|--help) usage ;;
+        *) die "unknown command '$2'; run 'worktree help'" ;;
+      esac
       ;;
     *)
       die "unknown command '$command'; run 'worktree help'"
