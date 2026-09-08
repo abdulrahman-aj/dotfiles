@@ -23,7 +23,7 @@ for this work.
 ## Execution
 
 - Give each worker a clear task and checks to run. Avoid assigning duplicate tasks.
-- Use separate worktrees for parallel implementation; see `parallel-work`.
+- Default to separate worktrees for implementation (see principles Workflow); run parallel tasks via `parallel-work`.
 - The primary merges changes, resolves conflicts, and verifies the combined result.
 
 ## Review

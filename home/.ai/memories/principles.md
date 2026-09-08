@@ -27,6 +27,7 @@
 * **Refactoring**: refactor to simplify or safeguard the requested change.
 
 ## Workflow
+* **Isolation first**: implement in a worktree (`worktree -h`); merge only after checks pass.
 * **Planning**: use task lists when they help.
 * **Verify**: don't declare success without evidence (tests, logs, or observable behavior).
 * **Root cause**: solve the underlying cause, not the symptom.

@@ -8,7 +8,7 @@ description: Use to run approved independent tasks in parallel, each in its own 
 Use for user-approved tasks that can be done independently. Get permission to commit locally.
 
 1. Ask necessary implementation questions in one message; wait for answers.
-2. Read `worktree help` and create a worktree for each task.
+2. Create (or reuse) a worktree for each task — see `worktree -h`.
 3. Start workers in parallel. Give each its task, worktree path, and check commands.
    Keep edits in that worktree; commit locally, never push. Return commits, check results, and risks.
 4. Review all changes for each task, not just its latest commit; follow `ask-for-review`.
