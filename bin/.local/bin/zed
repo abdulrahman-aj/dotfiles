@@ -1,31 +1,30 @@
 #!/usr/bin/env sh
-# Portable `zed` entrypoint: some systems ship the binary as `zeditor`.
-# Gives every shell (and non-shell parents like hunk) one name to call.
+# One `zed` name everywhere: prefer `zeditor`, else a real `zed` on PATH.
 if command -v zeditor >/dev/null 2>&1; then
     exec zeditor "$@"
 fi
-# Fall back to a real `zed` elsewhere on PATH, skipping this wrapper.
-# Re-entry guard: same file reachable via different textual paths (e.g.
-# symlinked PATH dirs) would otherwise recurse forever.
-if [ "${_ZED_WRAPPER_REENTRY:-}" = 1 ]; then
-    echo "zed: wrapper loop detected, no real zed binary found" >&2
+
+# Guard: symlinked PATH dirs can expose this wrapper twice, which would
+# otherwise delegate to itself forever.
+if [ -n "${_ZED_WRAPPER_SEEN:-}" ]; then
+    echo "zed: no zed or zeditor binary found on PATH" >&2
     exit 127
 fi
-case $0 in
-    */*) self_path=$0 ;;
-    *) self_path=$(command -v zed) ;;
-esac
-old_ifs=$IFS
+
+# Remove our own directory from PATH, then resolve `zed` once more.
+me=$(command -v zed)
+me_dir=${me%/*}
+restored_ifs=$IFS
 IFS=:
+rest=
 for dir in $PATH; do
-    dir=${dir:-.}
-    candidate="$dir/zed"
-    if [ -x "$candidate" ] && [ "$candidate" != "$self_path" ]; then
-        IFS=$old_ifs
-        export _ZED_WRAPPER_REENTRY=1
-        exec "$candidate" "$@"
-    fi
+    [ "${dir:-.}" = "$me_dir" ] || rest="${rest:+$rest:}${dir:-.}"
 done
-IFS=$old_ifs
-echo "zed: no zed or zeditor binary found on PATH" >&2
-exit 127
+IFS=$restored_ifs
+
+next=$(PATH=$rest command -v zed) || {
+    echo "zed: no zed or zeditor binary found on PATH" >&2
+    exit 127
+}
+export _ZED_WRAPPER_SEEN=1
+exec "$next" "$@"
