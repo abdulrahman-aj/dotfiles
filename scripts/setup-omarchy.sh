@@ -36,4 +36,8 @@ omarchy pkg add dosfstools ntfs-3g
 # Ensure mode-switching Wi-Fi adapters initialize as network devices.
 omarchy pkg add usb_modeswitch
 
+if ! omarchy plugin list 2>/dev/null | grep -q "aj.opencode-go"; then
+    omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
+fi
+
 chsh -s "$(command -v fish)" "$USER"
