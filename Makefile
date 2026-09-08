@@ -10,7 +10,6 @@ all:
 	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
-	@bash scripts/install-kickstart.sh "$(TARGET_ABS)"
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
 
 check:

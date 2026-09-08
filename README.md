@@ -11,14 +11,14 @@ git clone git@github.com:abdulrahman-aj/dotfiles.git ~/dotfiles && cd ~/dotfiles
 ```
 
 `make` backs up unmanaged conflicts under `~/.dotfiles-backups/`, stows the
-configuration, and initializes Fisher and Kickstart.nvim.
+configuration, and initializes Fisher.
 
 On Omarchy, `make` also offers to remove bundled preinstalls and sets up the
 personal configuration and packages.
 
 ## Usage
 
-- `make` - deploy everything (stow home/ + AI, Neovim, and Fish setup)
+- `make` - deploy everything (stow home/ + AI and Fish setup)
 - `make check` - report missing requirements and unmanaged conflicts without changes
 - `make test` - run the deployment tests in isolated temporary homes
 - `make unstow` - remove repo-managed links without deleting generated tool data

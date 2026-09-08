@@ -26,8 +26,8 @@ directory.
   to a timestamped `.dotfiles-backups/` directory under the target home.
 - Stow uses `--no-folding`, keeping managed directories writable and linking their
   individual files instead of linking whole directory trees into the repo.
-- Fisher and Kickstart.nvim are external bootstrap steps run after Stow. They honor
-  `TARGET`, preserve unrelated existing configurations, and are safe to retry.
+- Fisher is an external bootstrap step run after Stow. It honors
+  `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - `home/` is always stowed in full. The Omarchy setup step (preinstall removal,
   package/browser/editor installs, `chsh`) runs only on Omarchy hosts deploying
   to the real `$HOME`; elsewhere the stowed XDG defaults apply as-is.
