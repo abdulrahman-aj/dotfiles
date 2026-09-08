@@ -5,7 +5,8 @@ end
 
 rebind("SUPER + SHIFT + Z", "Zed", { launch = "zed" })
 rebind("SUPER + SHIFT + T", "T3 Code", { launch = "t3code", focus = "t3code" })
-rebind("SUPER + CTRL + RETURN", "Herdr", { tui = "herdr", focus = true })
+rebind("SUPER + CTRL + RETURN", "Herdr",
+  { launch = "alacritty --class=herdr -e herdr", focus = "herdr" })
 
 -- Scratchpad — SHIFT for moves.
 hl.unbind("SUPER + ALT + S")
