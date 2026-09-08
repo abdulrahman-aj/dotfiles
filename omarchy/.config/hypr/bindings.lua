@@ -3,7 +3,7 @@ local function rebind(keys, description, dispatcher, options)
   o.bind(keys, description, dispatcher, options)
 end
 
-rebind("SUPER + SHIFT + Z", "Zed", { launch = "zeditor" })
+rebind("SUPER + SHIFT + Z", "Zed", { launch = "zed" })
 rebind("SUPER + SHIFT + T", "T3 Code", { launch = "t3code", focus = "t3code" })
 
 -- Scratchpad — SHIFT for moves.
