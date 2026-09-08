@@ -5,6 +5,7 @@ end
 
 rebind("SUPER + SHIFT + Z", "Zed", { launch = "zed" })
 rebind("SUPER + SHIFT + T", "T3 Code", { launch = "t3code", focus = "t3code" })
+rebind("SUPER + CTRL + RETURN", "Herdr", { omarchy = "terminal-herdr" })
 
 -- Scratchpad — SHIFT for moves.
 hl.unbind("SUPER + ALT + S")
