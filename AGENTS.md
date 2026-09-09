@@ -7,6 +7,9 @@ Personal dotfiles managed with GNU Stow. Deploying to a new machine: clone the r
 `home/` is a stow package that mirrors `~/` 1:1: strip the `home/` prefix to
 get the deployed path (e.g. `home/.config/fish/config.fish` → `~/.config/fish/config.fish`).
 New dotfiles go under `home/` at their deployed relative path.
+New files need `make` to be stowed live; edits to stowed files are live
+via symlink unless an app replaced the link — run `make` to verify
+and restore, unless told otherwise.
 
 ## Key Commands
 

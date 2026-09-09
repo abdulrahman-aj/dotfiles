@@ -1,16 +1,24 @@
-.PHONY: all check test unstow
+.PHONY: all check test unstow stow omarchy fisher herdr
 
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
 STOW_FLAGS := --no-folding
 
-all:
-	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
+all: omarchy stow fisher herdr
+
+stow:
 	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
+
+omarchy:
+	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
+
+fisher:
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
+
+herdr:
 	@bash scripts/install-herdr-integrations.sh "$(TARGET_ABS)"
 
 check:
