@@ -32,7 +32,16 @@ if status is-interactive
     end
 
     if command -v wt &>/dev/null
-        wt config shell init fish | source
+        # HACK: Worktrunk jumps with `builtin cd`, which skips fish dir history
+        # (`cd -` forgets the pre-switch dir). Route its jump through
+        # zoxide's copy of fish's history-aware cd so history is recorded
+        # natively. Drop this if upstream stops bypassing `cd`
+        # (their #3159 workaround).
+        if functions -q __zoxide_cd_internal
+            wt config shell init fish | string replace 'builtin cd -- "$target"' '__zoxide_cd_internal -- "$target"' | source
+        else
+            wt config shell init fish | source
+        end
     end
 
     # Configure fzf.fish keybindings - disable process search
