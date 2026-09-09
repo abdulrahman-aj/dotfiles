@@ -23,7 +23,7 @@ if [[ ! -f "$HOME/.local/state/omarchy/preinstalls-removed" ]]; then
     omarchy remove preinstalls
 fi
 
-omarchy pkg add alacritty fish git-delta github-cli starship stow
+omarchy pkg add alacritty fish git-delta github-cli starship stow worktrunk
 omarchy pkg add omarchy-fish
 omarchy pkg add opencode
 omarchy pkg aur add google-chrome

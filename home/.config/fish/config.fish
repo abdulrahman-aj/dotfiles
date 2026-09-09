@@ -31,6 +31,10 @@ if status is-interactive
         starship init fish | source
     end
 
+    if command -v wt &>/dev/null
+        wt config shell init fish | source
+    end
+
     # Configure fzf.fish keybindings - disable process search
     if functions -q fzf_configure_bindings
         fzf_configure_bindings --processes=

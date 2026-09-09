@@ -28,7 +28,6 @@ check:
 
 test:
 	@bash tests/test-deploy.sh
-	@bash tests/test-worktree.sh
 
 unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }

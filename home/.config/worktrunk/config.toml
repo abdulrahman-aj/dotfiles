@@ -1,0 +1,8 @@
+# Worktrunk config (https://worktrunk.dev/config/).
+# Centralized layout matching the old worktree CLI, with hash-suffixed
+# sanitization so distinct branches (feature/auth vs feature-auth) never collide.
+worktree-path = "~/Worktrees/{{ repo }}/{{ branch | sanitize_hash }}"
+
+# Pin the JSON schema: v0.68.0 warns the default flips to 2 in a future release.
+[list]
+json-schema = 2
