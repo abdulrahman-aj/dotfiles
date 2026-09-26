@@ -1,7 +1,7 @@
 ---
 description: OpenAI agent for difficult reasoning, engineering, and second opinions.
 mode: subagent
-model: openai/gpt-5.6-sol
+model: openai/gpt-6-sol
 reasoningEffort: medium
 permission:
   task: deny
