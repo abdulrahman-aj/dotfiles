@@ -14,13 +14,14 @@ git clone git@github.com:abdulrahman-aj/dotfiles.git ~/dotfiles && cd ~/dotfiles
 configuration, and initializes Fisher.
 
 On Omarchy, `make` also offers to remove bundled preinstalls and sets up the
-personal configuration and packages.
+personal configuration and packages. OpenCode V2 is installed through mise.
 
 ## Usage
 
 - `make` - deploy everything (stow home/ + AI and Fish setup)
 - `make check` - report missing requirements and unmanaged conflicts without changes
 - `make test` - run the deployment tests in isolated temporary homes
+- `make test-herdr` - test the OpenCode V2 Herdr adapter (requires Node.js)
 - `make unstow` - remove repo-managed links without deleting generated tool data
 
 Pass `TARGET=/path/to/home` to run the complete workflow against a different home

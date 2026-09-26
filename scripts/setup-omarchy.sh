@@ -25,7 +25,6 @@ fi
 
 omarchy pkg add alacritty fish git-delta github-cli starship stow worktrunk
 omarchy pkg add omarchy-fish
-omarchy pkg add opencode
 omarchy pkg aur add google-chrome
 omarchy install browser zen
 omarchy default browser zen
@@ -43,6 +42,12 @@ fi
 
 # Mise-managed dev tools.
 mise use -g npm:hunkdiff
+if [[ -z "$(mise ls -g -i --no-header 'npm:@opencode/cli')" ]]; then
+    mise use -g \
+        --tool-option 'allow_builds=["@opencode/cli"]' \
+        --tool-option 'allow_low_downloads=true' \
+        'npm:@opencode/cli@latest'
+fi
 
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v fish)" ]]; then
     chsh -s "$(command -v fish)" "$USER"

@@ -17,6 +17,7 @@ and restore, unless told otherwise.
 make          # deploy everything (stow home/ + AI setup)
 make check    # dry-run and report conflicts
 make test     # run deployment tests in isolated temporary homes
+make test-herdr  # test the V2 Herdr adapter (requires Node.js)
 make unstow   # remove all symlinks
 ```
 
@@ -42,9 +43,17 @@ directory.
 
 ## AI Memories & Skills
 
-Single source of truth for shared rules: `home/.ai/memories/*.md`.
-OpenCode-only rules live in `home/.config/opencode/memories/` and are added
-to OpenCode's `instructions` array.
+OpenCode instructions live in `home/.config/opencode/AGENTS.md`, edited
+directly. No shared-memory layer, no generation step.
+
+Herdr's bundled OpenCode integration still targets V1; V2 uses the stowed
+`herdr-tui-session.js` adapter instead. Remove the V1 Herdr integration at
+cutover; do not reinstall it on V2. The TUI adapter reports the selected
+session and its child states while running inside a Herdr pane.
+Unlike V1's server plugin, it does not report headless `opencode run` activity;
+V2's shared server does not inherit each pane's Herdr environment.
+V2 agent Markdown files intentionally have no body: a nonempty body replaces
+the provider's base system prompt. Give task-specific checks in the delegation.
 
 Shared skills (`automate-friction`, `frontend-design`, `grill-me`, `remember`, `todo`,
 `todo-add`, `update-context`) live in `home/.agents/skills/`. OpenCode reads them natively.

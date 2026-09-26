@@ -23,7 +23,6 @@
       "space g d": ["task::Spawn", { "task_name": "hunk diff" }],
       "space o c": ["task::Spawn", { "task_name": "opencode" }],
       "space e": "project_panel::Toggle",
-      "space a": "agent::Toggle",
       "space b d": "pane::CloseActiveItem",
       "space m p": "markdown::OpenPreview",
       "space m P": "markdown::OpenPreviewToTheSide",
