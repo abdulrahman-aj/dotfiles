@@ -4,5 +4,8 @@
     "name": "system",
     "mode": "system"
   },
+  "tabs": {
+    "mode": "off"
+  },
   "plugins": ["./herdr-tui"]
 }
