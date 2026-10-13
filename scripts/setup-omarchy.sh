@@ -25,10 +25,13 @@ fi
 
 omarchy pkg add alacritty fish git-delta github-cli starship stow worktrunk
 omarchy pkg add omarchy-fish
+
 omarchy pkg aur add google-chrome
 omarchy install browser zen
 omarchy default browser zen
-omarchy install editor zed
+
+omarchy pkg add zed omazed
+omazed setup
 
 # Filesystem drivers for external drives.
 omarchy pkg add dosfstools ntfs-3g
