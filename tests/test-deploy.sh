@@ -27,17 +27,22 @@ test_conflict_backup() {
 
 test_stow_round_trip() {
     local target="$test_root/stow-home"
+    local agent_checkout="$test_root/agent-config"
     local leftover_link
 
     mkdir -p "$target"
+    mkdir -p "$agent_checkout"
+    printf 'install check unstow:\n\t@test "$(TARGET)" = "%s"\n' "$target" \
+        > "$agent_checkout/Makefile"
     stow --no-folding -R -t "$target" home
+    make -s agents TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
 
     [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
         || fail "Omarchy directory was folded into the repository"
     [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
 
-    make -s check TARGET="$target" >/dev/null
-    make -s unstow TARGET="$target" >/dev/null
+    make -s check TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
+    make -s unstow TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
     leftover_link="$(find "$target" -type l -print -quit)"
     [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }

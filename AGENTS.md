@@ -15,6 +15,7 @@ and restore, unless told otherwise.
 
 ```bash
 make          # deploy everything (stow home/ + AI setup)
+make agents   # bootstrap and deploy the private agent-config repo
 make check    # dry-run and report conflicts
 make test     # run deployment tests in isolated temporary homes
 make test-herdr  # test the V2 Herdr adapter (requires Node.js)
@@ -43,8 +44,9 @@ directory.
 
 ## AI Memories & Skills
 
-OpenCode instructions live in `home/.config/opencode/AGENTS.md`, edited
-directly. No shared-memory layer, no generation step.
+Shared instructions and skills belong in `~/agent-config`, not this repo.
+Use `make agents` to install them or deploy new skills. See that repo's README
+for layout and deployment details. Harness-specific OpenCode config stays here.
 
 Herdr's bundled OpenCode integration still targets V1; V2 uses the stowed
 `herdr-tui-session.js` adapter instead. Remove the V1 Herdr integration at
@@ -52,14 +54,7 @@ cutover; do not reinstall it on V2. The TUI adapter reports the selected
 session and its child states while running inside a Herdr pane.
 Unlike V1's server plugin, it does not report headless `opencode run` activity;
 V2's shared server does not inherit each pane's Herdr environment.
-V2 agent Markdown files intentionally have no body: a nonempty body replaces
-the provider's base system prompt. Give task-specific checks in the delegation.
-
-Shared skills (`automate-friction`, `frontend-design`, `grill-me`, `remember`, `todo`,
-`todo-add`, `update-context`) live in `home/.agents/skills/`. OpenCode reads them natively.
-
-To add a memory, use the `/remember` skill (manual procedure:
-`home/.agents/skills/remember/SKILL.md`).
+OpenCode agent profiles are retired; T3 selects providers and models.
 
 ## Constraints
 
