@@ -5,13 +5,13 @@ TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
 STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
-AGENT_CONFIG_REPO ?= git@github.com:abdulrahman-aj/agent-config.git
+AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
 all: omarchy stow agents fisher
 
 agents:
 	@test -e "$(AGENT_CONFIG_DIR)" || \
-		git clone -- "$(AGENT_CONFIG_REPO)" "$(AGENT_CONFIG_DIR)"
+		gh repo clone "$(AGENT_CONFIG_REPO)" "$(AGENT_CONFIG_DIR)"
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" install TARGET="$(TARGET_ABS)"
 
 stow:

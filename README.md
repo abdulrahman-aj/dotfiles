@@ -4,10 +4,12 @@ Managed with GNU Stow.
 
 ## Install
 
-**Requirements:** Bash · Fish · GNU Stow · curl · Git · Neovim · Python 3
+**Requirements:** Bash · Fish · GNU Stow · curl · Git · GitHub CLI · Neovim · Python 3
 
 ```bash
-git clone git@github.com:abdulrahman-aj/dotfiles.git ~/dotfiles && cd ~/dotfiles && make
+gh auth login --web --git-protocol https
+gh repo clone https://github.com/abdulrahman-aj/dotfiles.git ~/dotfiles
+cd ~/dotfiles && make
 ```
 
 `make` backs up unmanaged conflicts under `~/.dotfiles-backups/`, stows the
@@ -30,6 +32,7 @@ Pass `TARGET=/path/to/home` to run the complete workflow against a different hom
 directory. Fisher and agent setup honor the alternate target.
 
 Agent-config is cloned into `TARGET/agent-config` when missing; existing checkouts
-are never pulled or reset. Override with `AGENT_CONFIG_DIR` or `AGENT_CONFIG_REPO`.
+are never pulled or reset. Override the checkout with `AGENT_CONFIG_DIR` or the
+GitHub repository with `AGENT_CONFIG_REPO`.
 `make check` and `make unstow` include it. See its README for skill deployment.
 Legacy links to retired dotfiles OpenCode agent profiles must be removed manually.
