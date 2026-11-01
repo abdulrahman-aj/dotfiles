@@ -4,17 +4,17 @@ Personal configuration managed with GNU Stow.
 
 ## Setup
 
-On Arch or Omarchy, start with Git, Make, Yay and AUR build tools installed:
+On the ISO or Omarchy, authenticate and clone:
 
 ```sh
-git clone https://github.com/abdulrahman-aj/dotfiles.git ~/dotfiles
+gh auth login
+gh repo clone abdulrahman-aj/dotfiles ~/dotfiles
 cd ~/dotfiles
 make
 ```
 
 `make` installs personal apps, links configuration, deploys
 [agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
-Authenticate with `gh auth login` if the private agent-config clone needs access.
 Existing files are backed up under `~/.dotfiles-backups/`.
 
 Omarchy keeps its desktop integration. Plain Arch skips Hyprland, Omarchy and

@@ -16,17 +16,20 @@ fi
 "${install_packages[@]}" alacritty neovim python fish stow git curl github-cli git-delta \
     starship zoxide eza fzf fd bat lazygit jq ttf-jetbrains-mono-nerd zed mise \
     nodejs npm worktrunk dosfstools ntfs-3g usb_modeswitch
-yay -S --needed google-chrome zen-browser-bin t3code-bin
 
 if command -v omarchy >/dev/null; then
+    omarchy pkg aur add t3code-bin
     omarchy pkg add omarchy-fish omazed
     omazed setup
     # Browser setup also applies Omarchy's policies and Wayland settings.
+    omarchy install browser chrome
     omarchy install browser zen
     omarchy default browser zen
     if ! omarchy plugin list 2>/dev/null | grep -q 'aj.opencode-go'; then
         omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
     fi
+else
+    yay -S --needed google-chrome zen-browser-bin t3code-bin
 fi
 
 mise use -g herdr codex npm:hunkdiff

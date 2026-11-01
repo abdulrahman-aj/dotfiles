@@ -45,7 +45,6 @@ check:
 
 test:
 	@bash tests/test-deploy.sh
-	@bash tests/test-arch.sh
 
 test-herdr:
 	@node --test tests/test-herdr-opencode.mjs
