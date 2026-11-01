@@ -31,6 +31,7 @@ bash scripts/setup-arch.sh "$HOME"
 [[ $(grep -c '^sudo pacman ' "$LOG") == 2 ]] || fail 'package installation did not retry'
 [[ $(grep -c '^yay ' "$LOG") == 2 ]] || fail 'AUR installation did not retry'
 [[ $(head -n 1 "$LOG") == sudo\ pacman* ]] || fail 'packages installed out of order'
+grep -Eq '^sudo pacman -Syu .* python ' "$LOG" || fail 'bootstrap must upgrade coherently and install Python'
 grep -Eq '^sudo pacman .* fzf fd bat ' "$LOG" || fail 'fzf directory search dependencies missing'
 grep -Eq '^yay .* t3code-bin$' "$LOG" || fail 'configured T3 Code handler has no application'
 grep -Fxq 'mise use -g herdr' "$LOG" || fail 'Herdr configuration has no application'

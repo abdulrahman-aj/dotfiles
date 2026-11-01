@@ -12,7 +12,7 @@ for command_name in yay sudo; do
     }
 done
 
-sudo pacman -S --needed --noconfirm fish stow github-cli git-delta starship \
+sudo pacman -Syu --needed --noconfirm python fish stow github-cli git-delta starship \
     zoxide eza fzf fd bat lazygit jq ttf-jetbrains-mono-nerd zed mise nodejs npm dosfstools ntfs-3g usb_modeswitch
 # Yay resolves both repository and AUR packages, and --needed makes retries safe.
 yay -S --needed worktrunk google-chrome zen-browser-bin t3code-bin
