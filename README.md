@@ -33,6 +33,8 @@ OpenCode configuration comes from agent-config, including when deploying an olde
 dotfiles revision that still contains OpenCode files.
 Omarchy-specific plugins and omazed are not installed on Arch. The offline ISO
 is responsible for the desktop, browser, Neovim, firmware and recovery tools.
+Fish exposes Arch's `zeditor` executable as `zed` when no existing `zed` launcher
+is present, keeping the editor command portable.
 
 `make` backs up unmanaged conflicts under `~/.dotfiles-backups/`, stows the
 configuration, sets up [agent-config](https://github.com/abdulrahman-aj/agent-config),
