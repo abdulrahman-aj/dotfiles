@@ -6,10 +6,11 @@ usage() {
     exit 2
 }
 
-[[ $# -eq 2 ]] || usage
+[[ $# -ge 2 && $# -le 3 ]] || usage
 
 mode="$1"
 target="$2"
+profile="${3:-full}"
 
 [[ "$mode" == "check" || "$mode" == "backup" ]] || usage
 
@@ -62,6 +63,11 @@ add_conflict() {
 
 while IFS= read -r -d '' source_path; do
     relative_path="${source_path#"$package_root"/}"
+    if [[ "$profile" == arch ]]; then
+        case "$relative_path" in
+            .config/hypr/*|.config/omarchy/*|.config/alacritty/*|.config/opencode/*) continue ;;
+        esac
+    fi
     if blocking_path="$(find_blocking_ancestor "$relative_path")"; then
         add_conflict "$blocking_path"
         continue

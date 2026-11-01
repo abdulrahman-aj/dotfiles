@@ -1,13 +1,34 @@
-.PHONY: all check test test-herdr unstow stow omarchy fisher agents
+.PHONY: all check test test-herdr unstow stow omarchy fisher agents bootstrap
 
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
+PROFILE ?= auto
+export PROFILE
+DEPLOY_PROFILE := $(shell bash scripts/profile.sh)
+ifeq ($(filter $(DEPLOY_PROFILE),arch full),)
+$(error Invalid deployment profile)
+endif
+ARCH_IGNORE := \.config/(hypr|omarchy|alacritty|opencode)(/|$$)
 STOW_FLAGS := --no-folding
+ifeq ($(DEPLOY_PROFILE),arch)
+STOW_FLAGS += --ignore='$(ARCH_IGNORE)'
+endif
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
-all: omarchy stow agents fisher
+all:
+	$(MAKE) bootstrap TARGET="$(TARGET_ABS)"
+	$(MAKE) stow TARGET="$(TARGET_ABS)"
+	$(MAKE) agents TARGET="$(TARGET_ABS)"
+	$(MAKE) fisher TARGET="$(TARGET_ABS)"
+
+bootstrap:
+ifeq ($(DEPLOY_PROFILE),arch)
+	@bash scripts/setup-arch.sh "$(TARGET_ABS)"
+else
+	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
+endif
 
 agents:
 	@test -e "$(AGENT_CONFIG_DIR)" || \
@@ -16,7 +37,7 @@ agents:
 
 stow:
 	@bash scripts/check-prereqs.sh
-	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
+	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)" "$(DEPLOY_PROFILE)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
 
 omarchy:
@@ -27,12 +48,13 @@ fisher:
 
 check:
 	@bash scripts/check-prereqs.sh
-	@bash scripts/manage-conflicts.sh check "$(TARGET_ABS)"
+	@bash scripts/manage-conflicts.sh check "$(TARGET_ABS)" "$(DEPLOY_PROFILE)"
 	$(STOW) $(STOW_FLAGS) --simulate -t "$(TARGET_ABS)" home
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" check TARGET="$(TARGET_ABS)"
 
 test:
 	@bash tests/test-deploy.sh
+	@bash tests/test-arch.sh
 
 test-herdr:
 	@node --test tests/test-herdr-opencode.mjs
