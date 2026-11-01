@@ -4,7 +4,7 @@ Personal configuration managed with GNU Stow.
 
 ## Setup
 
-On the ISO or Omarchy, authenticate and clone:
+The ISO includes `gh`. On Omarchy, run `omarchy pkg add github-cli` first.
 
 ```sh
 gh auth login
