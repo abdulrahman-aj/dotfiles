@@ -57,6 +57,32 @@ test_stow_round_trip() {
     [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }
 
+test_zw() {
+    local bin="$test_root/editors"
+    local wrapper="$test_root/wrapper"
+    local editor output
+
+    mkdir -p "$bin" "$wrapper"
+    ln -s "$(command -v sh)" "$bin/sh"
+    cp home/.local/bin/zed "$wrapper/zed"
+    touch "$bin/tool"
+    chmod +x "$bin/tool"
+
+    for editor in zed zeditor; do
+        printf '#!/bin/sh\nprintf "%%s\\n" "$0" "$@"\n' > "$bin/$editor"
+        chmod +x "$bin/$editor"
+        output="$(fish --no-config -c '
+            source "$argv[1]"
+            set -gx PATH "$argv[2]" "$argv[3]"
+            zw tool
+        ' "$repo/home/.config/fish/config.fish" "$wrapper" "$bin")"
+        [[ "$output" == "$bin/$editor"$'\n'"$bin/tool" ]] \
+            || fail "zw did not open the command with $editor"
+        rm "$bin/$editor"
+    done
+}
+
+test_zw
 test_conflict_backup
 mkdir -p "$test_root/bin"
 ln -s "$(command -v realpath)" "$test_root/bin/realpath"
@@ -65,4 +91,4 @@ PATH="$test_root/bin" /bin/bash scripts/setup-arch.sh "$test_root/alternate-home
 test_stow_round_trip full
 test_stow_round_trip arch
 
-echo "Deployment smoke test passed"
+echo "Dotfiles smoke tests passed"
