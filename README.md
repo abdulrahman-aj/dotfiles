@@ -14,7 +14,7 @@ make
 ```
 
 `make` installs personal apps, links configuration, deploys
-[agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
+[agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish and Nix.
 Existing files are backed up under `~/.dotfiles-backups/`.
 
 Omarchy keeps its desktop integration. Plain Arch skips Hyprland, Omarchy and
@@ -32,4 +32,5 @@ OpenCode config comes from agent-config.
 shell. `PROFILE=arch` selects portable config; `PROFILE=full` includes desktop
 config. Otherwise the profile is detected automatically.
 
-For development, `nix-shell` supplies test tools. Normal setup does not require Nix.
+Nix is installed for development; it is not required to start setup.
+Use `nix-shell` for this repo's test tools.
