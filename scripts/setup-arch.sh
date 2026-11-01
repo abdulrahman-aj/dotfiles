@@ -19,8 +19,7 @@ fi
 sudo systemctl enable --now nix-daemon.socket
 
 if command -v omarchy >/dev/null; then
-    omarchy pkg aur add t3code-bin
-    omarchy pkg add omarchy-fish omazed
+    omarchy pkg add t3code-bin omarchy-fish omazed
     omazed setup
     # Browser setup also applies Omarchy's policies and Wayland settings.
     omarchy install browser chrome

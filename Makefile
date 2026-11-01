@@ -53,4 +53,4 @@ unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }
 	$(STOW) $(STOW_FLAGS) -t "$(TARGET_ABS)" -D home
 	@if [ -d "$(AGENT_CONFIG_DIR)" ]; then \
-		$(MAKE) -C "$(AGENT_CONFIG_DIR)" unstow TARGET="$(TARGET_ABS)"; fi
+		$(MAKE) -C "$(AGENT_CONFIG_DIR)" uninstall TARGET="$(TARGET_ABS)"; fi

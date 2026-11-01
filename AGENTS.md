@@ -22,8 +22,8 @@ make test-herdr  # test the V2 Herdr adapter (requires Node.js)
 make unstow   # remove all symlinks
 ```
 
-Pass `TARGET=/path/to/home` to run the complete workflow against another home
-directory.
+Pass `TARGET=/path/to/home` to deploy to another home directory without
+installing packages or changing the login shell.
 
 ## Deployment Architecture
 
@@ -34,7 +34,7 @@ directory.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
-  `PROFILE=arch` excludes Hyprland, Omarchy, Alacritty and legacy OpenCode files;
+  `PROFILE=arch` excludes Hyprland, Omarchy, Alacritty and OpenCode files;
   `PROFILE=full` stows all configuration.
 - The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
   sets terminal preference order — do not replace it with the single-entry

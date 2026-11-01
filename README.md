@@ -4,7 +4,7 @@ Personal configuration managed with GNU Stow.
 
 ## Setup
 
-The ISO includes `gh`. On Omarchy, run `omarchy pkg add github-cli` first.
+Requires internet access, `make` and `gh`; Arch setup also uses `sudo` and `yay`.
 
 ```sh
 gh auth login
@@ -13,24 +13,24 @@ cd ~/dotfiles
 make
 ```
 
-`make` installs personal apps, links configuration, deploys
-[agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish and Nix.
-Existing files are backed up under `~/.dotfiles-backups/`.
+`make` links configuration, deploys
+[agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
+On Arch and Omarchy, it also installs personal apps and Nix and sets Fish as the
+login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 
-Omarchy keeps its desktop integration. Plain Arch skips Hyprland, Omarchy and
-the Omarchy-dependent Alacritty config; Niri/Dux settings stay untouched.
-OpenCode config comes from agent-config.
+On Omarchy, setup offers to remove bundled apps and sets Zen as the default
+browser. The `arch` profile excludes Hyprland, Omarchy, Alacritty and OpenCode
+configuration.
 
 ## Commands
 
-- `make bootstrap` — install apps and tools only.
+- `make bootstrap` — run app and shell setup without linking dotfiles.
 - `make check` — check deployment without changing files.
 - `make test` — test deployment in temporary homes.
 - `make unstow` — remove managed links.
 
 `TARGET=/another/home` deploys without installing packages or changing the login
-shell. `PROFILE=arch` selects portable config; `PROFILE=full` includes desktop
-config. Otherwise the profile is detected automatically.
+shell. Plain Arch defaults to `PROFILE=arch`; other systems use `PROFILE=full`.
+Set `PROFILE` explicitly to override this.
 
-Nix is installed for development; it is not required to start setup.
-Use `nix-shell` for this repo's test tools.
+Run `nix-shell --run 'make test'` for deployment tests.
