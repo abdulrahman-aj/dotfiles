@@ -25,9 +25,11 @@ OpenCode config comes from agent-config.
 
 - `make bootstrap` — install apps and tools only.
 - `make check` — check deployment without changing files.
-- `make test` — run tests in temporary homes (`nix-shell` supplies dependencies).
+- `make test` — test deployment in temporary homes.
 - `make unstow` — remove managed links.
 
 `TARGET=/another/home` deploys without installing packages or changing the login
 shell. `PROFILE=arch` selects portable config; `PROFILE=full` includes desktop
 config. Otherwise the profile is detected automatically.
+
+For development, `nix-shell` supplies test tools. Normal setup does not require Nix.
