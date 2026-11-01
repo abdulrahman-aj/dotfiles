@@ -18,7 +18,6 @@ make          # deploy everything (stow home/ + AI setup)
 make agents   # bootstrap and deploy the private agent-config repo
 make check    # dry-run and report conflicts
 make test     # run deployment tests in isolated temporary homes
-make test-herdr  # test the V2 Herdr adapter (requires Node.js)
 make unstow   # remove all symlinks
 ```
 
@@ -34,8 +33,8 @@ installing packages or changing the login shell.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
-  `PROFILE=arch` excludes OpenCode files owned by agent-config;
-  `PROFILE=full` stows all configuration.
+- All files in `home/` are stowed. OpenCode configuration belongs exclusively
+  to agent-config.
 - The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
   sets terminal preference order — do not replace it with the single-entry
   output of `omarchy default terminal`). Applications may atomically replace
@@ -44,16 +43,10 @@ installing packages or changing the login shell.
 
 ## AI Memories & Skills
 
-Shared instructions and skills belong in `~/agent-config`, not this repo.
+Shared instructions, skills and OpenCode configuration belong in `~/agent-config`.
 Use `make agents` to install them or deploy new skills. See that repo's README
-for layout and deployment details. Harness-specific OpenCode config stays here.
-
-Herdr's bundled OpenCode integration still targets V1; V2 uses the stowed
-`herdr-tui-session.js` adapter instead. Remove the V1 Herdr integration at
-cutover; do not reinstall it on V2. The TUI adapter reports the selected
-session and its child states while running inside a Herdr pane.
-Unlike V1's server plugin, it does not report headless `opencode run` activity;
-V2's shared server does not inherit each pane's Herdr environment.
+for layout and deployment details. This repo installs the OpenCode binary;
+agent-config owns its configuration.
 OpenCode agent profiles are retired; T3 selects providers and models.
 
 ## Constraints
