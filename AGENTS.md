@@ -34,7 +34,7 @@ installing packages or changing the login shell.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
-  `PROFILE=arch` excludes Hyprland, Omarchy, Alacritty and OpenCode files;
+  `PROFILE=arch` excludes OpenCode files owned by agent-config;
   `PROFILE=full` stows all configuration.
 - The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
   sets terminal preference order — do not replace it with the single-entry

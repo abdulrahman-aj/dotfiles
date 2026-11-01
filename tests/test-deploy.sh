@@ -41,14 +41,13 @@ test_stow_round_trip() {
     PROFILE="$profile" make -s stow TARGET="$target" >/dev/null
     make -s agents TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
 
-    if [[ "$profile" == full ]]; then
-        [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
-            || fail "Omarchy directory was folded into the repository"
-        [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
-    else
-        [[ $(cat "$target/.config/hypr/bindings.lua") == keep ]] || fail 'Hyprland config replaced'
-        [[ $(cat "$target/.config/alacritty/alacritty.toml") == keep ]] || fail 'Alacritty config replaced'
-        [[ ! -e "$target/.config/omarchy" && ! -e "$target/.config/opencode" ]] || fail 'desktop config deployed'
+    [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
+        || fail "Omarchy directory was folded into the repository"
+    [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
+    [[ -L "$target/.config/hypr/bindings.lua" ]] || fail 'Hyprland config is not linked'
+    [[ -L "$target/.config/alacritty/alacritty.toml" ]] || fail 'Alacritty config is not linked'
+    if [[ "$profile" == arch ]]; then
+        [[ ! -e "$target/.config/opencode" ]] || fail 'OpenCode config deployed'
     fi
 
     PROFILE="$profile" make -s check TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null

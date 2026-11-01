@@ -13,7 +13,7 @@ endif
 STOW_FLAGS := --no-folding
 STOW_IGNORE :=
 ifeq ($(PROFILE),arch)
-STOW_IGNORE := \.config/(hypr|omarchy|alacritty|opencode)(/|$$)
+STOW_IGNORE := \.config/opencode(/|$$)
 STOW_FLAGS += --ignore='$(STOW_IGNORE)'
 endif
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
@@ -44,7 +44,7 @@ check:
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" check TARGET="$(TARGET_ABS)"
 
 test:
-	@bash tests/test-deploy.sh
+	@NIX_BUILD_SHELL="$$(command -v bash)" nix-shell --run 'bash tests/test-deploy.sh'
 
 test-herdr:
 	@node --test tests/test-herdr-opencode.mjs
