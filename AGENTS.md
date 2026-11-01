@@ -33,9 +33,9 @@ directory.
   individual files instead of linking whole directory trees into the repo.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
-- `home/` is always stowed in full. The Omarchy setup step (preinstall removal,
-  package/browser/editor installs, `chsh`) runs only on Omarchy hosts deploying
-  to the real `$HOME`; elsewhere the stowed XDG defaults apply as-is.
+- Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
+  `PROFILE=arch` excludes Hyprland, Omarchy, Alacritty and legacy OpenCode files;
+  `PROFILE=full` stows all configuration.
 - The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
   sets terminal preference order — do not replace it with the single-entry
   output of `omarchy default terminal`). Applications may atomically replace
