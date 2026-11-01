@@ -27,20 +27,24 @@ test_conflict_backup() {
 
 test_stow_round_trip() {
     local target="$test_root/stow-home"
-    local agent_checkout="$test_root/agent-config"
+    local agent_checkout="$test_root/agents"
     local leftover_link
 
     mkdir -p "$target"
     mkdir -p "$agent_checkout"
-    printf 'install check unstow:\n\t@test "$(TARGET)" = "%s"\n' "$target" \
+    printf 'install check uninstall:\n\t@test "$(TARGET)" = "%s"\n' "$target" \
         > "$agent_checkout/Makefile"
-    stow --no-folding -R -t "$target" home
+    mkdir -p "$target/.config/hypr" "$target/.config/alacritty"
+    printf 'keep\n' > "$target/.config/hypr/bindings.lua"
+    printf 'keep\n' > "$target/.config/alacritty/alacritty.toml"
+    make -s stow TARGET="$target" >/dev/null
     make -s agents TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
 
     [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
         || fail "Omarchy directory was folded into the repository"
     [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
-
+    [[ -L "$target/.config/hypr/bindings.lua" ]] || fail 'Hyprland config is not linked'
+    [[ -L "$target/.config/alacritty/alacritty.toml" ]] || fail 'Alacritty config is not linked'
     make -s check TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
     make -s unstow TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
     leftover_link="$(find "$target" -type l -print -quit)"
@@ -48,6 +52,10 @@ test_stow_round_trip() {
 }
 
 test_conflict_backup
+mkdir -p "$test_root/bin"
+ln -s "$(command -v realpath)" "$test_root/bin/realpath"
+# No package tools are available: another target home must skip setup entirely.
+PATH="$test_root/bin" /bin/bash scripts/setup-arch.sh "$test_root/alternate-home"
 test_stow_round_trip
 
 echo "Deployment smoke test passed"

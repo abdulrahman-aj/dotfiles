@@ -1,38 +1,33 @@
 # dotfiles
 
-Managed with GNU Stow.
+Personal configuration managed with GNU Stow.
 
-## Install
+## Setup
 
-**Requirements:** Bash · Fish · GNU Stow · curl · Git · GitHub CLI · Neovim · Python 3
+Requires internet access, `make` and `gh`; Arch setup also uses `sudo` and `yay`.
 
-```bash
-gh auth login --web --git-protocol https
-gh repo clone https://github.com/abdulrahman-aj/dotfiles.git ~/dotfiles
-cd ~/dotfiles && make
+```sh
+gh auth login
+gh repo clone abdulrahman-aj/dotfiles ~/dotfiles
+cd ~/dotfiles
+make
 ```
 
-`make` backs up unmanaged conflicts under `~/.dotfiles-backups/`, stows the
-configuration, sets up [agent-config](https://github.com/abdulrahman-aj/agent-config),
-and initializes Fisher.
+`make` links configuration, deploys
+[agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
+OpenCode configuration belongs to agent-config.
+On Arch and Omarchy, it also installs personal apps and Nix and sets Fish as the
+login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 
-On Omarchy, `make` also offers to remove bundled preinstalls and sets up the
-personal configuration and packages. OpenCode V2 is installed through mise.
+On Omarchy, setup offers to remove bundled apps and sets Zen as the default
+browser.
 
-## Usage
+## Commands
 
-- `make` - deploy everything (stow home/ + AI and Fish setup)
-- `make agents` - install shared instructions and skills from agent-config
-- `make check` - report missing requirements and unmanaged conflicts without changing deployed files
-- `make test` - run the deployment tests in isolated temporary homes
-- `make test-herdr` - test the OpenCode V2 Herdr adapter (requires Node.js)
-- `make unstow` - remove repo-managed links without deleting generated tool data
+- `make bootstrap` — run app and shell setup without linking dotfiles.
+- `make check` — check deployment without changing files.
+- `make test` — test deployment in temporary homes using Nix.
+- `make unstow` — remove managed links.
 
-Pass `TARGET=/path/to/home` to run the complete workflow against a different home
-directory. Fisher and agent setup honor the alternate target.
-
-Agent-config is cloned into `TARGET/agent-config` when missing; existing checkouts
-are never pulled or reset. Override the checkout with `AGENT_CONFIG_DIR` or the
-GitHub repository with `AGENT_CONFIG_REPO`.
-`make check` and `make unstow` include it. See its README for skill deployment.
-Legacy links to retired dotfiles OpenCode agent profiles must be removed manually.
+`TARGET=/another/home` deploys without installing packages or changing the login
+shell.

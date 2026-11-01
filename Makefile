@@ -1,4 +1,5 @@
-.PHONY: all check test test-herdr unstow stow omarchy fisher agents
+.PHONY: all check test unstow stow fisher agents bootstrap
+.NOTPARALLEL:
 
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
@@ -7,7 +8,10 @@ STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
-all: omarchy stow agents fisher
+all: bootstrap stow agents fisher
+
+bootstrap:
+	@bash scripts/setup-arch.sh "$(TARGET_ABS)"
 
 agents:
 	@test -e "$(AGENT_CONFIG_DIR)" || \
@@ -19,9 +23,6 @@ stow:
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
 
-omarchy:
-	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
-
 fisher:
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
 
@@ -32,13 +33,10 @@ check:
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" check TARGET="$(TARGET_ABS)"
 
 test:
-	@bash tests/test-deploy.sh
-
-test-herdr:
-	@node --test tests/test-herdr-opencode.mjs
+	@NIX_BUILD_SHELL="$$(command -v bash)" nix-shell --run 'bash tests/test-deploy.sh'
 
 unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }
 	$(STOW) $(STOW_FLAGS) -t "$(TARGET_ABS)" -D home
 	@if [ -d "$(AGENT_CONFIG_DIR)" ]; then \
-		$(MAKE) -C "$(AGENT_CONFIG_DIR)" unstow TARGET="$(TARGET_ABS)"; fi
+		$(MAKE) -C "$(AGENT_CONFIG_DIR)" uninstall TARGET="$(TARGET_ABS)"; fi
