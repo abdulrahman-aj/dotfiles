@@ -113,7 +113,7 @@ end
 
 complete -c zw -w command
 function zw
-    __edit_cmd $argv[1] zed
+    __edit_cmd $argv[1] zeditor
 end
 
 function mcd

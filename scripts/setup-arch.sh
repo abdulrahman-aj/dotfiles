@@ -1,24 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+[[ -f /etc/arch-release ]] || exit 0
 target="$(realpath -m "${1:-$HOME}")"
 [[ "$target" == "$(realpath -m "$HOME")" ]] || exit 0
+command -v yay >/dev/null || { echo 'Missing required command: yay' >&2; exit 1; }
 
-# The offline installation supplies yay and its build prerequisites.
-for command_name in yay sudo; do
-    command -v "$command_name" >/dev/null 2>&1 || {
-        echo "Missing required command: $command_name" >&2
-        exit 1
-    }
-done
+if command -v omarchy >/dev/null; then
+    [[ -f "$HOME/.local/state/omarchy/preinstalls-removed" ]] || omarchy remove preinstalls
+    install_packages=(omarchy pkg add)
+else
+    install_packages=(sudo pacman -Syu --needed --noconfirm)
+fi
 
-sudo pacman -Syu --needed --noconfirm python fish stow github-cli git-delta starship \
-    zoxide eza fzf fd bat lazygit jq ttf-jetbrains-mono-nerd zed mise nodejs npm dosfstools ntfs-3g usb_modeswitch
-# Yay resolves both repository and AUR packages, and --needed makes retries safe.
-yay -S --needed worktrunk google-chrome zen-browser-bin t3code-bin
-mise use -g herdr
-mise use -g codex
-mise use -g npm:hunkdiff
+"${install_packages[@]}" alacritty neovim python fish stow git curl github-cli git-delta \
+    starship zoxide eza fzf fd bat lazygit jq ttf-jetbrains-mono-nerd zed mise \
+    nodejs npm worktrunk dosfstools ntfs-3g usb_modeswitch
+yay -S --needed google-chrome zen-browser-bin t3code-bin
+
+if command -v omarchy >/dev/null; then
+    omarchy pkg add omarchy-fish omazed
+    omazed setup
+    # Browser setup also applies Omarchy's policies and Wayland settings.
+    omarchy install browser zen
+    omarchy default browser zen
+    if ! omarchy plugin list 2>/dev/null | grep -q 'aj.opencode-go'; then
+        omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
+    fi
+fi
+
+mise use -g herdr codex npm:hunkdiff
 if [[ -z "$(mise ls -g -i --no-header 'npm:@opencode/cli')" ]]; then
     mise use -g --tool-option 'allow_builds=["@opencode/cli"]' \
         --tool-option 'allow_low_downloads=true' 'npm:@opencode/cli@latest'

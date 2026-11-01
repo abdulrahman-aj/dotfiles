@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-    echo "usage: $0 {check|backup} TARGET" >&2
+    echo "usage: $0 {check|backup} TARGET [IGNORE_REGEX]" >&2
     exit 2
 }
 
@@ -10,7 +10,7 @@ usage() {
 
 mode="$1"
 target="$2"
-profile="${3:-full}"
+ignore="${3:-}"
 
 [[ "$mode" == "check" || "$mode" == "backup" ]] || usage
 
@@ -63,10 +63,8 @@ add_conflict() {
 
 while IFS= read -r -d '' source_path; do
     relative_path="${source_path#"$package_root"/}"
-    if [[ "$profile" == arch ]]; then
-        case "$relative_path" in
-            .config/hypr/*|.config/omarchy/*|.config/alacritty/*|.config/opencode/*) continue ;;
-        esac
+    if [[ -n "$ignore" && "$relative_path" =~ $ignore ]]; then
+        continue
     fi
     if blocking_path="$(find_blocking_ancestor "$relative_path")"; then
         add_conflict "$blocking_path"

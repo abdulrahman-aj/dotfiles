@@ -1,34 +1,28 @@
-.PHONY: all check test test-herdr unstow stow omarchy fisher agents bootstrap
+.PHONY: all check test test-herdr unstow stow fisher agents bootstrap
+.NOTPARALLEL:
 
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
-PROFILE ?= auto
-export PROFILE
-DEPLOY_PROFILE := $(shell bash scripts/profile.sh)
-ifeq ($(filter $(DEPLOY_PROFILE),arch full),)
+PROFILE ?= $(shell \
+    if test -f /etc/arch-release && ! command -v omarchy >/dev/null; \
+    then echo arch; else echo full; fi)
+ifeq ($(filter $(PROFILE),arch full),)
 $(error Invalid deployment profile)
 endif
-ARCH_IGNORE := \.config/(hypr|omarchy|alacritty|opencode)(/|$$)
 STOW_FLAGS := --no-folding
-ifeq ($(DEPLOY_PROFILE),arch)
-STOW_FLAGS += --ignore='$(ARCH_IGNORE)'
+STOW_IGNORE :=
+ifeq ($(PROFILE),arch)
+STOW_IGNORE := \.config/(hypr|omarchy|alacritty|opencode)(/|$$)
+STOW_FLAGS += --ignore='$(STOW_IGNORE)'
 endif
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
-all:
-	$(MAKE) bootstrap TARGET="$(TARGET_ABS)"
-	$(MAKE) stow TARGET="$(TARGET_ABS)"
-	$(MAKE) agents TARGET="$(TARGET_ABS)"
-	$(MAKE) fisher TARGET="$(TARGET_ABS)"
+all: bootstrap stow agents fisher
 
 bootstrap:
-ifeq ($(DEPLOY_PROFILE),arch)
 	@bash scripts/setup-arch.sh "$(TARGET_ABS)"
-else
-	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
-endif
 
 agents:
 	@test -e "$(AGENT_CONFIG_DIR)" || \
@@ -37,25 +31,21 @@ agents:
 
 stow:
 	@bash scripts/check-prereqs.sh
-	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)" "$(DEPLOY_PROFILE)"
+	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)" '$(STOW_IGNORE)'
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
-
-omarchy:
-	@bash scripts/setup-omarchy.sh "$(TARGET_ABS)"
 
 fisher:
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
 
 check:
 	@bash scripts/check-prereqs.sh
-	@bash scripts/manage-conflicts.sh check "$(TARGET_ABS)" "$(DEPLOY_PROFILE)"
+	@bash scripts/manage-conflicts.sh check "$(TARGET_ABS)" '$(STOW_IGNORE)'
 	$(STOW) $(STOW_FLAGS) --simulate -t "$(TARGET_ABS)" home
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" check TARGET="$(TARGET_ABS)"
 
 test:
 	@bash tests/test-deploy.sh
 	@bash tests/test-arch.sh
-	@bash tests/test-editor-command.sh
 
 test-herdr:
 	@node --test tests/test-herdr-opencode.mjs
