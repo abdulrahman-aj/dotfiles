@@ -4,12 +4,15 @@ set -euo pipefail
 [[ -f /etc/arch-release ]] || exit 0
 target="$(realpath -m "${1:-$HOME}")"
 [[ "$target" == "$(realpath -m "$HOME")" ]] || exit 0
-command -v yay >/dev/null || { echo 'Missing required command: yay' >&2; exit 1; }
 
 if command -v omarchy >/dev/null; then
     [[ -f "$HOME/.local/state/omarchy/preinstalls-removed" ]] || omarchy remove preinstalls
     install_packages=(omarchy pkg add)
 else
+    pacman-conf --repo-list | grep -qx omarchy || {
+        echo "Enable and sync Omarchy's package repository before running setup." >&2
+        exit 1
+    }
     install_packages=(sudo pacman -Syu --needed --noconfirm)
 fi
 
@@ -29,7 +32,7 @@ if command -v omarchy >/dev/null; then
         omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
     fi
 else
-    yay -S --needed google-chrome zen-browser-bin t3code-bin
+    sudo pacman -S --needed --noconfirm google-chrome zen-browser-bin t3code-bin
 fi
 
 mise use -g herdr codex npm:hunkdiff

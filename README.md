@@ -4,7 +4,8 @@ Personal configuration managed with GNU Stow.
 
 ## Setup
 
-Requires internet access, `make` and `gh`; Arch setup also uses `sudo` and `yay`.
+Requires internet access, `make` and `gh`; Arch setup also uses `sudo` and
+Omarchy's package repository for Chrome, Zen and T3 Code.
 
 ```sh
 gh auth login
