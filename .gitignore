@@ -1,1 +1,5 @@
 dank-zed-theme.json
+
+# Dux derives Niri settings from its JSON preferences. Binds are edited directly.
+home/.config/niri/dms/*.kdl
+!home/.config/niri/dms/binds.kdl

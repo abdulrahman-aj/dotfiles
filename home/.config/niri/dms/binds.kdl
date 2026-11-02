@@ -1,0 +1,10 @@
+binds {
+    Mod+Return { spawn "alacritty"; }
+    Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+Comma { spawn "dms" "ipc" "call" "settings" "focusOrToggle"; }
+    Mod+Q { close-window; }
+    Mod+O { toggle-overview; }
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Shift+Q { quit; }
+}

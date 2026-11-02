@@ -1,0 +1,20 @@
+// Keybindings are edited directly; other fragments below are generated.
+// Layout/input source values live in ~/.config/dms/config.d.
+environment {
+    XDG_CURRENT_DESKTOP "niri"
+}
+hotkey-overlay {
+    skip-at-startup
+}
+prefer-no-csd
+layout {
+    background-color "transparent"
+}
+include optional=true "dms/input.kdl"
+include optional=true "dms/layout.kdl"
+include "dms/binds.kdl"
+include optional=true "dms/colors.kdl"
+include optional=true "dms/outputs.kdl"
+include optional=true "dms/cursor.kdl"
+include optional=true "dms/windowrules.kdl"
+include optional=true "dms/alttab.kdl"
