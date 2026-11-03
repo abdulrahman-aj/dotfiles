@@ -10,7 +10,6 @@ gestures {
 
 layout {
     background-color "transparent"
-    center-focused-column "never"
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
@@ -19,16 +18,9 @@ layout {
     default-column-width { proportion 1.0; }
     border {
         off
-        width 4
         active-color   "#707070"      // Neutral gray
         inactive-color "#d0d0d0"      // Light gray
         urgent-color   "#cc4444"      // Softer red
-    }
-    shadow {
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#0007"
     }
 }
 layer-rule {
@@ -47,18 +39,9 @@ hotkey-overlay {
     skip-at-startup
 }
 prefer-no-csd
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
     workspace-switch {
         spring damping-ratio=0.80 stiffness=523 epsilon=0.0001
-    }
-    window-open {
-        duration-ms 150
-        curve "ease-out-expo"
-    }
-    window-close {
-        duration-ms 150
-        curve "ease-out-quad"
     }
     horizontal-view-movement {
         spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
@@ -71,10 +54,6 @@ animations {
     }
     config-notification-open-close {
         spring damping-ratio=0.65 stiffness=923 epsilon=0.001
-    }
-    screenshot-ui-open {
-        duration-ms 200
-        curve "ease-out-quad"
     }
     overview-open-close {
         spring damping-ratio=0.85 stiffness=800 epsilon=0.0001

@@ -10,16 +10,7 @@
         ],
         "syncPositionAcrossScreens": true,
         "style": "expressive",
-        "transparency": 0,
-        "weight": 0,
-        "twoTone": true,
-        "showDate": false,
-        "showDigitalSeconds": false,
-        "showAnalogNumbers": false,
-        "showAnalogSeconds": true,
-        "autoPosition": true,
-        "colorMode": "default",
-        "customColor": "#ffffff"
+        "autoPosition": true
       }
     },
     {
@@ -44,10 +35,7 @@
         "displayPreferences": [
           "all"
         ],
-        "syncPositionAcrossScreens": true,
-        "style": "expressive",
-        "profileVisibility": "always",
-        "passwordVisibility": "always"
+        "syncPositionAcrossScreens": true
       }
     },
     {
@@ -71,9 +59,7 @@
           "all"
         ],
         "syncPositionAcrossScreens": true,
-        "showMediaPlayer": false,
-        "showWeather": true,
-        "background": false
+        "showMediaPlayer": false
       }
     },
     {
