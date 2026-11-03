@@ -132,8 +132,6 @@ binds {
 
     // === Monitor Navigation ===
     Mod+Ctrl+Left  { focus-monitor-left; }
-    //Mod+Ctrl+Down  { focus-monitor-down; }
-    //Mod+Ctrl+Up    { focus-monitor-up; }
     Mod+Ctrl+Right { focus-monitor-right; }
     Mod+Ctrl+H     { focus-monitor-left; }
     Mod+Ctrl+J     { focus-monitor-down; }
