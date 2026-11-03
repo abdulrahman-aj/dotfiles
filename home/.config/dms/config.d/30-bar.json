@@ -5,9 +5,6 @@
       "name": "Main Bar",
       "enabled": true,
       "position": 0,
-      "screenPreferences": [
-        "all"
-      ],
       "showOnLastDisplay": true,
       "leftWidgets": [
         "launcherButton",
@@ -33,13 +30,6 @@
         "controlCenterButton"
       ],
       "innerPadding": 4,
-      "noBackground": false,
-      "borderThickness": 1,
-      "fontScale": 1,
-      "popupGapsAuto": true,
-      "popupGapsManual": 4,
-      "followInterfaceStyle": true,
-      "widgetFollowInterfaceStyle": true,
       "island": true
     }
   ]

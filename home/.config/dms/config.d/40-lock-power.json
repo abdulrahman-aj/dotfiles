@@ -5,12 +5,8 @@
       "widgetType": "desktopClock",
       "enabled": true,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
-        "style": "expressive",
-        "autoPosition": true
+        "style": "expressive"
       }
     },
     {
@@ -18,13 +14,8 @@
       "widgetType": "lockDate",
       "enabled": false,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
-        "format": "short",
-        "colorMode": "default",
-        "customColor": "#ffffff"
+        "format": "short"
       }
     },
     {
@@ -32,9 +23,6 @@
       "widgetType": "lockAuth",
       "enabled": true,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true
       }
     },
@@ -43,9 +31,6 @@
       "widgetType": "lockNotifications",
       "enabled": false,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
         "mode": 2
       }
@@ -55,9 +40,6 @@
       "widgetType": "lockStatus",
       "enabled": true,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
         "showMediaPlayer": false
       }
@@ -67,11 +49,7 @@
       "widgetType": "lockPower",
       "enabled": false,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
-        "syncPositionAcrossScreens": true,
-        "shape": "round"
+        "syncPositionAcrossScreens": true
       }
     }
   ],
