@@ -12,7 +12,7 @@ binds {
         spawn "dms" "ipc" "call" "defaultApp" "browser";
     }
     Mod+Shift+Alt+B repeat=false hotkey-overlay-title="Private Browser" {
-        spawn "sh" "-c" r#"exec "$HOME/.local/bin/browser-private""#;
+        spawn "zen-browser" "--private-window";
     }
     Mod+Shift+E repeat=false hotkey-overlay-title="Files" {
         spawn "dms" "ipc" "call" "defaultApp" "fileManager";
