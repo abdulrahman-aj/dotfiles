@@ -8,12 +8,6 @@ gestures {
     }
 }
 
-input {
-    keyboard {
-        numlock
-    }
-}
-
 layout {
     background-color "transparent"
     center-focused-column "never"
