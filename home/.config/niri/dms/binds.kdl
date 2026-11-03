@@ -17,8 +17,8 @@ binds {
     Mod+Shift+E repeat=false hotkey-overlay-title="Files" {
         spawn "dms" "ipc" "call" "defaultApp" "fileManager";
     }
-    Mod+T hotkey-overlay-title="Open Terminal" repeat=false { spawn "alacritty"; }
-    Mod+Return hotkey-overlay-title="Open Terminal" repeat=false { spawn "alacritty"; }
+    Mod+T hotkey-overlay-title="Open Terminal" repeat=false { spawn "xdg-terminal-exec"; }
+    Mod+Return hotkey-overlay-title="Open Terminal" repeat=false { spawn "xdg-terminal-exec"; }
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false {
         spawn "dms" "ipc" "call" "spotlight" "toggle";
     }

@@ -16,7 +16,6 @@
         "launcherButton",
         {
           "id": "workspaceSwitcher",
-          "showWorkspaceIndex": true,
           "showOccupiedWorkspacesOnly": true
         },
         "focusedWindow"
