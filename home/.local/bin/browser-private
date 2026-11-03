@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Launch the default browser's declared private-window desktop action."""
+import configparser
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+
+
+def main():
+    browser = subprocess.check_output(
+        ['xdg-mime', 'query', 'default', 'x-scheme-handler/https'], text=True
+    ).strip()
+    if not browser.endswith('.desktop') or Path(browser).name != browser:
+        raise SystemExit('No default browser desktop entry is configured')
+    roots = [os.environ.get('XDG_DATA_HOME') or str(Path.home() / '.local/share')]
+    roots += (os.environ.get('XDG_DATA_DIRS') or '/usr/local/share:/usr/share').split(':')
+    desktop = next((Path(root) / 'applications' / browser for root in roots
+                    if root and (Path(root) / 'applications' / browser).is_file()), None)
+    if desktop is None:
+        raise SystemExit(f'Default browser desktop entry not found: {browser}')
+    entry = configparser.ConfigParser(interpolation=None, strict=False)
+    entry.optionxform = str
+    entry.read(desktop, encoding='utf-8')
+    action = 'new-private-window'
+    if action not in entry.get('Desktop Entry', 'Actions', fallback='').split(';'):
+        raise SystemExit(f'{browser} does not advertise a private-window action')
+    command = entry.get('Desktop Action ' + action, 'Exec', fallback='')
+    if not command:
+        raise SystemExit(f'{browser} has no private-window launch command')
+
+    # Like Omarchy's launcher, follow the default browser. Its desktop action
+    # owns the private-mode flags; GIO handles Exec quoting, field codes and wrappers.
+    # Reference: https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-browser
+    entry['Desktop Entry']['Exec'] = command
+    entry['Desktop Entry']['DBusActivatable'] = 'false'
+    entry['Desktop Entry'].pop('Actions', None)
+    with tempfile.TemporaryDirectory(prefix='browser-private-') as directory:
+        launch_file = Path(directory) / 'private.desktop'
+        private = configparser.ConfigParser(interpolation=None)
+        private.optionxform = str
+        private['Desktop Entry'] = dict(entry['Desktop Entry'])
+        with launch_file.open('w', encoding='utf-8') as stream:
+            private.write(stream, space_around_delimiters=False)
+        subprocess.run(['gio', 'launch', str(launch_file)], check=True)
+
+
+if __name__ == '__main__':
+    main()

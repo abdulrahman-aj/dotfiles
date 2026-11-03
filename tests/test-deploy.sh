@@ -51,6 +51,46 @@ test_stow_round_trip() {
     [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }
 
+test_private_browser() {
+    local fixture="$test_root/browser test" capture="$test_root/private.desktop"
+    mkdir -p "$fixture/bin" "$fixture/data/applications"
+    cat >"$fixture/bin/xdg-mime" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' browser.desktop
+SH
+    cat >"$fixture/bin/gio" <<'SH'
+#!/usr/bin/env bash
+[[ $1 == launch && $# -eq 2 ]] || exit 1
+cp -- "$2" "$BROWSER_CAPTURE"
+SH
+    chmod +x "$fixture/bin/xdg-mime" "$fixture/bin/gio"
+    cat >"$fixture/data/applications/browser.desktop" <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=Test browser
+Exec=browser --regular
+DBusActivatable=true
+Actions=new-private-window;
+[Desktop Action new-private-window]
+Name=Private window
+Exec="/opt/Browser App/browser" --private-window %u
+DESKTOP
+    PATH="$fixture/bin:$PATH" XDG_DATA_HOME="$fixture/data" XDG_DATA_DIRS="$fixture/other" \
+        BROWSER_CAPTURE="$capture" home/.local/bin/browser-private
+    grep -qxF 'Exec="/opt/Browser App/browser" --private-window %u' "$capture" \
+        || fail 'private launcher did not preserve the declared private command'
+    grep -qxF 'DBusActivatable=false' "$capture" \
+        || fail 'private launcher could activate a regular browser window over D-Bus'
+    rm -- "$capture"
+    sed -i '/^Actions=/d' "$fixture/data/applications/browser.desktop"
+    if PATH="$fixture/bin:$PATH" XDG_DATA_HOME="$fixture/data" XDG_DATA_DIRS="$fixture/other" \
+        BROWSER_CAPTURE="$capture" home/.local/bin/browser-private >/dev/null 2>&1; then
+        fail 'private launcher accepted a browser without an advertised private action'
+    fi
+    [[ ! -e "$capture" ]] || fail 'unsupported private mode fell back to a regular window'
+}
+
+test_private_browser
 test_conflict_backup
 mkdir -p "$test_root/bin"
 ln -s "$(command -v realpath)" "$test_root/bin/realpath"
