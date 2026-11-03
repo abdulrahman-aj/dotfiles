@@ -1,0 +1,47 @@
+{
+  "lockScreenWidgetInstances": [
+    {
+      "id": "lock_clock",
+      "widgetType": "desktopClock",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "style": "expressive"
+      }
+    },
+    {
+      "id": "lock_date",
+      "widgetType": "lockDate",
+      "enabled": false,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "format": "short"
+      }
+    },
+    {
+      "id": "lock_auth",
+      "widgetType": "lockAuth",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true
+      }
+    },
+    {
+      "id": "lock_status",
+      "widgetType": "lockStatus",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "showMediaPlayer": false
+      }
+    },
+    {
+      "id": "lock_power",
+      "widgetType": "lockPower",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true
+      }
+    }
+  ]
+}
