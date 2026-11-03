@@ -1,7 +1,4 @@
 {
-  "niriLayoutGapsOverride": 4,
-  "touchpadTapToClick": true,
-  "touchpadNaturalScroll": true,
   "keyboardLayouts": "us,ara",
   "keyboardOptions": "grp:alts_toggle",
   "keyboardRepeatDelay": 250,

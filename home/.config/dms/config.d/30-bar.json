@@ -40,15 +40,7 @@
       "popupGapsManual": 4,
       "followInterfaceStyle": true,
       "widgetFollowInterfaceStyle": true,
-      "dot": false,
       "island": true
-    }
-  ],
-  "dockConfigs": [
-    {
-      "id": "dock",
-      "name": "Dock",
-      "enabled": false
     }
   ]
 }

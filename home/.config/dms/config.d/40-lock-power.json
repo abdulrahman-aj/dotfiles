@@ -75,14 +75,10 @@
       }
     }
   ],
-  "lockScreenPowerOffMonitorsOnLock": false,
   "acMonitorTimeout": 900,
   "batteryMonitorTimeout": 900,
   "acLockTimeout": 900,
   "batteryLockTimeout": 900,
-  "acSuspendTimeout": 0,
   "batterySuspendTimeout": 1800,
-  "acPostLockMonitorTimeout": 0,
-  "batteryPostLockMonitorTimeout": 0,
   "lockBeforeSuspend": true
 }
