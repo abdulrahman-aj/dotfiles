@@ -17,7 +17,6 @@ binds {
     Mod+Shift+E repeat=false hotkey-overlay-title="Files" {
         spawn "dms" "ipc" "call" "defaultApp" "fileManager";
     }
-    Mod+T hotkey-overlay-title="Open Terminal" repeat=false { spawn "xdg-terminal-exec"; }
     Mod+Return hotkey-overlay-title="Open Terminal" repeat=false { spawn "xdg-terminal-exec"; }
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false {
         spawn "dms" "ipc" "call" "spotlight" "toggle";
@@ -53,9 +52,6 @@ binds {
         spawn "dms" "ipc" "call" "lock" "lock";
     }
     Ctrl+Alt+Delete hotkey-overlay-title="Task Manager" repeat=false {
-        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
-    }
-    Ctrl+Alt+M hotkey-overlay-title="Task Manager" repeat=false {
         spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
     }
 
@@ -157,10 +153,6 @@ binds {
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // === Workspace Navigation ===
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
     Mod+Ctrl+Down { move-column-to-workspace-down; }
     Mod+Ctrl+Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
