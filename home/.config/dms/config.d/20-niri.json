@@ -1,8 +1,0 @@
-{
-  "keyboardLayouts": "us,ara",
-  "keyboardOptions": "grp:alts_toggle",
-  "keyboardRepeatDelay": 250,
-  "keyboardRepeatRate": 40,
-  "keyboardNumlock": true,
-  "niriLayoutBorderSize": 1
-}
