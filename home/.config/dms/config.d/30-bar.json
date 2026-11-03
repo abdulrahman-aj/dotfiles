@@ -29,7 +29,6 @@
         "battery",
         "controlCenterButton"
       ],
-      "innerPadding": 4,
       "island": true
     }
   ]
