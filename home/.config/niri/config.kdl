@@ -1,122 +1,26 @@
-config-notification {
-    disable-failed
-}
-
-gestures {
-    hot-corners {
-        off
-    }
-}
+include "/usr/share/arch-niri-dux/niri/defaults.kdl"
 
 layout {
-    background-color "transparent"
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
     default-column-width { proportion 1.0; }
-    border {
-        active-color   "#707070"      // Neutral gray
-        inactive-color "#d0d0d0"      // Light gray
-        urgent-color   "#cc4444"      // Softer red
-    }
 }
-layer-rule {
-    match namespace="^quickshell$"
-    place-within-backdrop true
-}
-overview {
-    workspace-shadow {
-        off
-    }
-}
-environment {
-  XDG_CURRENT_DESKTOP "niri"
-}
-hotkey-overlay {
-    skip-at-startup
-}
-prefer-no-csd
-animations {
-    workspace-switch {
-        spring damping-ratio=0.80 stiffness=523 epsilon=0.0001
-    }
-    horizontal-view-movement {
-        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
-    }
-    window-movement {
-        spring damping-ratio=0.75 stiffness=323 epsilon=0.0001
-    }
-    window-resize {
-        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
-    }
-    config-notification-open-close {
-        spring damping-ratio=0.65 stiffness=923 epsilon=0.001
-    }
-    overview-open-close {
-        spring damping-ratio=0.85 stiffness=800 epsilon=0.0001
-    }
-}
+// Also override application-specific widths inherited from the stock config.
 window-rule {
-    match app-id=r#"^org\.gnome\."#
-    draw-border-with-background false
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
-window-rule {
-    match app-id=r#"^gnome-control-center$"#
-    match app-id=r#"^pavucontrol$"#
-    match app-id=r#"^nm-connection-editor$"#
-    open-floating false
-}
-window-rule {
-    match app-id=r#"^org\.gnome\.Calculator$"#
-    match app-id=r#"^gnome-calculator$"#
-    match app-id=r#"^galculator$"#
-    match app-id=r#"^blueman-manager$"#
-    match app-id=r#"^xdg-desktop-portal$"#
-    open-floating true
-}
-window-rule {
-    match app-id=r#"^steam$"# title=r#"^notificationtoasts_\d+_desktop$"#
-    default-floating-position x=10 y=10 relative-to="bottom-right"
-    open-focused false
-}
-window-rule {
-    match app-id="Alacritty"
-    match app-id="zen"
-    match app-id="com.mitchellh.ghostty"
-    match app-id="kitty"
-    draw-border-with-background false
-}
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    open-floating true
-}
-debug {
-    honor-xdg-activation-with-invalid-serial
+    default-column-width { proportion 1.0; }
 }
 
-// Super+Tab is reserved for workspace navigation.
-recent-windows {
-    binds {
-        Alt+Tab         { next-window scope="workspace"; }
-        Alt+Shift+Tab   { previous-window scope="workspace"; }
-        Alt+grave       { next-window filter="app-id"; }
-        Alt+Shift+grave { previous-window filter="app-id"; }
-    }
-}
-
-// Include dms files
 include optional=true "dms/colors.kdl"
 include optional=true "dms/layout.kdl"
 include optional=true "dms/alttab.kdl"
-include optional=true "dms/binds.kdl"
 include optional=true "dms/outputs.kdl"
 include optional=true "dms/cursor.kdl"
 include optional=true "dms/input.kdl"
 include optional=true "dms/windowrules.kdl"
 
-include optional=true "/usr/share/arch-niri-dux/session.kdl"
+recent-windows {
+    binds {
+        Alt+Tab { next-window scope="workspace"; }
+        Alt+Shift+Tab { previous-window scope="workspace"; }
+    }
+}
+
+include optional=true "dms/binds.kdl"
