@@ -1,0 +1,14 @@
+{
+  "keyboardLayouts": "us,ara",
+  "keyboardOptions": "grp:alts_toggle",
+  "keyboardRepeatDelay": 250,
+  "keyboardRepeatRate": 40,
+  "keyboardNumlock": true,
+  "niriLayoutBorderSize": 1,
+  "acMonitorTimeout": 900,
+  "batteryMonitorTimeout": 900,
+  "acLockTimeout": 900,
+  "batteryLockTimeout": 900,
+  "batterySuspendTimeout": 1800,
+  "lockBeforeSuspend": true
+}

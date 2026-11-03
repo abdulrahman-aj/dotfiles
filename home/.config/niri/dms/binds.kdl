@@ -1,0 +1,81 @@
+binds {
+    Mod+Tab { focus-workspace-down; }
+    Mod+Shift+Tab { focus-workspace-up; }
+    Mod+Shift+Slash hotkey-overlay-title="Keyboard Shortcuts" repeat=false {
+        spawn "dms" "ipc" "call" "keybinds" "toggle" "niri";
+    }
+    Mod+Shift+B repeat=false hotkey-overlay-title="Open Browser" {
+        spawn "dms" "ipc" "call" "defaultApp" "browser";
+    }
+    Mod+Shift+Alt+B repeat=false hotkey-overlay-title="Private Browser" {
+        spawn "zen-browser" "--private-window";
+    }
+    Mod+Shift+E repeat=false hotkey-overlay-title="Files" {
+        spawn "dms" "ipc" "call" "defaultApp" "fileManager";
+    }
+    Mod+Return hotkey-overlay-title="Open Terminal" repeat=false { spawn "xdg-terminal-exec"; }
+    Mod+Space hotkey-overlay-title="Application Launcher" repeat=false {
+        spawn "dms" "ipc" "call" "spotlight" "toggle";
+    }
+    Alt+Space hotkey-overlay-title="Spotlight Bar" repeat=false {
+        spawn "dms" "ipc" "call" "spotlight-bar" "toggle";
+    }
+    Mod+V hotkey-overlay-title="Clipboard Manager" repeat=false {
+        spawn "dms" "ipc" "call" "clipboard" "toggle";
+    }
+    Mod+M hotkey-overlay-title="Media" repeat=false {
+        spawn "dms" "ipc" "call" "dash" "toggle" "media";
+    }
+    Mod+X hotkey-overlay-title="Power Menu: Toggle" repeat=false { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+    Mod+A hotkey-overlay-title="Control Center" repeat=false { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+    Mod+D hotkey-overlay-title="Dash" repeat=false { spawn "dms" "ipc" "call" "dash" "toggle" ""; }
+    Mod+Shift+C hotkey-overlay-title="Color Picker" repeat=false { spawn "dms" "ipc" "call" "color-picker" "toggle"; }
+    Mod+Alt+N hotkey-overlay-title="Night Mode" repeat=false { spawn "dms" "ipc" "call" "night" "toggle"; }
+    Mod+Alt+I hotkey-overlay-title="Idle Inhibit" repeat=false { spawn "dms" "ipc" "call" "inhibit" "toggle"; }
+    Mod+Comma hotkey-overlay-title="Settings" repeat=false {
+        spawn "dms" "ipc" "call" "settings" "focusOrToggle";
+    }
+    Mod+Y hotkey-overlay-title="Browse Wallpapers" repeat=false {
+        spawn "dms" "ipc" "call" "dash" "toggle" "wallpaper";
+    }
+    Mod+N hotkey-overlay-title="Notepad" repeat=false { spawn "dms" "ipc" "call" "notepad" "toggle"; }
+    Mod+Shift+N hotkey-overlay-title="Notepad: Expand" repeat=false { spawn "dms" "ipc" "call" "notepad" "toggleExpand"; }
+    Mod+Ctrl+N hotkey-overlay-title="Notification Center" repeat=false { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" repeat=false {
+        spawn "dms" "ipc" "call" "lock" "lock";
+    }
+    Ctrl+Alt+Delete hotkey-overlay-title="Task Manager" repeat=false {
+        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
+    }
+    Mod+W repeat=false hotkey-overlay-title="Close Window" { close-window; }
+    Mod+Shift+W hotkey-overlay-title="Create window rule" repeat=false { spawn "dms" "ipc" "call" "window-rules" "toggle"; }
+    Mod+Down  { focus-window-or-workspace-down; }
+    Mod+Up    { focus-window-or-workspace-up; }
+    Mod+J     { focus-window-or-workspace-down; }
+    Mod+K     { focus-window-or-workspace-up; }
+    Mod+Shift+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Shift+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+    Mod+Alt+R hotkey-overlay-title="Rename Workspace" repeat=false {
+        spawn "dms" "ipc" "call" "workspace-rename" "open";
+    }
+    XF86Launch1 hotkey-overlay-title="Screenshot: Region" repeat=false { spawn "dms" "screenshot"; }
+    Ctrl+XF86Launch1 hotkey-overlay-title="Screenshot: Full Screen" repeat=false { spawn "dms" "screenshot" "full"; }
+    Alt+XF86Launch1 hotkey-overlay-title="Screenshot: Window" repeat=false { spawn "dms" "screenshot" "window"; }
+    Print hotkey-overlay-title="Screenshot: Region" repeat=false { spawn "dms" "screenshot"; }
+    Ctrl+Print hotkey-overlay-title="Screenshot: Full Screen" repeat=false { spawn "dms" "screenshot" "full"; }
+    Alt+Print hotkey-overlay-title="Screenshot: Window" repeat=false { spawn "dms" "screenshot" "window"; }
+    Mod+P hotkey-overlay-title="Cycle Display Profile" repeat=false {
+        spawn "dms" "ipc" "outputs" "cycleProfile";
+    }
+
+    // Disable unwanted stock shortcuts; Niri still consumes these combinations.
+    Mod+T repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Ctrl+Alt+M repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Mod+Q repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Mod+Page_Down repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Mod+Page_Up repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Mod+U repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+    Mod+I repeat=false hotkey-overlay-title="Disabled" { spawn "true"; }
+}
