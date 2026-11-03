@@ -1,10 +1,10 @@
-.PHONY: all check test unstow stow fisher agents bootstrap
+.PHONY: all check test test-desktop-vm unstow stow fisher agents bootstrap
 .NOTPARALLEL:
 
 TARGET ?= $(HOME)
 TARGET_ABS := $(abspath $(TARGET))
 STOW ?= stow
-STOW_FLAGS := --no-folding --ignore='^\.config/(niri|dms/config\.d)(/|$$)'
+STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
@@ -21,7 +21,6 @@ agents:
 stow:
 	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
-	@bash scripts/link-desktop.sh link "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
 
 fisher:
@@ -36,9 +35,11 @@ check:
 test:
 	@NIX_BUILD_SHELL="$$(command -v bash)" nix-shell --run 'bash tests/test-deploy.sh && python3 tests/test-desktop.py'
 
+test-desktop-vm:
+	python3 tests/test-desktop-vm.py $(ARGS)
+
 unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }
 	$(STOW) $(STOW_FLAGS) -t "$(TARGET_ABS)" -D home
-	@bash scripts/link-desktop.sh unlink "$(TARGET_ABS)"
 	@if [ -d "$(AGENT_CONFIG_DIR)" ]; then \
 		$(MAKE) -C "$(AGENT_CONFIG_DIR)" uninstall TARGET="$(TARGET_ABS)"; fi

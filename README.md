@@ -36,33 +36,50 @@ shell.
 ## Niri + Dux (v0)
 
 The sample settings establish the file layout; they are not a port of the old
-Fedora desktop. `make stow` deploys them without app installation or agent setup.
+Fedora desktop. `make stow` deploys them with the existing individual Stow links,
+without app installation or agent setup. Conflicting files are backed up under
+`~/.dotfiles-backups/`. Existing unrelated files stay in place. Log out and back
+in after the initial deployment so Niri and Dux load the new configuration.
 
 ```
 home/.config/niri/
-  config.kdl                 # entrypoint with native includes
-  dms/binds.kdl              # edited directly by the keybindings GUI
+  config.kdl                 # hand-written entrypoint with native includes
+  dms/binds.kdl              # Dux keybinding editor storage
+  dms/windowrules.kdl        # Dux window-rule editor storage
+  dms/layout.kdl             # regenerated, but also stores X-ray choices
 home/.config/dms/config.d/
-  10-preferences.json         # Dux loads these after settings.json
-  20-niri.json                # source settings for generated Niri input/layout
+  10-preferences.json        # selected Dux preferences
+  20-niri.json               # source settings for Niri input/layout
 ```
 
-These two directories link into the checkout as directories, so atomic GUI
-saves change the real files and appear in `git diff`. Other application configs
-keep their individual Stow links. The first deployment backs up conflicting
-directories under `~/.dotfiles-backups/`; subsequent deployments preserve edits.
-Existing bindings and JSON fragments stay in that backup; the repo versions
-become active. Log out and back in after the initial handoff so Niri and Dux load the new paths.
-Dux's `settings.json` and `~/.local/state/dms/session.json` remain outside Git.
-Dux generates Niri input/layout/colors/outputs and other fragments from its JSON
-settings; those KDL files are carried over and Git-ignored. Only `dms/binds.kdl`
-is tracked directly. Only preferences declared in `config.d` round-trip to Git;
-other GUI settings stay in the writable `settings.json`. Add further source keys
-to a tracked fragment deliberately. There is no JSON merge step or auto-commit.
+Dux loads JSON fragments after `~/.config/dms/settings.json`. Only preferences
+declared in a tracked fragment round-trip to Git; other settings remain in
+`settings.json`. Dux saves a key to the last fragment declaring it, so avoid
+duplicating tracked keys in later fragments. Add further source keys deliberately.
+There is no custom JSON merge step or auto-commit. Session state stays outside Git too.
 
-To check persistence: change the clock format in Dux Settings, inspect
-`git diff -- home/.config/dms/config.d`, run `make stow` again, and confirm the
-change remains. The keybinding editor writes `home/.config/niri/dms/binds.kdl` directly. Niri
-layout/input controls save JSON source values and regenerate the ignored KDL.
-Edit the source files by hand if preferred; do not override a generated value
-later in the Niri entrypoint.
+The KDL files under `dms/` are Dux-managed. Use its editors for bindings and window
+rules; use JSON preferences for input/layout controls. `layout.kdl` is also
+tracked because Dux reads its X-ray choices back from this file. Its generated
+content will appear in Git, including changes from JSON settings. This does not
+make it a place for hand-written layout overrides. Other generated KDL (colors,
+outputs, input, cursor and Alt-Tab) lives in the target home, outside the checkout.
+Put hand-written Niri configuration in `config.kdl` or an included personal file.
+
+Dux 2.0's binding/rule writers follow file links. Its layout writer resolves the
+link before replacing the target, and its JSON writer uses Qt's symlink-aware
+`QSaveFile`. The Qt implementation resolves symlinks before committing the replacement
+([source](https://github.com/qt/qtbase/blob/v6.10.0/src/corelib/io/qsavefile.cpp)).
+No directory-link exception is needed. To check persistence, change
+the clock format or gaps in Dux Settings, inspect `git diff`, run `make stow`
+again, and confirm the changes remain. The VM verification below checks the actual
+writers rather than simulating a generic atomic replacement.
+
+`make test` checks file links, conflicting-file backups, preservation of unrelated
+runtime files, Git-visible edits, redeployment and removal in temporary homes.
+`make test-desktop-vm` runs the real Dux writers in an already running disposable
+Arch/Niri/Dux VM with a fresh, Git-indexed copy of this checkout deployed. Run it
+as the graphical-session user with `ARGS=--disposable-vm`; it also refuses physical
+hosts. The probe intentionally leaves a test binding/rule and changed preferences
+for a reboot check with `ARGS='--disposable-vm --check-only'`. Discard the VM when
+finished. See the script's help for invocation.

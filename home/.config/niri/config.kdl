@@ -1,4 +1,4 @@
-// Keybindings are edited directly; other fragments below are generated.
+// Personal entrypoint. Dux manages the included dms/ files.
 // Layout/input source values live in ~/.config/dms/config.d.
 environment {
     XDG_CURRENT_DESKTOP "niri"

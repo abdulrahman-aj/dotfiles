@@ -28,19 +28,20 @@ installing packages or changing the login shell.
 
 - Before Stow runs, unmanaged paths that conflict with repo-managed files are moved
   to a timestamped `.dotfiles-backups/` directory under the target home.
-- Stow uses `--no-folding` for ordinary configs. `scripts/link-desktop.sh` links
-  `.config/niri` and `.config/dms/config.d` as whole directories, so atomic GUI
-  saves become Git changes. Never restore their edited files during deployment.
+- Stow uses `--no-folding`, keeping managed directories writable and linking their
+  individual files instead of linking whole directory trees into the repo.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
-- Files in `home/` are deployed through Stow or the two desktop directory links. OpenCode configuration belongs exclusively
+- All files in `home/` are stowed. OpenCode configuration belongs exclusively
   to agent-config.
 - The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
   sets terminal preference order — do not replace it with the single-entry
   output of `omarchy default terminal`). Applications may atomically replace
   their Stow links; the next deployment backs up changed files and restores
-  repository versions.
+  repository versions. Dux 2.0 writes through its file links, so its GUI edits
+  should already be Git changes. Investigate a broken Dux link before redeploying;
+  do not discard the edited file to restore a stale repository version.
 
 ## AI Memories & Skills
 

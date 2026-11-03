@@ -13,7 +13,7 @@ target="$2"
 
 [[ "$mode" == "check" || "$mode" == "backup" ]] || usage
 
-repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 package_root="$repo/home"
 target="$(realpath -m "$target")"
 declare -a conflicts=()
@@ -72,8 +72,7 @@ while IFS= read -r -d '' source_path; do
         && ! is_managed_path "$source_path" "$target_path"; then
         add_conflict "$relative_path"
     fi
-# Emit the pruned directories themselves: they must be backed up as units.
-done < <(find "$package_root" \( -path "$package_root/.config/niri" -o -path "$package_root/.config/dms/config.d" \) -prune -print0 -o \( -type f -o -type l \) -print0)
+done < <(find "$package_root" \( -type f -o -type l \) -print0)
 
 if ((${#conflicts[@]} == 0)); then
     echo "No unmanaged conflicts found"
@@ -92,18 +91,6 @@ for relative_path in "${conflicts[@]}"; do
     source_path="$target/$relative_path"
     backup_path="$backup_root/$relative_path"
     mkdir -p "$(dirname "$backup_path")"
-    # Carry generated colors and machine-specific outputs into the ignored
-    # paths of the new live directory, without replacing tracked preferences.
-    if [[ $relative_path == .config/niri ]]; then
-        for file in "$source_path"/dms/*.kdl; do
-            generated="dms/${file##*/}"
-            [[ $generated != dms/binds.kdl ]] || continue
-            if [[ -f "$source_path/$generated" && ! -e "$package_root/$relative_path/$generated" ]]; then
-                mkdir -p "$package_root/$relative_path/dms"
-                cp -- "$source_path/$generated" "$package_root/$relative_path/$generated"
-            fi
-        done
-    fi
     mv -- "$source_path" "$backup_path"
     printf 'Backed up %s -> %s\n' "$source_path" "$backup_path"
 done

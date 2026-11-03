@@ -1,0 +1,3 @@
+// Dux regenerates this file and reads its X-ray choices back on startup.
+// Keep it tracked for those choices; configure gaps in dms/config.d instead.
+layout {}
