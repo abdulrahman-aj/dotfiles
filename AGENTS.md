@@ -39,9 +39,7 @@ installing packages or changing the login shell.
   sets terminal preference order — do not replace it with the single-entry
   output of `omarchy default terminal`). Applications may atomically replace
   their Stow links; the next deployment backs up changed files and restores
-  repository versions. Dux 2.0 writes through its file links, so its GUI edits
-  should already be Git changes. Investigate a broken Dux link before redeploying;
-  do not discard the edited file to restore a stale repository version.
+  repository versions.
 
 ## AI Memories & Skills
 
