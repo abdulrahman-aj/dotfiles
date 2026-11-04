@@ -1,5 +1,6 @@
 general.import = [
     "~/.config/alacritty/colors-dark-modern.toml",
+    "~/.config/alacritty/dank-theme.toml",
     "~/.local/state/omarchy/current/theme/alacritty.toml",
 ]
 

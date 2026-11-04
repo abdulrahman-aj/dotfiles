@@ -24,15 +24,33 @@ sudo systemctl enable --now nix-daemon.socket
 if command -v omarchy >/dev/null; then
     omarchy pkg add t3code-bin omarchy-fish omazed
     omazed setup
-    # Browser setup also applies Omarchy's policies and Wayland settings.
     omarchy install browser chrome
     omarchy install browser zen
-    omarchy default browser zen
     if ! omarchy plugin list 2>/dev/null | grep -q 'aj.opencode-go'; then
         omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
     fi
 else
-    sudo pacman -S --needed --noconfirm google-chrome zen-browser-bin t3code-bin
+    sudo pacman -S --needed --noconfirm google-chrome zen-browser-bin t3code-bin tailscale
+fi
+
+if tailscale status &>/dev/null; then
+    echo "Tailscale already connected"
+elif [[ -t 0 ]]; then
+    read -r -p "Set up Tailscale now? [Y/n] " reply
+    case "${reply:-Y}" in
+    [Yy]*)
+        if command -v omarchy >/dev/null; then
+            omarchy install service tailscale || echo \
+                "Tailscale setup did not complete; rerun make to retry."
+        else
+            sudo systemctl enable --now tailscaled.service
+            sudo tailscale up || echo \
+                "Tailscale login skipped; run 'sudo tailscale up' to log in."
+            sudo tailscale set --operator="$USER"
+        fi
+        ;;
+    *) echo "Skipping Tailscale setup." ;;
+    esac
 fi
 
 mise use -g herdr codex npm:hunkdiff
