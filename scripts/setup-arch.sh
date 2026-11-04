@@ -30,7 +30,7 @@ if command -v omarchy >/dev/null; then
         omarchy plugin add git@github.com:abdulrahman-aj/omarchy-opencode-go.git --enable --yes
     fi
 else
-    sudo pacman -S --needed --noconfirm google-chrome zen-browser-bin t3code-bin tailscale
+    sudo pacman -S --needed --noconfirm google-chrome zen-browser-bin t3code-bin
 fi
 
 if tailscale status &>/dev/null; then
@@ -43,6 +43,7 @@ elif [[ -t 0 ]]; then
             omarchy install service tailscale || echo \
                 "Tailscale setup did not complete; rerun make to retry."
         else
+            sudo pacman -S --needed --noconfirm tailscale
             sudo systemctl enable --now tailscaled.service
             sudo tailscale up || echo \
                 "Tailscale login skipped; run 'sudo tailscale up' to log in."
