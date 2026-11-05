@@ -19,7 +19,7 @@ fi
 "${install_packages[@]}" alacritty neovim python fish stow git curl github-cli git-delta \
     starship zoxide eza fzf fd bat tldr lazygit jq ttf-jetbrains-mono-nerd zed mise \
     nodejs npm nix worktrunk dosfstools ntfs-3g usb_modeswitch
-sudo systemctl enable --now nix-daemon.socket
+sudo systemctl enable --now nix-daemon.service nix-daemon.socket
 
 if command -v omarchy >/dev/null; then
     omarchy pkg add t3code-bin omarchy-fish omazed
