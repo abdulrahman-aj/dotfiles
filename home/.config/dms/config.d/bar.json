@@ -28,7 +28,11 @@
         "battery",
         "controlCenterButton"
       ],
-      "island": true
+      "island": true,
+      "innerPadding": 2,
+      "widgetPadding": 8,
+      "islandCompactThickness": 38,
+      "islandSatelliteGap": 12
     }
   ]
 }

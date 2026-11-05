@@ -62,8 +62,8 @@
   "buffer_font_size": 16.0,
   "theme": {
     "mode": "dark",
-    "light": "Omazed",
-    "dark": "Omazed",
+    "light": "One Light",
+    "dark": "VSCode Dark Modern",
   },
   "auto_install_extensions": {
     "dockerfile": true,
