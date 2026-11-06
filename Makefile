@@ -9,6 +9,7 @@ AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
 all: bootstrap stow agents fisher
+	@bash scripts/finish-setup.sh "$(TARGET_ABS)"
 
 bootstrap:
 	@bash scripts/setup-arch.sh "$(TARGET_ABS)"
