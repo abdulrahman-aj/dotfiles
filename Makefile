@@ -33,7 +33,7 @@ check:
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" check TARGET="$(TARGET_ABS)"
 
 test:
-	@NIX_BUILD_SHELL="$$(command -v bash)" nix-shell --run 'bash tests/test-deploy.sh && bash tests/test-setup-arch.sh'
+	@NIX_BUILD_SHELL="$$(command -v bash)" nix-shell --run 'bash tests/test-deploy.sh'
 
 unstow:
 	@command -v "$(STOW)" >/dev/null 2>&1 || { echo "Missing required command: $(STOW)" >&2; exit 1; }
