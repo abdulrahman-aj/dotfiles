@@ -1,4 +1,4 @@
-# VS Code "Dark Modern" fallback for systems without an Omarchy theme.
+# VS Code "Dark Modern" fallback for systems without a Dux theme.
 [colors.primary]
 background = "#1f1f1f"
 foreground = "#cccccc"
