@@ -9,7 +9,7 @@ sudo pacman -Syu --needed --noconfirm \
     alacritty neovim python fish stow git curl github-cli git-delta \
     starship zoxide eza fzf fd bat tldr lazygit jq ttf-jetbrains-mono-nerd zed mise \
     nodejs npm nix worktrunk dosfstools ntfs-3g usb_modeswitch \
-    google-chrome zen-browser-bin t3code-bin
+    google-chrome zen-browser-bin t3code-bin tailscale
 sudo systemctl enable --now nix-daemon.service nix-daemon.socket
 
 if tailscale status &>/dev/null; then
@@ -18,7 +18,6 @@ elif [[ -t 0 ]]; then
     read -r -p "Set up Tailscale now? [Y/n] " reply
     case "${reply:-Y}" in
     [Yy]*)
-        sudo pacman -S --needed --noconfirm tailscale
         sudo systemctl enable --now tailscaled.service
         sudo tailscale up || echo \
             "Tailscale login skipped; run 'sudo tailscale up' to log in."
