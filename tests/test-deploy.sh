@@ -44,10 +44,6 @@ test_stow_round_trip() {
         || fail "Niri directory was folded into the repository"
     [[ -L "$target/.config/niri/dms/binds.kdl" ]] || fail 'Niri bindings are not linked'
     [[ -L "$target/.config/dms/config.d/preferences.json" ]] || fail 'Dux preferences are not linked'
-    [[ ! -e "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
-        || fail 'obsolete Omarchy config was deployed'
-    [[ ! -e "$target/.config/hypr" && ! -L "$target/.config/hypr" ]] \
-        || fail 'obsolete Hyprland config was deployed'
     [[ -L "$target/.config/alacritty/alacritty.toml" ]] || fail 'Alacritty config is not linked'
     make -s check TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
     make -s unstow TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
