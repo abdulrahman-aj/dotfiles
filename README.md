@@ -25,11 +25,6 @@ login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 Desktop preferences target Niri and Dux Shell. The managed MIME configuration
 sets Zen as the default browser.
 
-When updating an older checkout, remove dangling Stow symlinks under
-`~/.config/omarchy/` and the old `~/.config/hypr/{bindings,input,looknfeel}.lua`
-links, only if they point into this checkout. Stow cannot remove links whose
-source files have been deleted.
-
 ## Commands
 
 - `make bootstrap` — run app and shell setup without linking dotfiles.
