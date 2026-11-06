@@ -34,16 +34,20 @@ test_stow_round_trip() {
     mkdir -p "$agent_checkout"
     printf 'install check uninstall:\n\t@test "$(TARGET)" = "%s"\n' "$target" \
         > "$agent_checkout/Makefile"
-    mkdir -p "$target/.config/hypr" "$target/.config/alacritty"
-    printf 'keep\n' > "$target/.config/hypr/bindings.lua"
+    mkdir -p "$target/.config/niri/dms" "$target/.config/alacritty"
+    printf 'keep\n' > "$target/.config/niri/dms/binds.kdl"
     printf 'keep\n' > "$target/.config/alacritty/alacritty.toml"
     make -s stow TARGET="$target" >/dev/null
     make -s agents TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
 
-    [[ -d "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
-        || fail "Omarchy directory was folded into the repository"
-    [[ -L "$target/.config/omarchy/shell.json" ]] || fail "shell config is not linked"
-    [[ -L "$target/.config/hypr/bindings.lua" ]] || fail 'Hyprland config is not linked'
+    [[ -d "$target/.config/niri" && ! -L "$target/.config/niri" ]] \
+        || fail "Niri directory was folded into the repository"
+    [[ -L "$target/.config/niri/dms/binds.kdl" ]] || fail 'Niri bindings are not linked'
+    [[ -L "$target/.config/dms/config.d/preferences.json" ]] || fail 'Dux preferences are not linked'
+    [[ ! -e "$target/.config/omarchy" && ! -L "$target/.config/omarchy" ]] \
+        || fail 'obsolete Omarchy config was deployed'
+    [[ ! -e "$target/.config/hypr" && ! -L "$target/.config/hypr" ]] \
+        || fail 'obsolete Hyprland config was deployed'
     [[ -L "$target/.config/alacritty/alacritty.toml" ]] || fail 'Alacritty config is not linked'
     make -s check TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null
     make -s unstow TARGET="$target" AGENT_CONFIG_DIR="$agent_checkout" >/dev/null

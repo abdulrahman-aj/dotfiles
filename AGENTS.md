@@ -32,14 +32,13 @@ installing packages or changing the login shell.
   individual files instead of linking whole directory trees into the repo.
 - Fisher is an external bootstrap step run after Stow. It honors
   `TARGET`, preserves unrelated existing configurations, and is safe to retry.
-- Arch and Omarchy share app/tool setup, restricted to the real `$HOME`.
+- Arch app/tool setup uses Pacman with configured binary repositories, restricted
+  to the real `$HOME`. Do not introduce AUR builds or require an AUR helper.
 - All files in `home/` are stowed. OpenCode configuration belongs exclusively
   to agent-config.
-- The repo owns `shell.json`, `mimeapps.list`, and `xdg-terminals.list` (which
-  sets terminal preference order — do not replace it with the single-entry
-  output of `omarchy default terminal`). Applications may atomically replace
-  their Stow links; the next deployment backs up changed files and restores
-  repository versions.
+- The repo owns `mimeapps.list` and `xdg-terminals.list` (which sets terminal
+  preference order). Applications may atomically replace their Stow links; the
+  next deployment backs up changed files and restores repository versions.
 
 ## AI Memories & Skills
 

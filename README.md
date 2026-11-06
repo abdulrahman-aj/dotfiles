@@ -4,8 +4,10 @@ Personal configuration managed with GNU Stow.
 
 ## Setup
 
-Requires internet access, `make` and `gh`; Arch setup also uses `sudo` and
-Omarchy's package repository for Chrome, Zen and T3 Code.
+Requires internet access, `make` and `gh`. On Arch, setup also requires `sudo`.
+Packages, including Chrome, Zen and T3 Code, are installed with Pacman from
+the configured binary repositories. Those repositories must provide these
+packages; setup does not fall back to AUR builds.
 
 ```sh
 gh auth login
@@ -17,11 +19,16 @@ make
 `make` links configuration, deploys
 [agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
 OpenCode configuration belongs to agent-config.
-On Arch and Omarchy, it also installs personal apps and Nix and sets Fish as the
+On Arch, it also installs personal apps and Nix and sets Fish as the
 login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 
-On Omarchy, setup offers to remove bundled apps and sets Zen as the default
-browser.
+Desktop preferences target Niri and Dux Shell. The managed MIME configuration
+sets Zen as the default browser.
+
+When updating an older checkout, remove dangling Stow symlinks under
+`~/.config/omarchy/` and the old `~/.config/hypr/{bindings,input,looknfeel}.lua`
+links, only if they point into this checkout. Stow cannot remove links whose
+source files have been deleted.
 
 ## Commands
 

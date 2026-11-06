@@ -77,7 +77,6 @@
     "make": true,
     "vscode-dark-modern": true,
     "material-icon-theme": true,
-    "hyprlang": true,
     "qml": true,
     "sql": true,
     "toml": true,
