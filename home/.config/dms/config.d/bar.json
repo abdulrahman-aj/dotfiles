@@ -25,6 +25,10 @@
         "cpuUsage",
         "memUsage",
         "notificationButton",
+        {
+          "id": "keyboard_layout_name",
+          "keyboardLayoutNameCompactMode": true
+        },
         "battery",
         "controlCenterButton"
       ],
