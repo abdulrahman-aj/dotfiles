@@ -17,6 +17,11 @@
       "centerWidgets": [
         "music",
         "clock",
+        {
+          "id": "systemUpdate",
+          "enabled": true,
+          "hideWhenIdle": true
+        },
         "weather"
       ],
       "rightWidgets": [
