@@ -51,32 +51,7 @@ test_stow_round_trip() {
     [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }
 
-test_refresh_only_fast_forwards_clean_main() {
-    local origin="$test_root/refresh-origin"
-    local clean="$test_root/refresh-clean"
-    local dirty="$test_root/refresh-dirty"
-    local before
-
-    git init -q -b main "$origin"
-    git -C "$origin" -c user.name=t -c user.email=t@t commit -q --allow-empty -m one
-    git clone -q "$origin" "$clean"
-    git clone -q "$origin" "$dirty"
-    printf 'local work\n' > "$dirty/wip"
-    git -C "$origin" -c user.name=t -c user.email=t@t commit -q --allow-empty -m two
-    before="$(git -C "$dirty" rev-parse HEAD)"
-
-    bash scripts/refresh.sh "$clean" "$dirty" >/dev/null
-    bash scripts/refresh.sh "$test_root/missing" "$test_root" >/dev/null \
-        || fail 'refresh failed on a missing or non-git checkout'
-
-    [[ "$(git -C "$clean" rev-parse HEAD)" == "$(git -C "$origin" rev-parse HEAD)" ]] \
-        || fail 'clean main was not fast-forwarded'
-    [[ "$(git -C "$dirty" rev-parse HEAD)" == "$before" ]] \
-        || fail 'dirty checkout was updated'
-}
-
 test_conflict_backup
-test_refresh_only_fast_forwards_clean_main
 mkdir -p "$test_root/bin"
 ln -s "$(command -v realpath)" "$test_root/bin/realpath"
 # No package tools are available: another target home must skip setup entirely.

@@ -31,8 +31,6 @@ configuration sets Zen as the default browser.
 - `make bootstrap` — run app and shell setup without linking dotfiles.
 - `make check` — check deployment without changing files.
 - `make test` — test deployment in temporary homes using Nix.
-- `make refresh` — fast-forward `~/dotfiles` and `~/agent-config` when each is
-  clean and on `main`, then relink both.
 - `make unstow` — remove managed links.
 
 `TARGET=/another/home` deploys without installing packages or changing the login
