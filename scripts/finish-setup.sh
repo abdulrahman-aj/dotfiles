@@ -4,6 +4,8 @@ set -euo pipefail
 target="$(realpath -m "${1:-$HOME}")"
 [[ "$target" == "$(realpath -m "$HOME")" ]] || exit 0
 
+bash "$(dirname "${BASH_SOURCE[0]}")/enable-user-units.sh" "$target"
+
 if command -v dms >/dev/null; then
     dms restart || echo 'Dux Shell restart failed; a reboot will apply the settings.' >&2
 fi

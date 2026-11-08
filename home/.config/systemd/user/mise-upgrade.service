@@ -1,0 +1,12 @@
+[Unit]
+Description=Upgrade global mise tools
+
+[Service]
+Type=oneshot
+# --global upgrades ~/.config/mise/config.toml requests from outside any
+# project, so a project's mise.toml or lockfile is never touched.
+ExecStart=/usr/bin/mise upgrade --global --yes
+# A catch-up run right after boot can start before the network is up; retry
+# instead of waiting a week for the next run.
+Restart=on-failure
+RestartSec=15min
