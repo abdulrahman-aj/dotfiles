@@ -1,4 +1,4 @@
-.PHONY: all check test unstow stow fisher agents bootstrap
+.PHONY: all check test unstow stow fisher agents bootstrap refresh
 .NOTPARALLEL:
 
 TARGET ?= $(HOME)
@@ -23,6 +23,11 @@ stow:
 	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
+
+refresh:
+	@bash scripts/refresh.sh "$(CURDIR)" "$(AGENT_CONFIG_DIR)"
+	$(MAKE) stow agents
+	@bash scripts/enable-user-units.sh "$(TARGET_ABS)"
 
 fisher:
 	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
