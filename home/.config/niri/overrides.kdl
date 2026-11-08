@@ -1,0 +1,16 @@
+// Personal Niri settings. arch-niri-dux 0.3 loads this file last, after its
+// defaults and Dux's generated dms/*.kdl, so these settings win.
+
+layout {
+    // Full-width tiled columns without imposing a width on floating dialogs.
+    default-column-width { proportion 1.0; }
+}
+
+// Alt+Tab cycles windows on the current workspace only. Kept outside Dux's
+// writer until it preserves MRU bindings on shortcut saves.
+recent-windows {
+    binds {
+        Alt+Tab { next-window scope="workspace"; }
+        Alt+Shift+Tab { previous-window scope="workspace"; }
+    }
+}
