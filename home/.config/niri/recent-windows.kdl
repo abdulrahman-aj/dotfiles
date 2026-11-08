@@ -1,7 +1,0 @@
-// Keep these outside Dux's writer until it preserves MRU bindings on shortcut saves.
-recent-windows {
-    binds {
-        Alt+Tab { next-window scope="workspace"; }
-        Alt+Shift+Tab { previous-window scope="workspace"; }
-    }
-}

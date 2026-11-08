@@ -22,8 +22,9 @@ OpenCode configuration belongs to agent-config.
 On Arch, it also installs personal apps and Nix and sets Fish as the
 login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 
-Desktop preferences target Niri and Dux Shell. The managed MIME configuration
-sets Zen as the default browser.
+Desktop preferences target Niri and Dux Shell. Personal Niri settings live in
+`~/.config/niri/overrides.kdl`, which arch-niri-dux loads last. The managed MIME
+configuration sets Zen as the default browser.
 
 ## Commands
 
