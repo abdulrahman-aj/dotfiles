@@ -20,16 +20,20 @@ make
 [agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Fish.
 OpenCode configuration belongs to agent-config.
 On Arch, it also installs personal apps and Nix and sets Fish as the
-login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
+login shell, and enables a weekly `mise upgrade` of global tools. Conflicting
+dotfiles are backed up under `~/.dotfiles-backups/`.
 
-Desktop preferences target Niri and Dux Shell. The managed MIME configuration
-sets Zen as the default browser.
+Desktop preferences target Niri and Dux Shell. Personal Niri settings live in
+`~/.config/niri/overrides.kdl`, which arch-niri-dux loads last. The managed MIME
+configuration sets Zen as the default browser.
 
 ## Commands
 
 - `make bootstrap` — run app and shell setup without linking dotfiles.
 - `make check` — check deployment without changing files.
 - `make test` — test deployment in temporary homes using Nix.
+- `make refresh` — fast-forward `~/dotfiles` and `~/agent-config` when each is
+  clean and on `main`, then relink both.
 - `make unstow` — remove managed links.
 
 `TARGET=/another/home` deploys without installing packages or changing the login

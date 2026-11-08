@@ -18,6 +18,7 @@ make          # deploy everything (stow home/ + AI setup)
 make agents   # bootstrap and deploy the private agent-config repo
 make check    # dry-run and report conflicts
 make test     # run deployment tests in isolated temporary homes
+make refresh  # fast-forward clean main checkouts of both repos, then relink
 make unstow   # remove all symlinks
 ```
 
