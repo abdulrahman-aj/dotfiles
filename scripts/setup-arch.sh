@@ -27,7 +27,7 @@ elif [[ -t 0 ]]; then
     esac
 fi
 
-mise use -g herdr codex npm:hunkdiff
+mise use -g claude herdr codex npm:hunkdiff
 if [[ -z "$(mise ls -g -i --no-header 'npm:@opencode/cli')" ]]; then
     mise use -g --tool-option 'allow_builds=["@opencode/cli"]' \
         --tool-option 'allow_low_downloads=true' 'npm:@opencode/cli@latest'
