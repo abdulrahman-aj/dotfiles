@@ -31,7 +31,9 @@ configuration sets Zen as the default browser.
 - `make bootstrap` — run app and shell setup without linking dotfiles.
 - `make check` — check deployment without changing files.
 - `make test` — test deployment in temporary homes using Nix.
+- `make dux-plugins` — install pinned Dux plugins from `dux/plugins.lock.json`.
 - `make unstow` — remove managed links.
 
 `TARGET=/another/home` deploys without installing packages or changing the login
-shell.
+shell. Bump Dux plugins with `dms plugins update`, then
+`dms plugins lock -o dux/plugins.lock.json` and commit.

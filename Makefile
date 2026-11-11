@@ -1,4 +1,4 @@
-.PHONY: all check test unstow stow fisher agents bootstrap
+.PHONY: all check test unstow stow fisher agents dux-plugins bootstrap
 .NOTPARALLEL:
 
 TARGET ?= $(HOME)
@@ -8,7 +8,7 @@ STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
-all: bootstrap stow agents fisher
+all: bootstrap stow agents dux-plugins fisher
 	@bash scripts/finish-setup.sh "$(TARGET_ABS)"
 
 bootstrap:
@@ -18,6 +18,10 @@ agents:
 	@test -e "$(AGENT_CONFIG_DIR)" || \
 		gh repo clone "$(AGENT_CONFIG_REPO)" "$(AGENT_CONFIG_DIR)"
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" install TARGET="$(TARGET_ABS)"
+
+dux-plugins:
+	@dms plugins restore dux/plugins.lock.json
+	@dms ipc call plugins enable duxAiUsage || echo "Dux is not running; enable later with: dms ipc call plugins enable duxAiUsage"
 
 stow:
 	@bash scripts/check-prereqs.sh

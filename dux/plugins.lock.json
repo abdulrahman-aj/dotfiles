@@ -1,0 +1,10 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "duxAiUsage": {
+      "repo": "https://github.com/abdulrahman-aj/dux-ai-usage",
+      "path": "DuxAiUsage",
+      "commit": "45501133e3539e5113e4323b1c02fb115c2b0a2d"
+    }
+  }
+}
