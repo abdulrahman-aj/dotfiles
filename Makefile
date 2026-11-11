@@ -7,8 +7,6 @@ STOW ?= stow
 STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
-DUX_AI_USAGE_DIR ?= $(TARGET_ABS)/dux-ai-usage
-DUX_AI_USAGE_REPO ?= https://github.com/abdulrahman-aj/dux-ai-usage.git
 
 all: bootstrap stow agents dux-plugins fisher
 	@bash scripts/finish-setup.sh "$(TARGET_ABS)"
@@ -22,8 +20,8 @@ agents:
 	$(MAKE) -C "$(AGENT_CONFIG_DIR)" install TARGET="$(TARGET_ABS)"
 
 dux-plugins:
-	@DUX_AI_USAGE_DIR="$(DUX_AI_USAGE_DIR)" DUX_AI_USAGE_REPO="$(DUX_AI_USAGE_REPO)" \
-		bash scripts/install-dux-plugins.sh "$(TARGET_ABS)"
+	@dms plugins restore dux/plugins.lock.json
+	@dms ipc call plugins enable duxAiUsage || echo "Dux is not running; enable later with: dms ipc call plugins enable duxAiUsage"
 
 stow:
 	@bash scripts/check-prereqs.sh
