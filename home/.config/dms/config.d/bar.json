@@ -35,13 +35,21 @@
           "keyboardLayoutNameCompactMode": true
         },
         "battery",
+        {
+          "id": "duxAiUsage",
+          "enabled": true
+        },
         "controlCenterButton"
       ],
-      "island": true,
-      "innerPadding": 2,
-      "widgetPadding": 8,
-      "islandCompactThickness": 38,
-      "islandSatelliteGap": 12
+      "innerPadding": -2,
+      "widgetPadding": 7,
+      "islandCompactThickness": 34,
+      "islandSatelliteGap": 8,
+      "dot": false,
+      "screenPreferences": [
+        "all"
+      ],
+      "island": false
     }
   ]
 }

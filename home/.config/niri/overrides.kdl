@@ -14,3 +14,9 @@ recent-windows {
         Alt+Shift+Tab { previous-window scope="workspace"; }
     }
 }
+
+// Mod+U opens the Dash on the AI Usage tab (dux-ai-usage plugin). It replaces
+// the default focus-workspace-down here, which stays on Mod+J.
+binds {
+    Mod+U hotkey-overlay-title="AI Usage" { spawn "dms" "ipc" "call" "dash" "toggle" "plugin_duxAiUsage"; }
+}
