@@ -51,11 +51,55 @@ test_stow_round_trip() {
     [[ -z "$leftover_link" ]] || fail "managed link was not unstowed: $leftover_link"
 }
 
+test_dux_plugins() {
+    local target="$test_root/dux-home"
+    local clone="$test_root/dux-clone"
+    local stubs="$test_root/dux-bin"
+    local dms_log="$test_root/dms.log"
+
+    mkdir -p "$target" "$clone/DuxAiUsage" "$stubs"
+    printf '{"id":"duxAiUsage"}\n' > "$clone/DuxAiUsage/plugin.json"
+    printf '#!/usr/bin/env bash\necho "$@" >> "$DMS_LOG"\n' > "$stubs/dms"
+    chmod +x "$stubs/dms"
+
+    # A stale symlink is repointed at the managed clone.
+    mkdir -p "$target/.config/dms/plugins"
+    ln -s "$test_root" "$target/.config/dms/plugins/DuxAiUsage"
+
+    DMS_LOG="$dms_log" PATH="$stubs:$PATH" \
+        make -s dux-plugins TARGET="$target" DUX_AI_USAGE_DIR="$clone" >/dev/null
+    [[ "$(readlink "$target/.config/dms/plugins/DuxAiUsage")" == "$clone/DuxAiUsage" ]] \
+        || fail 'DuxAiUsage plugin was not linked'
+    [[ ! -e "$dms_log" ]] || fail 'dms was called for a non-HOME target'
+
+    # Second run is a no-op.
+    DMS_LOG="$dms_log" PATH="$stubs:$PATH" \
+        make -s dux-plugins TARGET="$target" DUX_AI_USAGE_DIR="$clone" >/dev/null
+    [[ "$(readlink "$target/.config/dms/plugins/DuxAiUsage")" == "$clone/DuxAiUsage" ]] \
+        || fail 'DuxAiUsage plugin link did not survive a second run'
+
+    # A real directory is never replaced.
+    rm "$target/.config/dms/plugins/DuxAiUsage"
+    mkdir -p "$target/.config/dms/plugins/DuxAiUsage"
+    if DMS_LOG="$dms_log" PATH="$stubs:$PATH" \
+        make -s dux-plugins TARGET="$target" DUX_AI_USAGE_DIR="$clone" >/dev/null 2>&1; then
+        fail 'dux-plugins replaced a real directory'
+    fi
+    rmdir "$target/.config/dms/plugins/DuxAiUsage"
+
+    # Against HOME the plugin is enabled via dms.
+    DMS_LOG="$dms_log" PATH="$stubs:$PATH" HOME="$target" DUX_AI_USAGE_DIR="$clone" \
+        bash scripts/install-dux-plugins.sh "$target" >/dev/null
+    grep -qx 'ipc call plugins enable duxAiUsage' "$dms_log" \
+        || fail 'dms plugin enable was not called for a HOME target'
+}
+
 test_conflict_backup
 mkdir -p "$test_root/bin"
 ln -s "$(command -v realpath)" "$test_root/bin/realpath"
 # No package tools are available: another target home must skip setup entirely.
 PATH="$test_root/bin" /bin/bash scripts/setup-arch.sh "$test_root/alternate-home"
 test_stow_round_trip
+test_dux_plugins
 
 echo "Deployment smoke test passed"
