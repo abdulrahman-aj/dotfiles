@@ -27,11 +27,8 @@ elif [[ -t 0 ]]; then
     esac
 fi
 
-mise use -g claude herdr codex agy npm:hunkdiff
-if [[ -z "$(mise ls -g -i --no-header 'npm:@opencode/cli')" ]]; then
-    mise use -g --tool-option 'allow_builds=["@opencode/cli"]' \
-        --tool-option 'allow_low_downloads=true' 'npm:@opencode/cli@latest'
-fi
+mise use -g claude herdr codex agy npm:hunkdiff opencode
+
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v fish)" ]]; then
     chsh -s "$(command -v fish)" "$USER"
 fi
