@@ -5,6 +5,11 @@ end
 if status is-interactive
     fish_vi_key_bindings
 
+    bind -M visual -m default y 'fish_clipboard_copy; commandline -f end-selection repaint-mode'
+    bind yy fish_clipboard_copy
+    bind p 'set -g fish_cursor_end_mode exclusive' forward-char 'set -g fish_cursor_end_mode inclusive' fish_clipboard_paste
+    bind P fish_clipboard_paste
+
     if command -v mise &>/dev/null
         mise activate fish | source
     end
