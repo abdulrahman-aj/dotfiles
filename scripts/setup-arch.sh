@@ -6,7 +6,7 @@ target="$(realpath -m "${1:-$HOME}")"
 [[ "$target" == "$(realpath -m "$HOME")" ]] || exit 0
 
 sudo pacman -Syu --needed --noconfirm \
-    alacritty neovim python fish stow git curl github-cli git-delta \
+    alacritty neovim python fish wl-clipboard stow git curl github-cli git-delta \
     starship zoxide eza fzf fd bat tldr lazygit jq ttf-jetbrains-mono-nerd zed mise \
     nodejs npm nix worktrunk dosfstools ntfs-3g usb_modeswitch \
     google-chrome zen-browser-bin t3code-bin tailscale
