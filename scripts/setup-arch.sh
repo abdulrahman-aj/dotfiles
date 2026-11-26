@@ -29,8 +29,8 @@ fi
 
 mise use -g claude herdr codex agy npm:hunkdiff opencode
 
-# Bash as the login shell gives ssh commands and scripts bash and the login
-# PATH; ~/.bashrc starts fish in interactive terminals.
+# Bash as the login shell runs ssh commands and scripts in bash;
+# ~/.bashrc starts fish in interactive terminals.
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != /bin/bash ]]; then
     chsh -s /bin/bash "$USER"
 fi
