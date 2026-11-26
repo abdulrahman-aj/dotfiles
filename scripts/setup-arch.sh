@@ -29,6 +29,8 @@ fi
 
 mise use -g claude herdr codex agy npm:hunkdiff opencode
 
-if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v fish)" ]]; then
-    chsh -s "$(command -v fish)" "$USER"
+# Bash as the login shell runs ssh commands and scripts in bash;
+# ~/.bashrc starts fish in interactive terminals.
+if [[ "$(getent passwd "$USER" | cut -d: -f7)" != /bin/bash ]]; then
+    chsh -s /bin/bash "$USER"
 fi
