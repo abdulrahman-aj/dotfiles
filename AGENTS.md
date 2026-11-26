@@ -5,7 +5,7 @@ Personal dotfiles managed with GNU Stow. Deploying to a new machine: clone the r
 ## Structure
 
 `home/` is a stow package that mirrors `~/` 1:1: strip the `home/` prefix to
-get the deployed path (e.g. `home/.config/fish/config.fish` → `~/.config/fish/config.fish`).
+get the deployed path (e.g. `home/.config/niri/overrides.kdl` → `~/.config/niri/overrides.kdl`).
 New dotfiles go under `home/` at their deployed relative path.
 New files need `make` to be stowed live; edits to stowed files are live
 via symlink unless an app replaced the link — run `make` to verify
@@ -30,10 +30,9 @@ installing packages or changing the login shell.
   to a timestamped `.dotfiles-backups/` directory under the target home.
 - Stow uses `--no-folding`, keeping managed directories writable and linking their
   individual files instead of linking whole directory trees into the repo.
-- Fisher is an external bootstrap step run after Stow. It honors
-  `TARGET`, preserves unrelated existing configurations, and is safe to retry.
 - Arch app/tool setup uses Pacman with configured binary repositories, restricted
-  to the real `$HOME`. Do not introduce AUR builds or require an AUR helper.
+  to the real `$HOME`. A tool those repositories lack comes from nixpkgs through
+  `nix profile add`. Do not introduce AUR builds or require an AUR helper.
 - All files in `home/` are stowed. OpenCode configuration belongs exclusively
   to agent-config.
 - The repo owns `mimeapps.list` and `xdg-terminals.list` (which sets terminal

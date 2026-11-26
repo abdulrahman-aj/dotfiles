@@ -1,4 +1,4 @@
-.PHONY: all check test unstow stow fisher agents dux-plugins bootstrap
+.PHONY: all check test unstow stow agents dux-plugins bootstrap
 .NOTPARALLEL:
 
 TARGET ?= $(HOME)
@@ -8,7 +8,7 @@ STOW_FLAGS := --no-folding
 AGENT_CONFIG_DIR ?= $(TARGET_ABS)/agent-config
 AGENT_CONFIG_REPO ?= https://github.com/abdulrahman-aj/agent-config.git
 
-all: bootstrap stow agents dux-plugins fisher
+all: bootstrap stow agents dux-plugins
 	@bash scripts/finish-setup.sh "$(TARGET_ABS)"
 
 bootstrap:
@@ -27,9 +27,6 @@ stow:
 	@bash scripts/check-prereqs.sh
 	@bash scripts/manage-conflicts.sh backup "$(TARGET_ABS)"
 	$(STOW) $(STOW_FLAGS) -R -t "$(TARGET_ABS)" home
-
-fisher:
-	@bash scripts/install-fisher.sh "$(TARGET_ABS)"
 
 check:
 	@bash scripts/check-prereqs.sh

@@ -3,5 +3,5 @@
     sha256 = "sha256-HzgjxrLY4AEc0044ZuM5CHbLSWLZgDlay1idmzvvpJs=";
   }) {} }:
 pkgs.mkShell {
-  packages = with pkgs; [ bash coreutils curl fish gh git gnumake gnused gnugrep neovim python3 stow ];
+  packages = with pkgs; [ bash coreutils curl gh git gnumake gnused gnugrep neovim python3 stow ];
 }
