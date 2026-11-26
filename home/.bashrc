@@ -3,9 +3,10 @@
 # /etc/profile.d. Interactive terminals hand over to fish.
 [[ $- != *i* ]] && return
 
-# Hand over only a plain interactive shell: not `bash -ic cmd`, not
-# `bash -i script`, and not `bash` typed inside fish.
-if [[ ! -v BASH_EXECUTION_STRING && ($0 == -bash || ${0##*/} == bash) ]] &&
+# Hand over only a plain interactive shell on a terminal: not `bash -ic cmd`,
+# not `bash -i script` ($0 is then the script), not `bash -i -s` reading a
+# pipe, and not `bash` typed inside fish.
+if [[ ! -v BASH_EXECUTION_STRING && ($0 == bash || $0 == -bash || $0 == "$BASH") && -t 0 ]] &&
     [[ $(</proc/$PPID/comm) != fish ]] && command -v fish >/dev/null; then
     shopt -q login_shell && exec fish --login
     exec fish
