@@ -1,13 +1,13 @@
-# PATH and EDITOR come from /etc/profile.d, which login shells read.
+# PATH and EDITOR come from arch-niri-dux's /etc/profile.d, which login shells read.
 # Scripts and one-shot ssh commands need nothing below.
 [[ $- != *i* ]] && return
 
 # ble.sh gives fish-style autosuggestions and syntax highlighting. It loads
 # first and attaches last, after everything that changes the prompt or bindings.
-# Source it by its store path: from a path under $HOME it writes its cache
-# next to itself, which the read-only store refuses.
-blesh=$(readlink -f "$HOME/.nix-profile/share/blesh/ble.sh")
-[[ -r $blesh ]] && source "$blesh" --noattach
+# Without ~/.cache it falls back to a cache next to itself, in the read-only
+# store, and fails to load.
+blesh="$HOME/.nix-profile/share/blesh/ble.sh"
+[[ -r $blesh ]] && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}" && source "$blesh" --noattach
 unset blesh
 
 set -o vi

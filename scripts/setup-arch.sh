@@ -29,7 +29,8 @@ fi
 
 mise use -g claude herdr codex agy npm:hunkdiff opencode
 
-nix profile add nixpkgs#blesh
+# The user nix.conf that enables flakes isn't stowed yet on a first run.
+nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#blesh
 
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != /bin/bash ]]; then
     chsh -s /bin/bash "$USER"

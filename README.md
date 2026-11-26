@@ -19,7 +19,7 @@ make
 `make` links configuration, deploys
 [agent-config](https://github.com/abdulrahman-aj/agent-config), and sets up Bash.
 OpenCode configuration belongs to agent-config.
-On Arch, it also installs personal apps and Nix and ble.sh and sets Bash as the
+On Arch, it also installs personal apps, Nix and ble.sh, and sets Bash as the
 login shell. Conflicting dotfiles are backed up under `~/.dotfiles-backups/`.
 
 Desktop preferences target Niri and Dux Shell. Personal Niri settings live in
