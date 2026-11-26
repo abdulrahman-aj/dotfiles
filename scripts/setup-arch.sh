@@ -6,7 +6,7 @@ target="$(realpath -m "${1:-$HOME}")"
 [[ "$target" == "$(realpath -m "$HOME")" ]] || exit 0
 
 sudo pacman -Syu --needed --noconfirm \
-    alacritty neovim python bash-completion stow git curl github-cli git-delta \
+    alacritty neovim python fish stow git curl github-cli git-delta \
     starship zoxide eza fzf fd bat tldr lazygit jq ttf-jetbrains-mono-nerd zed mise \
     nodejs npm nix worktrunk dosfstools ntfs-3g usb_modeswitch \
     google-chrome zen-browser-bin t3code-bin tailscale
@@ -29,9 +29,8 @@ fi
 
 mise use -g claude herdr codex agy npm:hunkdiff opencode
 
-# The user nix.conf that enables flakes isn't stowed yet on a first run.
-nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#blesh
-
+# Bash as the login shell gives ssh commands and scripts bash and the login
+# PATH; ~/.bashrc starts fish in interactive terminals.
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != /bin/bash ]]; then
     chsh -s /bin/bash "$USER"
 fi

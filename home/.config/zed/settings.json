@@ -67,6 +67,7 @@
   },
   "auto_install_extensions": {
     "dockerfile": true,
+    "fish": true,
     "git-firefly": true,
     "html": true,
     "kdl": true,

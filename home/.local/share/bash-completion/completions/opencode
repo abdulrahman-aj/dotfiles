@@ -1,1 +1,0 @@
-source <(opencode --completions bash)

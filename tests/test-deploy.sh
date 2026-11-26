@@ -17,12 +17,12 @@ test_conflict_backup() {
     local backup
 
     mkdir -p "$target/.config"
-    printf 'existing niri config\n' > "$target/.config/niri"
+    printf 'existing fish config\n' > "$target/.config/fish"
     bash scripts/manage-conflicts.sh backup "$target" >/dev/null
 
-    backup="$(find "$target/.dotfiles-backups" -path '*/.config/niri' -type f -print -quit)"
+    backup="$(find "$target/.dotfiles-backups" -path '*/.config/fish' -type f -print -quit)"
     [[ -n "$backup" ]] || fail "blocking path was not backed up"
-    grep -qx 'existing niri config' "$backup" || fail "backup content changed"
+    grep -qx 'existing fish config' "$backup" || fail "backup content changed"
 }
 
 test_stow_round_trip() {

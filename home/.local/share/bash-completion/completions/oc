@@ -1,3 +1,0 @@
-# `oc` is an alias for opencode.
-source <(opencode --completions bash)
-complete -F _opencode oc
