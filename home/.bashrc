@@ -5,9 +5,7 @@
 # Login shells, interactive or not, read this file through ~/.bash_profile.
 # mise's shims put its tools (claude, codex, ...) on PATH without the prompt
 # hook that `mise activate` needs, so one-shots and scripts find them too.
-mise_shims=$HOME/.local/share/mise/shims
-[[ -d $mise_shims && :$PATH: != *:$mise_shims:* ]] && PATH=$mise_shims:$PATH
-unset mise_shims
+PATH=$HOME/.local/share/mise/shims:$PATH
 
 [[ $- != *i* ]] && return
 
