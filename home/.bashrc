@@ -1,6 +1,14 @@
 # The login shell is bash, so scripts and ssh commands run in bash, and
 # `tailscale ssh` one-shots (run through `su -l`) also get the login PATH from
 # /etc/profile.d. Interactive terminals hand over to fish.
+
+# Login shells, interactive or not, read this file through ~/.bash_profile.
+# mise's shims put its tools (claude, codex, ...) on PATH without the prompt
+# hook that `mise activate` needs, so one-shots and scripts find them too.
+mise_shims=$HOME/.local/share/mise/shims
+[[ -d $mise_shims && :$PATH: != *:$mise_shims:* ]] && PATH=$mise_shims:$PATH
+unset mise_shims
+
 [[ $- != *i* ]] && return
 
 # Hand over only a plain interactive shell on a terminal: not `bash -ic cmd`,
